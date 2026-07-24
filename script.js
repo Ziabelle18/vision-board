@@ -2,6 +2,48 @@
 const cards = [
 
 {
+title:"⭐ About Me",
+content:"Dreamer with ambition"
+},
+
+{
+title:"👑 Strengths",
+content:"Resilient • Independent • Loyal"
+},
+
+{
+title:"🎯 Future Goals",
+content:"Travel • Business • Financial Freedom"
+},
+
+{
+title:"🌸 Healing Journey",
+content:"Growing every day"
+},
+
+{
+title:"👠 Fashion Style",
+content:"Elegant • Timeless • Black is my power color"
+},
+
+{
+title:"🎤 Big Dreams",
+content:"Perform on bigger stages"
+},
+
+{
+title:"☕ Things I Love",
+content:"Coffee • Singing • Horror Movies"
+},
+
+{
+title:"🌍 Solo Traveler",
+content:"Collecting memories around the world"
+}
+
+];
+
+{
 title:"About Me",
 content:"Dreamer with ambition"
 },
