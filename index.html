@@ -45,7 +45,6 @@
             margin: 0 auto;
         }
 
-        /* Header Section */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -66,7 +65,6 @@
             color: var(--accent-gold);
         }
 
-        /* Layout Grid */
         .board-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -74,7 +72,6 @@
             align-items: start;
         }
 
-        /* Card Styles */
         .card {
             background: var(--card-bg);
             border-radius: 16px;
@@ -104,12 +101,10 @@
             padding-bottom: 8px;
         }
 
-        /* Grid Column Sizes */
         .col-4 { grid-column: span 4; }
         .col-6 { grid-column: span 6; }
         .col-12 { grid-column: span 12; }
 
-        /* Profile Center Card */
         .profile-card {
             grid-column: span 4;
             text-align: center;
@@ -146,7 +141,6 @@
             margin-top: 10px;
         }
 
-        /* List Styles */
         ul.custom-list {
             list-style: none;
         }
@@ -167,7 +161,6 @@
             font-size: 0.9rem;
         }
 
-        /* Checkbox List Styles */
         ul.check-list {
             list-style: none;
         }
@@ -186,7 +179,6 @@
             height: 18px;
         }
 
-        /* Detail Items */
         .detail-item {
             margin-bottom: 14px;
         }
@@ -225,7 +217,6 @@
             color: #444;
         }
 
-        /* Responsive */
         @media (max-width: 992px) {
             .col-4 { grid-column: span 6; }
             .profile-card { grid-column: span 12; order: -1; }
@@ -241,16 +232,13 @@
 
     <div class="container">
         
-        <!-- Header -->
         <header class="header">
             <h1>this is me</h1>
             <p class="quote">"I'm not lucky, I'm consistent."</p>
         </header>
 
-        <!-- Main Grid -->
         <div class="board-grid">
 
-            <!-- About Me -->
             <div class="card col-4">
                 <div class="card-title">♡ About Me</div>
                 <ul class="custom-list">
@@ -263,10 +251,8 @@
                 </ul>
             </div>
 
-            <!-- Profile Center Card -->
             <div class="card profile-card">
                 <div class="profile-img-container">
-                    <!-- Palitan ng link ng picture mo pag na-upload mo na -->
                     <img src="profile.jpg" alt="Profile Picture">
                 </div>
                 <div class="profile-badge">MAIN CHARACTER ENERGY</div>
@@ -275,7 +261,6 @@
                 </div>
             </div>
 
-            <!-- Strengths -->
             <div class="card col-4">
                 <div class="card-title">👑 Strengths</div>
                 <ul class="custom-list">
@@ -289,7 +274,6 @@
                 </ul>
             </div>
 
-            <!-- Future Goals -->
             <div class="card col-4">
                 <div class="card-title">📌 Future Goals</div>
                 <ul class="check-list">
@@ -303,7 +287,6 @@
                 </ul>
             </div>
 
-            <!-- Healing Journey -->
             <div class="card col-4">
                 <div class="card-title">🌸 Healing Journey</div>
                 <ul class="custom-list">
@@ -314,7 +297,6 @@
                 </ul>
             </div>
 
-            <!-- Fashion Style -->
             <div class="card col-4">
                 <div class="card-title">🖤 Fashion Style</div>
                 <p style="font-weight: 600; margin-bottom: 8px;">Classic. Elegant. Timeless.</p>
@@ -324,7 +306,6 @@
                 </div>
             </div>
 
-            <!-- Things I Love -->
             <div class="card col-4">
                 <div class="card-title">🎤 Things I Love</div>
                 <div class="detail-item">
@@ -349,7 +330,6 @@
                 </div>
             </div>
 
-            <!-- Big Dreams -->
             <div class="card col-4">
                 <div class="card-title">☁️ Big Dreams</div>
                 <ul class="custom-list">
@@ -360,7 +340,6 @@
                 </ul>
             </div>
 
-            <!-- Quirks -->
             <div class="card col-4">
                 <div class="card-title">✨ Quirks</div>
                 <ul class="custom-list">
@@ -373,7 +352,6 @@
                 </ul>
             </div>
 
-            <!-- My Philosophy -->
             <div class="card col-12" style="background: #faf6f0; text-align: center;">
                 <div class="card-title" style="justify-content: center;">✨ My Philosophy</div>
                 <p class="sticky-note">
