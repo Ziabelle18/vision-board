@@ -40,6 +40,9 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            /* REMOVE BLUE TAP HIGHLIGHT & OUTLINES */
+            -webkit-tap-highlight-color: transparent !important;
+            outline: none !important;
         }
 
         html, body {
@@ -319,7 +322,7 @@
             max-width: 100%;
         }
 
-        /* SUBTLE & TRANSLUCENT PASTEL GOLD EDIT BUTTON */
+        /* SUBTLE EDIT BUTTON */
         .edit-btn {
             width: 22px;
             height: 22px;
@@ -371,7 +374,7 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
             width: 100%;
-            user-select: none; /* Prevents text selection popups on click */
+            user-select: none;
             -webkit-user-select: none;
         }
 
@@ -483,6 +486,8 @@
             text-align: center;
             cursor: pointer;
             position: relative;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .hero-girl {
@@ -492,6 +497,9 @@
             object-fit: contain;
             filter: drop-shadow(0 15px 30px rgba(180, 120, 140, 0.25));
             transition: transform 0.2s ease;
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-drag: none;
         }
 
         .hero-girl:hover {
