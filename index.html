@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Board - Scrapbook Style</title>
+    <title>Vision Board - Interactive Scrapbook</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -28,7 +28,6 @@
             color: var(--text-color);
             font-family: var(--font-body);
             padding: 40px 20px;
-            /* Grid Paper Pattern Background */
             background-image: 
                 linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
@@ -43,7 +42,7 @@
         /* Header Style */
         .header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             position: relative;
         }
 
@@ -54,6 +53,7 @@
             font-weight: 700;
             transform: rotate(-2deg);
             display: inline-block;
+            outline: none;
         }
 
         .header p.quote {
@@ -61,6 +61,7 @@
             font-size: 1.5rem;
             color: #666;
             margin-top: 5px;
+            outline: none;
         }
 
         /* Scrapbook Grid Container */
@@ -78,15 +79,30 @@
             border-radius: 4px;
             box-shadow: 4px 5px 15px rgba(0,0,0,0.08);
             position: relative;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Visual indicator kapag in-edit ang text */
+        [contenteditable="true"] {
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        [contenteditable="true"]:hover {
+            background: rgba(197, 160, 89, 0.15);
+        }
+        [contenteditable="true"]:focus {
+            background: rgba(197, 160, 89, 0.2);
+            outline: 1px dashed var(--accent-gold);
         }
 
         .card:hover {
             transform: scale(1.02) rotate(0deg) !important;
             z-index: 10;
+            box-shadow: 6px 12px 25px rgba(0,0,0,0.12);
         }
 
-        /* Tape Effect sa Taas ng Card */
+        /* Tape Effect */
         .tape {
             position: absolute;
             top: -12px;
@@ -98,6 +114,7 @@
             border-left: 2px dashed rgba(0,0,0,0.1);
             border-right: 2px dashed rgba(0,0,0,0.1);
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            pointer-events: none;
         }
 
         /* Card Titles */
@@ -112,9 +129,10 @@
             gap: 8px;
             border-bottom: 2px dashed #e0d8c3;
             padding-bottom: 8px;
+            outline: none;
         }
 
-        /* Custom Rotations para sa Cut-Out Collaged Look */
+        /* Custom Rotations */
         .rotate-left { transform: rotate(-3deg); }
         .rotate-right { transform: rotate(2.5deg); }
         .rotate-slightly-left { transform: rotate(-1.5deg); }
@@ -123,7 +141,7 @@
         /* Polaroid Center Frame */
         .polaroid-card {
             background: #ffffff;
-            padding: 15px 15px 25px 15px;
+            padding: 15px 15px 20px 15px;
             box-shadow: 6px 10px 20px rgba(0,0,0,0.12);
             text-align: center;
             border: 1px solid #e2dcd0;
@@ -131,10 +149,10 @@
 
         .polaroid-img {
             width: 100%;
-            height: 340px;
+            height: 320px;
             object-fit: cover;
             border: 1px solid #ddd;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .polaroid-caption {
@@ -142,13 +160,13 @@
             font-size: 1.8rem;
             font-weight: 700;
             color: #333;
+            outline: none;
         }
 
         /* Sticky Note Variant */
         .sticky-note {
             background: #fff8c6;
             border-radius: 2px;
-            box-shadow: 5px 5px 12px rgba(0,0,0,0.07);
         }
 
         .black-card {
@@ -158,6 +176,44 @@
         .black-card .card-title {
             color: #fff;
             border-bottom-color: #444;
+        }
+
+        /* Music Player Card Special Styling */
+        .music-card {
+            background: #1e1e24;
+            color: #fff;
+            text-align: center;
+        }
+        .music-card .card-title {
+            color: #c5a059;
+            border-bottom-color: #333;
+        }
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .play-btn {
+            background: var(--accent-gold);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+        .track-info {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
         }
 
         /* Lists */
@@ -170,6 +226,7 @@
             margin-bottom: 10px;
             position: relative;
             padding-left: 20px;
+            outline: none;
         }
 
         ul.scrap-list li::before {
@@ -193,9 +250,10 @@
 
     <div class="container">
         
+        <!-- Header (Editable) -->
         <header class="header">
-            <h1>this is me</h1>
-            <p class="quote">"I'm not lucky, I'm consistent."</p>
+            <h1 contenteditable="true">this is me</h1>
+            <p class="quote" contenteditable="true">"I'm not lucky, I'm consistent."</p>
         </header>
 
         <div class="scrapbook-board">
@@ -203,78 +261,103 @@
             <!-- Card 1: About Me -->
             <div class="card rotate-left">
                 <div class="tape"></div>
-                <div class="card-title">♡ ABOUT ME</div>
+                <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
                 <ul class="scrap-list">
-                    <li>Dreamer with ambition</li>
-                    <li>Creative soul</li>
-                    <li>Loves deeply, feels everything</li>
-                    <li>Soft heart, strong mind</li>
-                    <li>Private, but passionate</li>
-                    <li>Always evolving</li>
+                    <li contenteditable="true">Dreamer with ambition</li>
+                    <li contenteditable="true">Creative soul</li>
+                    <li contenteditable="true">Loves deeply, feels everything</li>
+                    <li contenteditable="true">Soft heart, strong mind</li>
+                    <li contenteditable="true">Private, but passionate</li>
+                    <li contenteditable="true">Always evolving</li>
                 </ul>
             </div>
 
-            <!-- Card 2: Center Polaroid Image -->
+            <!-- Card 2: Center Polaroid Image & Caption -->
             <div class="card polaroid-card rotate-slightly-right">
                 <div class="tape" style="top: -15px;"></div>
                 <img src="profile.jpg" alt="Profile Picture" class="polaroid-img">
-                <div class="polaroid-caption">"Working on the life I prayed for."</div>
+                <div class="polaroid-caption" contenteditable="true">"Working on the life I prayed for."</div>
             </div>
 
             <!-- Card 3: Strengths -->
             <div class="card rotate-right">
                 <div class="tape"></div>
-                <div class="card-title">👑 STRENGTHS</div>
+                <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
                 <ul class="scrap-list">
-                    <li>Resilient</li>
-                    <li>Determined</li>
-                    <li>Independent</li>
-                    <li>Empathetic</li>
-                    <li>Hardworking</li>
-                    <li>Adaptable</li>
+                    <li contenteditable="true">Resilient</li>
+                    <li contenteditable="true">Determined</li>
+                    <li contenteditable="true">Independent</li>
+                    <li contenteditable="true">Empathetic</li>
+                    <li contenteditable="true">Hardworking</li>
+                    <li contenteditable="true">Adaptable</li>
                 </ul>
             </div>
 
-            <!-- Card 4: Future Goals (Black Sticky Card) -->
+            <!-- Card 4: Future Goals (Black Card) -->
             <div class="card black-card rotate-slightly-left">
                 <div class="tape" style="background: rgba(255,255,255,0.2);"></div>
-                <div class="card-title">📌 FUTURE GOALS</div>
+                <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
                 <ul class="scrap-list">
-                    <li>Successful Freelance Career</li>
-                    <li>Build My Business</li>
-                    <li>Financial Freedom</li>
-                    <li>Help My Family</li>
-                    <li>Travel The World</li>
+                    <li contenteditable="true">Successful Freelance Career</li>
+                    <li contenteditable="true">Build My Business</li>
+                    <li contenteditable="true">Financial Freedom</li>
+                    <li contenteditable="true">Help My Family</li>
+                    <li contenteditable="true">Travel The World</li>
                 </ul>
             </div>
 
-            <!-- Card 5: Healing Journey -->
-            <div class="card rotate-right">
-                <div class="tape"></div>
-                <div class="card-title">🌸 HEALING JOURNEY</div>
-                <ul class="scrap-list">
-                    <li>Learning to choose me</li>
-                    <li>Releasing what no longer serves me</li>
-                    <li>Building peace from within</li>
-                    <li>Growing, glowing, going</li>
-                </ul>
+            <!-- Card 5: MUSIC PLAYER CARD -->
+            <div class="card music-card rotate-right">
+                <div class="tape" style="background: rgba(255,255,255,0.2);"></div>
+                <div class="card-title">🎵 MY SOUNDTRACK</div>
+                <div class="track-info">
+                    <p style="font-weight: 600; font-size: 1rem;" contenteditable="true">Acoustic Covers & Vocal Vibes</p>
+                    <p style="color: #aaa; font-size: 0.85rem;" contenteditable="true">Live Session • Stage Performances</p>
+                </div>
+                
+                <!-- Audio element (Lagay ka ng music file name tulad ng song.mp3) -->
+                <audio id="bgMusic" src="song.mp3"></audio>
+
+                <div class="player-controls">
+                    <span style="cursor: pointer; opacity: 0.7;">⏮️</span>
+                    <button class="play-btn" onclick="togglePlay()">▶️</button>
+                    <span style="cursor: pointer; opacity: 0.7;">⏭️</span>
+                </div>
             </div>
 
             <!-- Card 6: Quirks (Yellow Sticky Note) -->
             <div class="card sticky-note rotate-left">
                 <div class="tape"></div>
-                <div class="card-title">✨ QUIRKS</div>
+                <div class="card-title" contenteditable="true">✨ QUIRKS</div>
                 <ul class="scrap-list">
-                    <li>Random dance breaks</li>
-                    <li>Talks to herself</li>
-                    <li>Has 1000 screenshots</li>
-                    <li>Loves room service</li>
-                    <li>Obsessed with perfume</li>
+                    <li contenteditable="true">Random dance breaks</li>
+                    <li contenteditable="true">Talks to herself</li>
+                    <li contenteditable="true">Has 1000 screenshots</li>
+                    <li contenteditable="true">Loves room service</li>
+                    <li contenteditable="true">Obsessed with perfume</li>
                 </ul>
             </div>
 
         </div>
     </div>
+
+    <script>
+        // Simple Audio Toggle Script
+        function togglePlay() {
+            var audio = document.getElementById("bgMusic");
+            var btn = document.querySelector(".play-btn");
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.innerHTML = "⏸️";
+                }).catch(e => {
+                    alert("Mag-add muna ng 'song.mp3' na file sa folder mo para tumugtog!");
+                });
+            } else {
+                audio.pause();
+                btn.innerHTML = "▶️";
+            }
+        }
+    </script>
 
 </body>
 </html>
