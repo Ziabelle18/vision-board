@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Board - Editorial Scrapbook</title>
+    <title>Vision Board - This Is Me</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Fonts matched to editorial/AI poster aesthetic -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel+Decorative:wght@700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f4efe6;
-            --text-color: #2b2825;
-            --accent-gold: #b89350;
-            --font-title: 'Cinzel Decorative', 'Playfair Display', serif;
-            --font-serif: 'Playfair Display', serif;
-            --font-script: 'Pinyon Script', 'Caveat', cursive;
-            --font-hand: 'Caveat', cursive;
-            --font-body: 'Montserrat', sans-serif;
+            --bg-color: #f2ede4;
+            --accent-gold: #c5a059;
+            --accent-black: #1a1a1a;
+            --font-main: 'Montserrat', sans-serif;
         }
 
         * {
@@ -28,379 +23,179 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-body);
-            padding: 50px 20px;
-            background-image: 
-                radial-gradient(rgba(0,0,0,0.08) 0.8px, transparent 0.8px);
-            background-size: 18px 18px;
-        }
-
-        .container {
-            max-width: 1150px;
-            margin: 0 auto;
-        }
-
-        /* Header Style matched to AI style */
-        .header {
-            text-align: center;
-            margin-bottom: 45px;
-            position: relative;
-        }
-
-        .header h1 {
-            font-family: var(--font-script);
-            font-size: 5.8rem;
-            line-height: 0.8;
-            font-weight: 400;
-            color: #1a1a1a;
-            transform: rotate(-3deg);
-            display: inline-block;
-            outline: none;
-            margin-bottom: 10px;
-        }
-
-        .header p.quote {
-            font-family: var(--font-hand);
-            font-size: 1.8rem;
-            color: var(--accent-gold);
-            outline: none;
-            font-weight: 700;
-        }
-
-        /* Scrapbook Grid Container */
-        .scrapbook-board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 28px;
-            align-items: start;
-        }
-
-        /* Common Scrapbook Card Base */
-        .card {
-            background: #fff;
-            padding: 26px;
-            border-radius: 2px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-            position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(0,0,0,0.04);
-        }
-
-        /* Visual indicator kapag in-edit */
-        [contenteditable="true"] {
-            cursor: pointer;
-            border-radius: 3px;
-            transition: background 0.2s;
-        }
-        [contenteditable="true"]:hover {
-            background: rgba(184, 147, 80, 0.12);
-        }
-        [contenteditable="true"]:focus {
-            background: rgba(184, 147, 80, 0.18);
-            outline: 1px dashed var(--accent-gold);
-        }
-
-        .card:hover {
-            transform: scale(1.02) rotate(0deg) !important;
-            z-index: 10;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
-        }
-
-        /* Tape Effect */
-        .tape {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85px;
-            height: 22px;
-            background: rgba(225, 215, 190, 0.65);
-            border-left: 2px dashed rgba(0,0,0,0.08);
-            border-right: 2px dashed rgba(0,0,0,0.08);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            pointer-events: none;
-        }
-
-        /* Editorial Card Titles */
-        .card-title {
-            font-family: var(--font-serif);
-            font-size: 1.25rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 16px;
-            color: #1a1a1a;
+            font-family: var(--font-main);
+            color: #333;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            border-bottom: 1.5px solid #eae2d0;
-            padding-bottom: 8px;
-            outline: none;
+            min-height: 100vh;
+            padding: 30px 15px 100px 15px; /* Extra bottom padding para sa floating music player */
+            /* Subtle dotted background pattern */
+            background-image: radial-gradient(rgba(0,0,0,0.06) 0.8px, transparent 0.8px);
+            background-size: 20px 20px;
         }
 
-        /* Custom Rotations */
-        .rotate-left { transform: rotate(-2.5deg); }
-        .rotate-right { transform: rotate(2deg); }
-        .rotate-slightly-left { transform: rotate(-1deg); }
-        .rotate-slightly-right { transform: rotate(1.5deg); }
-
-        /* Center Photo Frame */
-        .polaroid-card {
-            background: #ffffff;
-            padding: 16px 16px 22px 16px;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
-            text-align: center;
+        /* Poster Display Frame */
+        .board-wrapper {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            overflow: hidden;
             border: 1px solid #e0d8c8;
         }
 
-        .polaroid-img {
+        /* The Main AI Poster Image */
+        .board-img {
             width: 100%;
-            height: 330px;
-            object-fit: cover;
-            border: 1px solid #eee;
-            margin-bottom: 14px;
+            height: auto;
+            display: block;
+            pointer-events: none; /* Iniiwasan ang accidental dragging ng pic */
         }
 
-        .polaroid-caption {
-            font-family: var(--font-hand);
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #222;
-            outline: none;
+        /* Interactive Clickable Overlay Hotspots (Halimbawa para sa interactive links/popups) */
+        .hotspot {
+            position: absolute;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(197, 160, 89, 0);
         }
 
-        /* Black Theme Card */
-        .black-card {
-            background: #1c1a19;
-            color: #fff;
-        }
-        .black-card .card-title {
-            color: #fff;
-            border-bottom-color: #333;
+        .hotspot:hover {
+            background: rgba(197, 160, 89, 0.15);
+            box-shadow: 0 0 15px rgba(197, 160, 89, 0.4);
+            border: 1.5px dashed var(--accent-gold);
         }
 
-        /* Music Player Styling */
-        .music-card {
-            background: #242120;
+        /* Positions ng Interactive Zones (In % para responsive sa mobile/desktop) */
+        .spot-things-i-love {
+            top: 47%;
+            left: 2%;
+            width: 30%;
+            height: 25%;
+        }
+
+        .spot-future-goals {
+            top: 3%;
+            right: 2%;
+            width: 25%;
+            height: 16%;
+        }
+
+        .spot-philosophy {
+            bottom: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25%;
+            height: 10%;
+        }
+
+        /* Floating Audio Player Bar */
+        .floating-player {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 26, 26, 0.92);
+            backdrop-filter: blur(8px);
             color: #fff;
-            text-align: center;
-        }
-        .music-card .card-title {
-            color: var(--accent-gold);
-            border-bottom-color: #3d3835;
-        }
-        .player-controls {
+            padding: 12px 24px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin-top: 15px;
+            gap: 18px;
+            z-index: 100;
+            border: 1px solid rgba(197, 160, 89, 0.4);
         }
+
+        .player-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .player-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .player-subtitle {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+        }
+
         .play-btn {
             background: var(--accent-gold);
             border: none;
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background 0.2s;
         }
+
         .play-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Lists */
-        ul.scrap-list {
-            list-style: none;
-        }
-
-        ul.scrap-list li {
-            font-size: 0.92rem;
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 20px;
-            outline: none;
-        }
-
-        ul.scrap-list li::before {
-            content: "✦";
-            position: absolute;
-            left: 0;
-            color: var(--accent-gold);
-            font-size: 0.8rem;
-        }
-
-        .detail-item {
-            margin-bottom: 12px;
-        }
-        .detail-item .title {
-            font-weight: 600;
-            font-size: 0.9rem;
-            outline: none;
-        }
-        .detail-item .subtitle {
-            font-size: 0.8rem;
-            color: #777;
-            font-style: italic;
-            outline: none;
-        }
-
-        /* Philosophy Sticky Note */
-        .philosophy-note {
-            background: #faf6eb;
-            border: 1px solid #e8dec8;
-            text-align: center;
-        }
-        .philosophy-text {
-            font-family: var(--font-hand);
-            font-size: 1.4rem;
-            line-height: 1.4;
-            color: #333;
-            outline: none;
-            padding: 5px;
-        }
-
-        /* Responsiveness */
-        @media (max-width: 900px) {
-            .scrapbook-board { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .scrapbook-board { grid-template-columns: 1fr; }
-            .header h1 { font-size: 4rem; }
+            transform: scale(1.08);
+            background: #d4ae63;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <!-- Header (Editable) -->
-        <header class="header">
-            <h1 contenteditable="true">this is me</h1>
-            <p class="quote" contenteditable="true">"I'm not lucky, I'm consistent."</p>
-        </header>
+    <!-- Main Vision Board Frame -->
+    <div class="board-wrapper">
+        <!-- Siguraduhing "vision-board.png" ang name ng AI photo mo sa folder -->
+        <img src="vision-board.png" alt="Vision Board Poster" class="board-img">
 
-        <div class="scrapbook-board">
+        <!-- Clickable Overlay Zones -->
+        <div class="hotspot spot-things-i-love" onclick="showAlert('🎤 Things I Love', 'Performing, Music, Horror Movies & Creative Outlets!')" title="Click to view details"></div>
+        <div class="hotspot spot-future-goals" onclick="showAlert('📌 Future Goals', 'Financial Freedom, Luxury Travel & Building My Business!')" title="Click to view details"></div>
+        <div class="hotspot spot-philosophy" onclick="showAlert('✨ My Philosophy', 'Stay kind, work hard, be humble, trust God.')" title="Click to view details"></div>
+    </div>
 
-            <!-- Card 1: About Me -->
-            <div class="card rotate-left">
-                <div class="tape"></div>
-                <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
-                <ul class="scrap-list">
-                    <li contenteditable="true">Dreamer with ambition</li>
-                    <li contenteditable="true">Creative soul</li>
-                    <li contenteditable="true">Loves deeply, feels everything</li>
-                    <li contenteditable="true">Soft heart, strong mind</li>
-                    <li contenteditable="true">Private, but passionate</li>
-                    <li contenteditable="true">Always evolving</li>
-                </ul>
-            </div>
-
-            <!-- Card 2: Center Photo Frame -->
-            <div class="card polaroid-card rotate-slightly-right">
-                <div class="tape" style="top: -15px;"></div>
-                <img src="profile.jpg" alt="Profile Picture" class="polaroid-img">
-                <div class="polaroid-caption" contenteditable="true">"I'm working on the life I prayed for. ♡"</div>
-            </div>
-
-            <!-- Card 3: Strengths -->
-            <div class="card rotate-right">
-                <div class="tape"></div>
-                <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
-                <ul class="scrap-list">
-                    <li contenteditable="true">Resilient</li>
-                    <li contenteditable="true">Determined</li>
-                    <li contenteditable="true">Independent</li>
-                    <li contenteditable="true">Empathetic</li>
-                    <li contenteditable="true">Hardworking</li>
-                    <li contenteditable="true">Adaptable</li>
-                </ul>
-            </div>
-
-            <!-- Card 4: Future Goals (Black Card) -->
-            <div class="card black-card rotate-slightly-left">
-                <div class="tape" style="background: rgba(255,255,255,0.2);"></div>
-                <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
-                <ul class="scrap-list">
-                    <li contenteditable="true">Successful Freelance Career</li>
-                    <li contenteditable="true">Build My Business</li>
-                    <li contenteditable="true">Financial Freedom</li>
-                    <li contenteditable="true">Help My Family</li>
-                    <li contenteditable="true">Travel The World</li>
-                </ul>
-            </div>
-
-            <!-- Card 5: Things I Love -->
-            <div class="card rotate-right">
-                <div class="tape"></div>
-                <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
-                <div class="detail-item">
-                    <div class="title" contenteditable="true">🎤 Performing & Singing</div>
-                    <div class="subtitle" contenteditable="true">My heart on stage</div>
-                </div>
-                <div class="detail-item">
-                    <div class="title" contenteditable="true">🎬 Horror Movies</div>
-                    <div class="subtitle" contenteditable="true">Thrills, chills & twisted genius</div>
-                </div>
-                <div class="detail-item">
-                    <div class="title" contenteditable="true">📱 TikTok After Performances</div>
-                    <div class="subtitle" contenteditable="true">My little dopamine reward</div>
-                </div>
-                <div class="detail-item">
-                    <div class="title" contenteditable="true">✏️ Sketching & Journaling</div>
-                    <div class="subtitle" contenteditable="true">Brain dump to beautiful plans</div>
-                </div>
-            </div>
-
-            <!-- Card 6: Music Player Card -->
-            <div class="card music-card rotate-slightly-left">
-                <div class="tape" style="background: rgba(255,255,255,0.2);"></div>
-                <div class="card-title">🎵 MY SOUNDTRACK</div>
-                <div style="margin-bottom: 10px;">
-                    <p style="font-weight: 600; font-size: 0.95rem;" contenteditable="true">Acoustic Covers & Vocal Vibes</p>
-                    <p style="color: #aaa; font-size: 0.8rem;" contenteditable="true">Live Session • Stage Performances</p>
-                </div>
-                
-                <audio id="bgMusic" src="song.mp3"></audio>
-
-                <div class="player-controls">
-                    <span style="cursor: pointer; opacity: 0.7;">⏮️</span>
-                    <button class="play-btn" onclick="togglePlay()">▶️</button>
-                    <span style="cursor: pointer; opacity: 0.7;">⏭️</span>
-                </div>
-            </div>
-
-            <!-- Card 7: My Philosophy (Pinalitan ang Quirks) -->
-            <div class="card philosophy-note rotate-left" style="grid-column: span 3;">
-                <div class="tape"></div>
-                <div class="card-title" style="justify-content: center;" contenteditable="true">✨ MY PHILOSOPHY</div>
-                <div class="philosophy-text" contenteditable="true">
-                    "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
-                </div>
-            </div>
-
+    <!-- Floating Soundtrack Player -->
+    <div class="floating-player">
+        <div class="player-info">
+            <span class="player-title">🎵 Vision Board Soundtrack</span>
+            <span class="player-subtitle">Live Covers & Vocal Vibes</span>
         </div>
+
+        <!-- Palitan ng totoong audio file path kung may song.mp3 ka -->
+        <audio id="bgMusic" src="song.mp3" loop></audio>
+
+        <button class="play-btn" onclick="togglePlay()" id="playBtn">▶️</button>
     </div>
 
     <script>
+        // Toggle Audio Play/Pause
         function togglePlay() {
             var audio = document.getElementById("bgMusic");
-            var btn = document.querySelector(".play-btn");
+            var btn = document.getElementById("playBtn");
+            
             if (audio.paused) {
                 audio.play().then(() => {
                     btn.innerHTML = "⏸️";
                 }).catch(e => {
-                    alert("Mag-add ng 'song.mp3' sa file folder para sa audio playback!");
+                    alert("Maglagay ng 'song.mp3' file sa parehong folder para sa music!");
                 });
             } else {
                 audio.pause();
                 btn.innerHTML = "▶️";
             }
+        }
+
+        // Custom Click Notification para sa Hotspots
+        function showAlert(title, text) {
+            alert(title + "\n\n" + text);
         }
     </script>
 
