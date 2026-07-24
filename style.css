@@ -129,6 +129,16 @@ box-shadow:0 20px 40px rgba(0,0,0,.15);
 
 .card h2{
 
+font-size:22px;
+
+margin-bottom:12px;
+
+font-family:"Cormorant Garamond", serif;
+
+color:#222;
+
+}
+
 font-family:"Cormorant Garamond";
 
 font-size:32px;
