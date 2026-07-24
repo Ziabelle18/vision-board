@@ -5,79 +5,260 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DreamCanvas - Vision Board</title>
     
-    <!-- Custom Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Link to external CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f3eee6;
+            --card-bg: #fffdfb;
+            --text-color: #2b2b2b;
+            --accent-gold: #c5a059;
+            --font-title: 'Playfair Display', serif;
+            --font-hand: 'Caveat', cursive;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: var(--font-body);
+            color: var(--text-color);
+            padding: 20px 10px 80px 10px;
+            background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+
+        /* Fixed Main Container */
+        .board-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-family: var(--font-hand);
+            font-size: 4.5rem;
+            line-height: 0.9;
+            transform: rotate(-2deg);
+            display: inline-block;
+        }
+
+        .header .quote {
+            font-family: var(--font-hand);
+            font-size: 1.6rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        /* Grid Layout Fix */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Card Styling */
+        .card {
+            background: var(--card-bg);
+            padding: 18px;
+            border-radius: 6px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            position: relative;
+            border: 1px solid #e8e2d5;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.02) rotate(0deg) !important;
+            z-index: 10;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+
+        /* Tape Effect */
+        .tape {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 18px;
+            background: rgba(215, 203, 178, 0.7);
+            border-left: 2px dashed rgba(0,0,0,0.08);
+            border-right: 2px dashed rgba(0,0,0,0.08);
+        }
+
+        .card-title {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            border-bottom: 1.5px solid #eee5d5;
+            padding-bottom: 4px;
+        }
+
+        ul.scrap-list {
+            list-style: none;
+        }
+
+        ul.scrap-list li {
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            padding-left: 16px;
+            position: relative;
+            line-height: 1.3;
+        }
+
+        ul.scrap-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+        }
+
+        /* CENTER COLUMN & CHARACTER IMAGE CONTROL */
+        .col-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-wrapper {
+            width: 100%;
+            max-width: 320px; /* Nilimitahan ang laki para hindi lumampas */
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-girl {
+            width: 100%;
+            height: auto;
+            max-height: 480px;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+        }
+
+        .center-quote-card {
+            width: 100%;
+            text-align: center;
+            background: #faf6eb;
+            margin-top: 10px;
+        }
+
+        .handwritten-quote {
+            font-family: var(--font-hand);
+            font-size: 1.4rem;
+            line-height: 1.2;
+        }
+
+        .dark-card {
+            background: #1e1c1b;
+            color: #ffffff;
+            border: none;
+        }
+
+        .dark-card .card-title {
+            color: #ffffff;
+            border-bottom-color: #333;
+        }
+
+        /* Slight Rotations */
+        .rot-left { transform: rotate(-1.5deg); }
+        .rot-right { transform: rotate(1.5deg); }
+
+        @media (max-width: 850px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .col-center { order: -1; }
+        }
+    </style>
 </head>
 <body>
 
     <div class="board-container">
         
-        <!-- Header -->
         <header class="header">
-            <h1 id="title-text">this is me</h1>
-            <p class="quote" id="quote-text">"I'm not lucky, I'm consistent."</p>
+            <h1 contenteditable="true">this is me</h1>
+            <p class="quote" contenteditable="true">"I'm not lucky, I'm consistent."</p>
         </header>
 
-        <!-- Main Grid Layout (Version 2A Structure) -->
-        <div class="main-layout" id="vision-board">
+        <div class="main-layout">
 
             <!-- LEFT COLUMN -->
             <div class="column col-left">
-                <div class="card rot-left" data-card="about-me">
-                    <div class="card-title">♡ ABOUT ME</div>
+                <div class="card rot-left">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
                     <ul class="scrap-list">
-                        <li>Dreamer with ambition</li>
-                        <li>Creative soul & performer</li>
-                        <li>Loves deeply, feels everything</li>
-                        <li>Soft heart, strong mind</li>
-                        <li>Private, but passionate</li>
+                        <li contenteditable="true">Dreamer with ambition</li>
+                        <li contenteditable="true">Creative soul & performer</li>
+                        <li contenteditable="true">Loves deeply, feels everything</li>
+                        <li contenteditable="true">Soft heart, strong mind</li>
+                        <li contenteditable="true">Private, but passionate</li>
                     </ul>
                 </div>
 
-                <div class="card rot-right" data-card="healing">
-                    <div class="card-title">🌸 HEALING JOURNEY</div>
+                <div class="card rot-right">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">🌸 HEALING JOURNEY</div>
                     <ul class="scrap-list">
-                        <li>Learning to choose me</li>
-                        <li>Releasing what no longer serves me</li>
-                        <li>Building peace from within</li>
+                        <li contenteditable="true">Learning to choose me</li>
+                        <li contenteditable="true">Releasing what no longer serves me</li>
+                        <li contenteditable="true">Building peace from within</li>
                     </ul>
                 </div>
 
-                <div class="card rot-left" data-card="things-i-love">
-                    <div class="card-title">🎤 THINGS I LOVE</div>
+                <div class="card rot-left">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
                     <ul class="scrap-list">
-                        <li>Performing & Singing</li>
-                        <li>Horror Movies & Thrillers</li>
-                        <li>Sketching & Journaling</li>
-                        <li>Coffee & Tea Breaks</li>
+                        <li contenteditable="true">Performing & Singing</li>
+                        <li contenteditable="true">Horror Movies & Thrillers</li>
+                        <li contenteditable="true">Sketching & Journaling</li>
+                        <li contenteditable="true">Coffee & Tea Breaks</li>
                     </ul>
                 </div>
 
-                <div class="card rot-right" data-card="daily-reminder">
-                    <div class="card-title">📋 DAILY REMINDER</div>
+                <div class="card rot-right">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">📋 DAILY REMINDER</div>
                     <ul class="scrap-list">
-                        <li>You are enough.</li>
-                        <li>Don't compare, just keep going.</li>
-                        <li>Discipline today, freedom tomorrow.</li>
+                        <li contenteditable="true">You are enough.</li>
+                        <li contenteditable="true">Don't compare, just keep going.</li>
+                        <li contenteditable="true">Discipline today, freedom tomorrow.</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- CENTER COLUMN (CHARACTER / HERO GIRL) -->
+            <!-- CENTER COLUMN (GIRL & PHILOSOPHY) -->
             <div class="column col-center">
                 <div class="hero-wrapper">
-                    <!-- Babasahin muna ang girl.png, fallback sa character.png o vision-board.png -->
-                    <img src="girl.png" alt="Vision Character" class="hero-girl" id="hero-img" onerror="this.onerror=null; this.src='character.png';">
+                    <!-- Hinahanap nito ang image sa folder mo -->
+                    <img src="girl.png" alt="Character" class="hero-girl" onerror="this.onerror=null; this.src='vision-board.png';">
                 </div>
 
-                <div class="card rot-slight center-quote-card" data-card="philosophy">
-                    <div class="card-title">✨ MY PHILOSOPHY</div>
-                    <p class="handwritten-quote">
+                <div class="card center-quote-card">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
+                    <p class="handwritten-quote" contenteditable="true">
                         "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
                     </p>
                 </div>
@@ -85,40 +266,44 @@
 
             <!-- RIGHT COLUMN -->
             <div class="column col-right">
-                <div class="card rot-right" data-card="strengths">
-                    <div class="card-title">👑 STRENGTHS</div>
+                <div class="card rot-right">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
                     <ul class="scrap-list">
-                        <li>Resilient & Determined</li>
-                        <li>Independent & Adaptable</li>
-                        <li>Empathetic & Loyal</li>
+                        <li contenteditable="true">Resilient & Determined</li>
+                        <li contenteditable="true">Independent & Adaptable</li>
+                        <li contenteditable="true">Empathetic & Loyal</li>
                     </ul>
                 </div>
 
-                <div class="card dark-card rot-left" data-card="future-goals">
-                    <div class="card-title">📌 FUTURE GOALS</div>
+                <div class="card dark-card rot-left">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
                     <ul class="scrap-list">
-                        <li>Successful Freelance Career</li>
-                        <li>Build My Business</li>
-                        <li>Financial Freedom</li>
-                        <li>Travel The World</li>
+                        <li contenteditable="true">Successful Freelance Career</li>
+                        <li contenteditable="true">Build My Business</li>
+                        <li contenteditable="true">Financial Freedom</li>
+                        <li contenteditable="true">Travel The World</li>
                     </ul>
                 </div>
 
-                <div class="card rot-right" data-card="fashion">
-                    <div class="card-title">👠 FASHION STYLE</div>
+                <div class="card rot-right">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">👠 FASHION STYLE</div>
                     <ul class="scrap-list">
-                        <li>Classic. Elegant. Timeless.</li>
-                        <li>Main Character Energy ♡</li>
-                        <li>Black is my power color</li>
+                        <li contenteditable="true">Classic. Elegant. Timeless.</li>
+                        <li contenteditable="true">Main Character Energy ♡</li>
+                        <li contenteditable="true">Black is my power color</li>
                     </ul>
                 </div>
 
-                <div class="card rot-left" data-card="big-dreams">
-                    <div class="card-title">☁️ BIG DREAMS</div>
+                <div class="card rot-left">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">☁️ BIG DREAMS</div>
                     <ul class="scrap-list">
-                        <li>Perform on bigger stages</li>
-                        <li>Work with brands I love</li>
-                        <li>Own a successful business</li>
+                        <li contenteditable="true">Perform on bigger stages</li>
+                        <li contenteditable="true">Work with brands I love</li>
+                        <li contenteditable="true">Own a successful business</li>
                     </ul>
                 </div>
             </div>
@@ -126,7 +311,5 @@
         </div>
     </div>
 
-    <!-- Link to external JavaScript -->
-    <script src="script.js"></script>
 </body>
 </html>
