@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Board - Scrapbook Collage</title>
+    <title>Vision Board - Interactive Scrapbook</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f3eee6;
+            --bg-color: #f2ebd9;
             --accent-gold: #c5a059;
+            --accent-black: #1a1a1a;
             --font-title: 'Playfair Display', serif;
             --font-hand: 'Caveat', cursive;
             --font-body: 'Montserrat', sans-serif;
@@ -26,29 +27,32 @@
             background-color: var(--bg-color);
             font-family: var(--font-body);
             color: #2b2b2b;
-            padding: 40px 15px 100px 15px;
-            background-image: radial-gradient(rgba(0,0,0,0.06) 0.8px, transparent 0.8px);
-            background-size: 20px 20px;
+            padding: 40px 20px 120px 20px;
+            /* Subtle paper texture background */
+            background-image: 
+                radial-gradient(rgba(0,0,0,0.06) 1px, transparent 0),
+                linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 0);
+            background-size: 20px 20px, 80px 80px;
         }
 
         .board-container {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 0 auto;
             position: relative;
-            padding: 20px;
         }
 
-        /* Header Section */
+        /* Header Title */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .header h1 {
             font-family: var(--font-hand);
             font-size: 5.5rem;
+            color: #1a1a1a;
             line-height: 0.9;
-            transform: rotate(-2deg);
+            transform: rotate(-1.5deg);
             display: inline-block;
         }
 
@@ -57,110 +61,118 @@
             font-size: 1.8rem;
             color: var(--accent-gold);
             font-weight: 700;
+            margin-top: 5px;
         }
 
-        /* Main Canvas Layout */
+        /* Collage 3-Column Layout */
         .collage-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1.2fr 1fr;
             gap: 25px;
-            position: relative;
-            z-index: 1;
+            align-items: start;
         }
 
-        /* Scrapbook Cards Base */
+        /* Scrapbook Modular Cards */
         .card {
-            background: #fff;
-            padding: 22px;
-            border-radius: 4px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            background: #fffefb;
+            padding: 24px;
+            border-radius: 3px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
             position: relative;
-            border: 1px solid #e8e2d5;
-            transition: transform 0.3s ease, z-index 0.3s;
+            border: 1px solid #e2dacd;
+            margin-bottom: 25px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
         }
 
+        /* Interactive Hover Animation */
         .card:hover {
-            transform: scale(1.03) rotate(0deg) !important;
+            transform: translateY(-5px) scale(1.03) rotate(0deg) !important;
             z-index: 20 !important;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.14);
         }
 
-        /* Tape Effect */
+        /* Washi Tape Accent */
         .tape {
             position: absolute;
-            top: -10px;
+            top: -12px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 20px;
-            background: rgba(225, 215, 190, 0.7);
-            border-left: 2px dashed rgba(0,0,0,0.08);
-            border-right: 2px dashed rgba(0,0,0,0.08);
+            transform: translateX(-50%) rotate(-1deg);
+            width: 85px;
+            height: 22px;
+            background: rgba(215, 203, 178, 0.7);
+            backdrop-filter: blur(2px);
+            border-left: 2px dashed rgba(0,0,0,0.1);
+            border-right: 2px dashed rgba(0,0,0,0.1);
             pointer-events: none;
-        }
-
-        /* Editable text highlights */
-        [contenteditable="true"]:hover {
-            background: rgba(197, 160, 89, 0.1);
-            border-radius: 3px;
         }
 
         /* Card Titles */
         .card-title {
             font-family: var(--font-title);
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            text-transform: uppercase;
             letter-spacing: 1.5px;
             margin-bottom: 12px;
-            border-bottom: 1.5px solid #eae2d0;
+            border-bottom: 1.5px solid #eee5d5;
             padding-bottom: 6px;
+            color: #1a1a1a;
         }
 
-        /* Rotations para sa Cutout Feel */
-        .rot-left { transform: rotate(-2.5deg); }
-        .rot-right { transform: rotate(2deg); }
-        .rot-slight-left { transform: rotate(-1deg); }
+        /* Center Column - Main Character Cutout */
+        .center-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* Floating Character Cutout sa Gitna */
-        .character-overlay {
-            grid-column: span 1;
-            text-align: center;
+        .character-box {
             position: relative;
-            z-index: 10;
+            width: 100%;
+            text-align: center;
         }
 
-        .character-img {
-            max-width: 100%;
+        .character-box img {
+            width: 100%;
+            max-width: 360px;
             height: auto;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.18));
             transition: transform 0.3s ease;
         }
 
-        .character-img:hover {
+        .character-box img:hover {
             transform: scale(1.02);
         }
 
-        /* Black Sticky Card */
-        .black-card {
+        /* Dark Chalkboard Card */
+        .dark-card {
             background: #1e1c1b;
             color: #fff;
+            border: none;
         }
-        .black-card .card-title {
+
+        .dark-card .card-title {
             color: #fff;
             border-bottom-color: #333;
         }
 
-        /* Custom List */
+        .dark-card .tape {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* List Styling */
         ul.scrap-list {
             list-style: none;
         }
+
         ul.scrap-list li {
             font-size: 0.9rem;
             margin-bottom: 8px;
             padding-left: 18px;
             position: relative;
+            line-height: 1.4;
         }
+
         ul.scrap-list li::before {
             content: "✦";
             position: absolute;
@@ -168,18 +180,65 @@
             color: var(--accent-gold);
         }
 
-        /* Bottom Floating Soundtrack Player */
+        /* Live Editable Text Styling */
+        [contenteditable="true"] {
+            outline: none;
+            transition: background 0.2s;
+        }
+
+        [contenteditable="true"]:hover, [contenteditable="true"]:focus {
+            background: rgba(197, 160, 89, 0.12);
+            border-radius: 3px;
+        }
+
+        /* Polaroid Photo Frame */
+        .polaroid-card {
+            background: #fff;
+            padding: 10px 10px 22px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-radius: 2px;
+            transform: rotate(-3deg);
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .polaroid-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 15;
+        }
+
+        .polaroid-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 1px;
+        }
+
+        .polaroid-caption {
+            font-family: var(--font-hand);
+            font-size: 1.4rem;
+            text-align: center;
+            margin-top: 8px;
+            color: #444;
+        }
+
+        /* Custom Card Rotations */
+        .rot-left { transform: rotate(-2deg); }
+        .rot-right { transform: rotate(2deg); }
+        .rot-slight { transform: rotate(-1deg); }
+
+        /* Floating Audio Player */
         .floating-player {
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(26, 26, 26, 0.92);
-            backdrop-filter: blur(8px);
+            background: rgba(20, 20, 20, 0.92);
+            backdrop-filter: blur(10px);
             color: #fff;
             padding: 10px 22px;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            border-radius: 40px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             gap: 15px;
@@ -194,16 +253,21 @@
             height: 36px;
             border-radius: 50%;
             cursor: pointer;
+            color: #000;
             font-size: 0.9rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.2s;
         }
 
-        /* Mobile Adjustments */
+        .play-btn:hover {
+            transform: scale(1.08);
+        }
+
         @media (max-width: 850px) {
             .collage-grid { grid-template-columns: 1fr; }
-            .character-overlay { order: -1; }
+            .center-col { order: -1; }
         }
     </style>
 </head>
@@ -214,73 +278,82 @@
         <!-- Header -->
         <header class="header">
             <h1 contenteditable="true">this is me</h1>
+            <br>
             <p class="quote" contenteditable="true">"I'm not lucky, I'm consistent."</p>
         </header>
 
-        <!-- Main Collage Canvas -->
+        <!-- Main Collage Grid -->
         <div class="collage-grid">
 
-            <!-- Left Column Cards -->
-            <div class="card rot-left">
-                <div class="tape"></div>
-                <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
-                <ul class="scrap-list">
-                    <li contenteditable="true">Dreamer with ambition</li>
-                    <li contenteditable="true">Creative soul</li>
-                    <li contenteditable="true">Loves deeply, feels everything</li>
-                    <li contenteditable="true">Soft heart, strong mind</li>
-                    <li contenteditable="true">Private, but passionate</li>
-                </ul>
+            <!-- LEFT COLUMN -->
+            <div class="left-col">
+                <div class="card rot-left">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
+                    <ul class="scrap-list">
+                        <li contenteditable="true">Dreamer with ambition</li>
+                        <li contenteditable="true">Creative soul & performer</li>
+                        <li contenteditable="true">Loves deeply, feels everything</li>
+                        <li contenteditable="true">Soft heart, strong mind</li>
+                        <li contenteditable="true">Private, but passionate</li>
+                    </ul>
+                </div>
+
+                <div class="card rot-right">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
+                    <ul class="scrap-list">
+                        <li contenteditable="true">Performing & Singing</li>
+                        <li contenteditable="true">Horror Movies & Thrillers</li>
+                        <li contenteditable="true">Journaling & Sketching</li>
+                        <li contenteditable="true">Coffee & Tea Breaks</li>
+                    </ul>
+                </div>
             </div>
 
-            <!-- Center Column: Character Illustration Cutout -->
-            <div class="character-overlay">
-                <!-- Siguraduhing "character.png" o "vision-board.png" ang file name -->
-                <img src="character.png" alt="Character Illustration" class="character-img" onerror="this.src='vision-board.png'">
+            <!-- CENTER COLUMN (CHARACTER & PHILOSOPHY) -->
+            <div class="center-col">
+                <div class="character-box">
+                    <img src="character.png" alt="Character Cutout" onerror="this.src='vision-board.png'">
+                </div>
+
+                <div class="card rot-slight" style="width: 100%; text-align: center; background: #faf6eb; margin-top: 15px;">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
+                    <p style="font-family: var(--font-hand); font-size: 1.6rem; line-height: 1.3;" contenteditable="true">
+                        "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
+                    </p>
+                </div>
             </div>
 
-            <!-- Right Column Cards -->
-            <div class="card rot-right">
-                <div class="tape"></div>
-                <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
-                <ul class="scrap-list">
-                    <li contenteditable="true">Resilient</li>
-                    <li contenteditable="true">Determined</li>
-                    <li contenteditable="true">Independent</li>
-                    <li contenteditable="true">Empathetic</li>
-                    <li contenteditable="true">Hardworking</li>
-                </ul>
-            </div>
+            <!-- RIGHT COLUMN -->
+            <div class="right-col">
+                <div class="card dark-card rot-right">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
+                    <ul class="scrap-list">
+                        <li contenteditable="true">Successful Freelance Career</li>
+                        <li contenteditable="true">Build My Business</li>
+                        <li contenteditable="true">Financial Freedom</li>
+                        <li contenteditable="true">Travel The World</li>
+                    </ul>
+                </div>
 
-            <!-- Second Row Cards -->
-            <div class="card black-card rot-slight-left">
-                <div class="tape" style="background: rgba(255,255,255,0.2);"></div>
-                <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
-                <ul class="scrap-list">
-                    <li contenteditable="true">Successful Freelance Career</li>
-                    <li contenteditable="true">Build My Business</li>
-                    <li contenteditable="true">Financial Freedom</li>
-                    <li contenteditable="true">Travel The World</li>
-                </ul>
-            </div>
+                <div class="card rot-left">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
+                    <ul class="scrap-list">
+                        <li contenteditable="true">Resilient & Determined</li>
+                        <li contenteditable="true">Independent & Adaptable</li>
+                        <li contenteditable="true">Empathetic & Loyal</li>
+                    </ul>
+                </div>
 
-            <div class="card rot-right">
-                <div class="tape"></div>
-                <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
-                <ul class="scrap-list">
-                    <li contenteditable="true">Performing & Singing</li>
-                    <li contenteditable="true">Horror Movies</li>
-                    <li contenteditable="true">TikTok After Performances</li>
-                    <li contenteditable="true">Coffee & Journaling</li>
-                </ul>
-            </div>
-
-            <div class="card rot-left" style="background: #faf6eb;">
-                <div class="tape"></div>
-                <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
-                <p style="font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.3;" contenteditable="true">
-                    "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
-                </p>
+                <!-- Polaroid Photo Card -->
+                <div class="polaroid-card">
+                    <img src="vision-board.png" alt="Travel Aesthetic" class="polaroid-img">
+                    <div class="polaroid-caption" contenteditable="true">world travel ✈️</div>
+                </div>
             </div>
 
         </div>
@@ -288,8 +361,8 @@
 
     <!-- Floating Audio Player -->
     <div class="floating-player">
-        <div style="font-size: 0.8rem;">
-            <p style="font-weight: 600;">🎵 Vision Board Vibe</p>
+        <div style="font-size: 0.85rem;">
+            <p style="font-weight: 600;">🎵 Vision Board Soundtrack</p>
             <p style="color: var(--accent-gold); font-size: 0.75rem;">Acoustic Live Session</p>
         </div>
         <audio id="bgMusic" src="song.mp3" loop></audio>
@@ -309,6 +382,5 @@
             }
         }
     </script>
-
 </body>
 </html>
