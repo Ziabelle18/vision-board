@@ -88,7 +88,7 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* TOP CONTROLS BAR (DESKTOP DEFAULT) */
+        /* TOP CONTROLS BAR (DESKTOP) */
         .top-controls {
             position: fixed;
             top: 15px;
@@ -235,7 +235,7 @@
         /* HEADER */
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             margin-top: 25px;
         }
 
@@ -255,11 +255,11 @@
             margin-top: 5px;
         }
 
-        /* DESKTOP GRID LAYOUT */
+        /* STRICT DESKTOP 3-COLUMN GRID LAYOUT */
         .main-layout {
             display: grid;
-            grid-template-columns: 310px 1fr 310px;
-            gap: 14px;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 18px;
             align-items: start;
         }
 
@@ -363,11 +363,12 @@
             color: var(--accent-gold);
         }
 
-        /* CENTER COLUMN */
+        /* CENTER COLUMN (HERO CHARACTER & PHILOSOPHY) */
         .col-center {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
 
         .hero-wrapper {
@@ -378,10 +379,9 @@
         }
 
         .hero-girl {
-            width: 135%;
-            margin-left: -17.5%;
+            width: 100%;
             height: auto;
-            max-height: 640px;
+            max-height: 520px;
             object-fit: contain;
             filter: drop-shadow(0 15px 30px rgba(0,0,0,0.22));
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -404,7 +404,7 @@
         .center-quote-card {
             width: 100%;
             text-align: center;
-            margin-top: -20px;
+            margin-top: 10px;
             z-index: 5;
         }
 
@@ -525,13 +525,12 @@
             color: var(--text-color);
         }
 
-        /* MOBILE SPECIFIC OVERRIDES & FIXED NO-OVERLAP ORDERING */
+        /* MOBILE SPECIFIC OVERRIDES */
         @media (max-width: 850px) {
             body {
                 padding-top: 10px;
             }
 
-            /* Un-fix Top Controls on Mobile so it never overlaps content */
             .top-controls {
                 position: relative;
                 top: 0;
@@ -559,31 +558,32 @@
                 font-size: 4.2rem;
             }
 
-            /* Convert Grid Layout to Flex Column */
+            /* Single Column Layout on Mobile */
             .main-layout {
                 display: flex;
                 flex-direction: column;
                 gap: 18px;
             }
 
-            /* Display column contents linearly */
             .column {
-                display: flex;
-                flex-direction: column;
-                gap: 18px;
-                width: 100%;
+                display: contents; /* Allows child cards to be re-ordered individually */
             }
 
             .hero-girl {
                 width: 100%;
-                margin-left: 0;
                 max-height: 480px;
             }
 
-            /* Re-order elements so Hero Girl is First */
-            .col-center { order: 1; }
-            .col-left   { order: 2; }
-            .col-right  { order: 3; }
+            /* MOBILE CARD STACKING SEQUENCE */
+            #card-center-col { order: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
+            #card-calendar   { order: 2; width: 100%; }
+            #card-todo       { order: 3; width: 100%; }
+            #card-about      { order: 4; width: 100%; }
+            #card-things     { order: 5; width: 100%; }
+            #card-healing    { order: 6; width: 100%; }
+            #card-strengths  { order: 7; width: 100%; }
+            #card-goals      { order: 8; width: 100%; }
+            #card-fashion    { order: 9; width: 100%; }
         }
     </style>
 </head>
@@ -591,10 +591,9 @@
 
     <div id="weatherScreenOverlay"></div>
 
-    <!-- Background Audio Element -->
+    <!-- Audio Element -->
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
 
-    <!-- TOP CONTROLS (Static Flow on Mobile) -->
     <div class="top-controls">
         <div class="vinyl-container" onclick="toggleMusic()">
             <div class="vinyl-record" id="vinylDisk"></div>
@@ -627,35 +626,19 @@
 
         <div class="main-layout">
 
-            <!-- CENTER COLUMN (FIRST ON MOBILE) -->
-            <div class="column col-center">
-                <div class="hero-wrapper" onclick="triggerCharacterBounce()">
-                    <img src="girl.png" alt="Character" class="hero-girl" id="heroImg" onerror="this.onerror=null; this.src='vision-board.png';">
-                </div>
-
-                <!-- 1. Hero Quote (Cream White 🤍) -->
-                <div class="card card-white center-quote-card" onclick="handleCardClick(this)">
-                    <div class="tape"></div>
-                    <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
-                    <p class="handwritten-quote" contenteditable="true">
-                        "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
-                    </p>
-                </div>
-            </div>
-
-            <!-- LEFT COLUMN -->
+            <!-- KALIWANG COLUMN (LEFT) -->
             <div class="column col-left">
                 
-                <!-- 2. Today's Calendar (Cream White 🤍) -->
-                <div class="card card-white rot-left">
+                <!-- Today's Calendar (Cream White 🤍) -->
+                <div class="card card-white rot-left" id="card-calendar">
                     <div class="tape"></div>
                     <div class="card-title">📅 TODAY'S CALENDAR</div>
                     <div class="calendar-header" id="calMonthYear">July 2026</div>
                     <div class="calendar-grid" id="calendarDays"></div>
                 </div>
 
-                <!-- 4. About Me (Soft Black 🖤) -->
-                <div class="card card-black rot-right" onclick="handleCardClick(this)">
+                <!-- About Me (Soft Black 🖤) -->
+                <div class="card card-black rot-right" id="card-about" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
                     <ul class="scrap-list">
@@ -667,8 +650,8 @@
                     </ul>
                 </div>
 
-                <!-- 5. Things I Love (Cream White 🤍) -->
-                <div class="card card-white rot-right" onclick="handleCardClick(this)">
+                <!-- Things I Love (Cream White 🤍) -->
+                <div class="card card-white rot-right" id="card-things" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
                     <ul class="scrap-list">
@@ -679,8 +662,8 @@
                     </ul>
                 </div>
 
-                <!-- 6. Healing Journey (Pastel Pink 🌸) -->
-                <div class="card card-pink rot-left" onclick="handleCardClick(this)">
+                <!-- Healing Journey (Pastel Pink 🌸) -->
+                <div class="card card-pink rot-left" id="card-healing" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">🌸 HEALING JOURNEY</div>
                     <ul class="scrap-list">
@@ -691,11 +674,27 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN -->
+            <!-- GITNANG COLUMN (CENTER - HERO GIRL & PHILOSOPHY) -->
+            <div class="column col-center" id="card-center-col">
+                <div class="hero-wrapper" onclick="triggerCharacterBounce()">
+                    <img src="girl.png" alt="Character" class="hero-girl" id="heroImg" onerror="this.onerror=null; this.src='vision-board.png';">
+                </div>
+
+                <!-- Philosophy (Cream White 🤍) -->
+                <div class="card card-white center-quote-card" onclick="handleCardClick(this)">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
+                    <p class="handwritten-quote" contenteditable="true">
+                        "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
+                    </p>
+                </div>
+            </div>
+
+            <!-- KANANG COLUMN (RIGHT) -->
             <div class="column col-right">
                 
-                <!-- 3. Daily To-Do List (Pastel Pink 🌸) -->
-                <div class="card card-pink rot-right">
+                <!-- Daily To-Do List (Pastel Pink 🌸) -->
+                <div class="card card-pink rot-right" id="card-todo">
                     <div class="tape"></div>
                     <div class="card-title">✍️ DAILY TO-DO LIST</div>
                     <div class="todo-input-box" onclick="event.stopPropagation()">
@@ -705,8 +704,8 @@
                     <div id="todoContainer" onclick="event.stopPropagation()"></div>
                 </div>
 
-                <!-- 7. Strengths (Soft Black 🖤) -->
-                <div class="card card-black rot-left" onclick="handleCardClick(this)">
+                <!-- Strengths (Soft Black 🖤) -->
+                <div class="card card-black rot-left" id="card-strengths" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
                     <ul class="scrap-list">
@@ -716,8 +715,8 @@
                     </ul>
                 </div>
 
-                <!-- 8. Future Goals (Cream White 🤍) -->
-                <div class="card card-white rot-right" onclick="handleCardClick(this)">
+                <!-- Future Goals (Cream White 🤍) -->
+                <div class="card card-white rot-right" id="card-goals" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
                     <ul class="scrap-list">
@@ -728,8 +727,8 @@
                     </ul>
                 </div>
 
-                <!-- 9. Fashion Style (Pastel Pink 🌸) -->
-                <div class="card card-pink rot-left" onclick="handleCardClick(this)">
+                <!-- Fashion Style (Pastel Pink 🌸) -->
+                <div class="card card-pink rot-left" id="card-fashion" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">👠 FASHION STYLE</div>
                     <ul class="scrap-list">
