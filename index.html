@@ -239,14 +239,14 @@
             z-index: 2;
         }
 
-        /* WEATHER STICKER */
+        /* REFINED COMPACT WEATHER STICKER */
         .weather-floating-sticker {
             position: absolute;
             top: 10px; left: 10px;
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: center; gap: 6px;
             background: var(--card-white);
-            padding: 6px 14px;
-            border-radius: 30px;
+            padding: 3px 10px;
+            border-radius: 20px;
             border: 1px dashed var(--accent-gold);
             cursor: pointer;
             z-index: 20;
@@ -255,11 +255,11 @@
         }
 
         .weather-floating-sticker:hover { transform: scale(1.05) rotate(-2deg); }
-        .weather-temp { font-size: 1.3rem; font-weight: 700; font-family: var(--font-title); color: var(--accent-gold); }
-        .weather-info { display: flex; flex-direction: column; }
-        .weather-city { font-size: 0.75rem; font-weight: 600; }
-        .weather-desc { font-size: 0.68rem; font-style: italic; opacity: 0.8; }
-        .weather-icon-live { font-size: 1.4rem; color: var(--accent-gold); }
+        .weather-temp { font-size: 0.95rem; font-weight: 700; font-family: var(--font-title); color: var(--accent-gold); }
+        .weather-info { display: flex; flex-direction: column; line-height: 1.1; }
+        .weather-city { font-size: 0.65rem; font-weight: 600; }
+        .weather-desc { font-size: 0.58rem; font-style: italic; opacity: 0.8; }
+        .weather-icon-live { font-size: 1rem; color: var(--accent-gold); }
 
         /* HEADER */
         .header {
@@ -498,10 +498,16 @@
             overflow: hidden; left: -9999px;
         }
 
-        /* MOBILE OVERRIDES */
+        /* MOBILE OVERRIDES (WEATHER STICKER SHIFTED TO UPPER LEFT) */
         @media (max-width: 850px) {
-            .top-controls { position: relative; top: 0; right: 0; left: 0; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
-            .weather-floating-sticker { position: relative; top: 0; left: 0; margin: 0 auto 15px auto; width: fit-content; }
+            .top-controls { position: relative; top: 0; right: 0; left: 0; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+            .weather-floating-sticker { 
+                position: absolute; 
+                top: 15px; 
+                left: 10px; 
+                margin: 0; 
+                transform: scale(0.9);
+            }
             .header h1 { font-size: 3.4rem; }
             .header .quote { font-size: 1.35rem; }
 
@@ -554,7 +560,7 @@
 
     <div class="board-container">
 
-        <!-- WEATHER STICKER -->
+        <!-- MINI REFINED WEATHER STICKER -->
         <div class="weather-floating-sticker" onclick="triggerWeatherMagic()">
             <div class="weather-icon-live" id="weatherIcon">✦</div>
             <div class="weather-info">
@@ -783,7 +789,7 @@
         // Load YouTube IFrame API Dynamically
         let ytPlayer = null;
         let isYtReady = false;
-        let activeMusicType = 'mp3'; // 'mp3' or 'youtube'
+        let activeMusicType = 'mp3';
 
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -815,7 +821,6 @@
             }
         }
 
-        // Helper to extract YouTube Video ID from any link
         function getYouTubeId(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
