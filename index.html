@@ -156,7 +156,8 @@
             align-items: center;
             gap: 6px;
             z-index: 100;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .control-btn {
@@ -231,6 +232,28 @@
             transition: transform 0.2s;
         }
 
+        /* REFINED WEATHER STICKER PLACED BELOW MUSIC PLAYER */
+        .weather-floating-sticker {
+            display: flex; 
+            align-items: center; 
+            gap: 6px;
+            background: var(--card-white);
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px dashed var(--accent-gold);
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .weather-floating-sticker:hover { transform: scale(1.05) rotate(-2deg); }
+        .weather-temp { font-size: 0.88rem; font-weight: 700; font-family: var(--font-title); color: var(--accent-gold); }
+        .weather-info { display: flex; flex-direction: column; line-height: 1.1; }
+        .weather-city { font-size: 0.62rem; font-weight: 600; }
+        .weather-desc { font-size: 0.55rem; font-style: italic; opacity: 0.8; }
+        .weather-icon-live { font-size: 0.9rem; color: var(--accent-gold); }
+
         .board-container {
             max-width: 1200px;
             width: 100%;
@@ -238,28 +261,6 @@
             position: relative;
             z-index: 2;
         }
-
-        /* REFINED COMPACT WEATHER STICKER */
-        .weather-floating-sticker {
-            position: absolute;
-            top: 10px; left: 10px;
-            display: flex; align-items: center; gap: 6px;
-            background: var(--card-white);
-            padding: 3px 10px;
-            border-radius: 20px;
-            border: 1px dashed var(--accent-gold);
-            cursor: pointer;
-            z-index: 20;
-            box-shadow: var(--shadow-soft);
-            transition: transform 0.2s ease;
-        }
-
-        .weather-floating-sticker:hover { transform: scale(1.05) rotate(-2deg); }
-        .weather-temp { font-size: 0.95rem; font-weight: 700; font-family: var(--font-title); color: var(--accent-gold); }
-        .weather-info { display: flex; flex-direction: column; line-height: 1.1; }
-        .weather-city { font-size: 0.65rem; font-weight: 600; }
-        .weather-desc { font-size: 0.58rem; font-style: italic; opacity: 0.8; }
-        .weather-icon-live { font-size: 1rem; color: var(--accent-gold); }
 
         /* HEADER */
         .header {
@@ -498,26 +499,18 @@
             overflow: hidden; left: -9999px;
         }
 
-        /* MOBILE OVERRIDES (SAFE INLINE LAYOUT TO PREVENT OVERLAPPING) */
+        /* MOBILE OVERRIDES */
         @media (max-width: 850px) {
             .top-controls { 
                 position: relative; 
                 top: 0; right: 0; left: 0; 
                 justify-content: center; 
-                margin-bottom: 8px; 
+                margin-bottom: 12px; 
                 flex-wrap: wrap; 
-            }
-            
-            .weather-floating-sticker { 
-                position: relative; 
-                top: 0; left: 0; 
-                margin: 0 auto 12px auto; 
-                width: fit-content;
-                transform: scale(0.95);
             }
 
             .header {
-                margin-top: 5px;
+                margin-top: 15px;
                 margin-bottom: 20px;
             }
 
@@ -553,17 +546,29 @@
 
     <input type="file" id="heroImageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
 
-    <!-- TOP CONTROLS WITH DARK BUTTON ELEVATED SIDE-BY-SIDE -->
+    <!-- TOP CONTROLS WITH WEATHER STICKER INTEGRATED DIRECTLY BELOW MUSIC PLAYER -->
     <div class="top-controls">
-        <div class="vinyl-wrapper">
-            <div class="vinyl-container" onclick="toggleMusic()">
-                <div class="vinyl-record" id="vinylDisk"></div>
-                <div class="vinyl-info">
-                    <span id="musicStatus">Play Music <span style="color:var(--accent-gold)">✦</span></span>
-                    <span class="vinyl-sub" id="musicSub">Cozy Lofi Vibes</span>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="vinyl-wrapper">
+                <div class="vinyl-container" onclick="toggleMusic()">
+                    <div class="vinyl-record" id="vinylDisk"></div>
+                    <div class="vinyl-info">
+                        <span id="musicStatus">Play Music <span style="color:var(--accent-gold)">✦</span></span>
+                        <span class="vinyl-sub" id="musicSub">Cozy Lofi Vibes</span>
+                    </div>
+                </div>
+                <button class="music-settings-btn" onclick="changeMusicUrl()" title="Change Music URL">✦</button>
+            </div>
+
+            <!-- WEATHER STICKER LOCATED NEATLY BELOW MUSIC PLAYER -->
+            <div class="weather-floating-sticker" onclick="triggerWeatherMagic()">
+                <div class="weather-icon-live" id="weatherIcon">✦</div>
+                <div class="weather-info">
+                    <div class="weather-temp" id="weatherTemp">--°C</div>
+                    <div class="weather-city" id="weatherCity">Detecting...</div>
+                    <div class="weather-desc" id="weatherDesc">Local Sky</div>
                 </div>
             </div>
-            <button class="music-settings-btn" onclick="changeMusicUrl()" title="Change Music URL">✦</button>
         </div>
 
         <button class="control-btn" onclick="openThemeModal()"><span class="gold-icon">✦</span> Theme</button>
@@ -572,16 +577,6 @@
     </div>
 
     <div class="board-container">
-
-        <!-- MINI REFINED WEATHER STICKER (SAFE NON-OVERLAPPING INLINE FLOW) -->
-        <div class="weather-floating-sticker" onclick="triggerWeatherMagic()">
-            <div class="weather-icon-live" id="weatherIcon">✦</div>
-            <div class="weather-info">
-                <div class="weather-temp" id="weatherTemp">--°C</div>
-                <div class="weather-city" id="weatherCity">Detecting...</div>
-                <div class="weather-desc" id="weatherDesc">Local Sky</div>
-            </div>
-        </div>
 
         <header class="header">
             <h1>my vision board <span class="edit-btn" onclick="enableTextEdit(this)">✦</span></h1>
