@@ -12,17 +12,17 @@
 
     <style>
         :root {
-            --bg-color: #f5f0e6;
+            --bg-color: #fceef2; /* Soft Pastel Pink Background */
             --card-white: #fffdfb;
-            --card-pink: #fde8ed;
+            --card-pink: #f8d7e0;
             --card-black: #1e1c1b;
             --text-color: #2b2b2b;
             --accent-gold: #c5a059;
             --font-title: 'Playfair Display', serif;
             --font-hand: 'Caveat', cursive;
             --font-body: 'Montserrat', sans-serif;
-            --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.06);
-            --tape-color: rgba(215, 203, 178, 0.75);
+            --shadow-soft: 0 10px 25px rgba(220, 150, 170, 0.15);
+            --tape-color: rgba(230, 200, 210, 0.75);
         }
 
         body.dark-mode {
@@ -48,10 +48,46 @@
             color: var(--text-color);
             padding: 20px 10px 80px 10px;
             transition: background-color 0.4s ease, color 0.4s ease, filter 0.5s ease;
-            background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 0);
-            background-size: 20px 20px;
+            background-image: radial-gradient(rgba(225, 175, 190, 0.25) 1px, transparent 0);
+            background-size: 24px 24px;
             position: relative;
             overflow-x: hidden;
+        }
+
+        /* BACKGROUND AESTHETIC BLOBS & SPARKLES */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.55;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatBlob 12s ease-in-out infinite alternate;
+        }
+
+        .blob-1 {
+            width: 380px; height: 380px;
+            background: #f7cad0;
+            top: -50px; left: -80px;
+        }
+
+        .blob-2 {
+            width: 420px; height: 420px;
+            background: #fae1dd;
+            bottom: 100px; right: -100px;
+            animation-delay: -4s;
+        }
+
+        .blob-3 {
+            width: 320px; height: 320px;
+            background: #f0efeb;
+            top: 40%; left: 35%;
+            animation-delay: -7s;
+        }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 40px) scale(1.08); }
         }
 
         /* ATMOSPHERIC SCREEN EFFECTS */
@@ -61,7 +97,7 @@
 
         @keyframes sunFlash {
             0% { filter: brightness(1); }
-            30% { filter: brightness(1.18) sepia(0.12); }
+            30% { filter: brightness(1.15) sepia(0.08); }
             100% { filter: brightness(1); }
         }
 
@@ -88,7 +124,7 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* TOP CONTROLS BAR (DESKTOP) */
+        /* TOP CONTROLS BAR */
         .top-controls {
             position: fixed;
             top: 15px;
@@ -181,6 +217,7 @@
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
+            z-index: 2;
         }
 
         /* FLOATING WEATHER STICKER */
@@ -191,7 +228,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(8px);
             padding: 6px 14px;
             border-radius: 30px;
@@ -255,7 +292,7 @@
             margin-top: 5px;
         }
 
-        /* STRICT DESKTOP 3-COLUMN GRID LAYOUT */
+        /* DESKTOP 3-COLUMN GRID LAYOUT */
         .main-layout {
             display: grid;
             grid-template-columns: 1fr 1.2fr 1fr;
@@ -275,7 +312,7 @@
             border-radius: 6px;
             box-shadow: var(--shadow-soft);
             position: relative;
-            border: 1px solid rgba(0,0,0,0.04);
+            border: 1px solid rgba(220, 150, 170, 0.15);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.4s;
             cursor: pointer;
         }
@@ -288,7 +325,7 @@
         .card-pink {
             background: var(--card-pink);
             color: var(--text-color);
-            border-color: rgba(220, 150, 170, 0.2);
+            border-color: rgba(220, 150, 170, 0.25);
         }
 
         .card-black {
@@ -363,7 +400,7 @@
             color: var(--accent-gold);
         }
 
-        /* CENTER COLUMN (HERO CHARACTER & PHILOSOPHY) */
+        /* CENTER COLUMN */
         .col-center {
             display: flex;
             flex-direction: column;
@@ -383,7 +420,7 @@
             height: auto;
             max-height: 520px;
             object-fit: contain;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.22));
+            filter: drop-shadow(0 15px 30px rgba(180, 120, 140, 0.25));
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -566,7 +603,7 @@
             }
 
             .column {
-                display: contents; /* Allows child cards to be re-ordered individually */
+                display: contents;
             }
 
             .hero-girl {
@@ -588,6 +625,11 @@
     </style>
 </head>
 <body>
+
+    <!-- AESTHETIC BACKGROUND BLOBS -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
 
     <div id="weatherScreenOverlay"></div>
 
