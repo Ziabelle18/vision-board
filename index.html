@@ -48,7 +48,7 @@
             --tape-color: rgba(200, 225, 235, 0.75);
         }
 
-        /* NEW: AESTHETIC SILVER GRAY THEME */
+        /* AESTHETIC SILVER GRAY THEME */
         body.theme-silver-gray {
             --bg-color: #f0f2f5;
             --card-white: #ffffff;
@@ -490,6 +490,14 @@
             background: var(--bg-color); color: var(--text-color); font-size: 0.85rem; margin-bottom: 10px;
         }
 
+        /* HIDDEN YOUTUBE IFRAME CONTAINER */
+        #ytPlayerContainer {
+            position: absolute;
+            width: 1px; height: 1px;
+            opacity: 0; pointer-events: none;
+            overflow: hidden; left: -9999px;
+        }
+
         /* MOBILE OVERRIDES */
         @media (max-width: 850px) {
             .top-controls { position: relative; top: 0; right: 0; left: 0; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
@@ -520,7 +528,9 @@
 
     <div id="weatherScreenOverlay"></div>
 
+    <!-- AUDIO PLAYER & HIDDEN YOUTUBE CONTAINER -->
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
+    <div id="ytPlayerContainer"></div>
 
     <input type="file" id="heroImageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
 
@@ -770,6 +780,48 @@
     </div>
 
     <script>
+        // Load YouTube IFrame API Dynamically
+        let ytPlayer = null;
+        let isYtReady = false;
+        let activeMusicType = 'mp3'; // 'mp3' or 'youtube'
+
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('ytPlayerContainer', {
+                height: '0',
+                width: '0',
+                videoId: '',
+                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1 },
+                events: {
+                    'onReady': () => { isYtReady = true; },
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerStateChange(event) {
+            const disk = document.getElementById('vinylDisk');
+            const status = document.getElementById('musicStatus');
+            if (event.data === YT.PlayerState.PLAYING) {
+                disk.classList.add('spinning');
+                status.innerHTML = 'Playing <span style="color:var(--accent-gold)">✦</span>';
+            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                disk.classList.remove('spinning');
+                status.innerHTML = 'Play Music <span style="color:var(--accent-gold)">✦</span>';
+            }
+        }
+
+        // Helper to extract YouTube Video ID from any link
+        function getYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
         // 1. Card Click & Popup with Wiggle Animation
         function handleCardClick(card, event) {
             if (card.dataset.editing === "true") return;
@@ -784,9 +836,8 @@
             modalBody.innerHTML = clone.innerHTML;
             modalOverlay.style.display = 'flex';
 
-            // Add wiggle effect to modal on opening
             modalCardBox.classList.remove('wiggle-effect');
-            void modalCardBox.offsetWidth; // trigger reflow
+            void modalCardBox.offsetWidth;
             modalCardBox.classList.add('wiggle-effect');
         }
 
@@ -896,35 +947,67 @@
             document.getElementById('bodyFontSelect').value = savedBodyFont;
         }
 
-        // 5. Vinyl Music Player
-        const savedSong = localStorage.getItem('dreamCanvasCustomSong');
-        if (savedSong) {
-            document.getElementById('bgMusic').src = savedSong;
-            document.getElementById('musicSub').innerText = "Custom Song ✨";
+        // 5. Dual Music Player (YouTube & Direct MP3)
+        const savedMusicUrl = localStorage.getItem('dreamCanvasCustomSong');
+        if (savedMusicUrl) {
+            const ytId = getYouTubeId(savedMusicUrl);
+            if (ytId) {
+                activeMusicType = 'youtube';
+                document.getElementById('musicSub').innerText = "YouTube Track ✨";
+            } else {
+                activeMusicType = 'mp3';
+                document.getElementById('bgMusic').src = savedMusicUrl;
+                document.getElementById('musicSub').innerText = "Custom Song ✨";
+            }
         }
 
         function toggleMusic() {
-            const audio = document.getElementById('bgMusic');
             const disk = document.getElementById('vinylDisk');
             const status = document.getElementById('musicStatus');
 
-            if (audio.paused) {
-                audio.play(); disk.classList.add('spinning'); status.innerHTML = 'Playing <span style="color:var(--accent-gold)">✦</span>';
+            if (activeMusicType === 'youtube' && ytPlayer && isYtReady) {
+                const state = ytPlayer.getPlayerState();
+                if (state === YT.PlayerState.PLAYING) {
+                    ytPlayer.pauseVideo();
+                } else {
+                    ytPlayer.playVideo();
+                }
             } else {
-                audio.pause(); disk.classList.remove('spinning'); status.innerHTML = 'Play Music <span style="color:var(--accent-gold)">✦</span>';
+                const audio = document.getElementById('bgMusic');
+                if (audio.paused) {
+                    audio.play(); disk.classList.add('spinning'); status.innerHTML = 'Playing <span style="color:var(--accent-gold)">✦</span>';
+                } else {
+                    audio.pause(); disk.classList.remove('spinning'); status.innerHTML = 'Play Music <span style="color:var(--accent-gold)">✦</span>';
+                }
             }
         }
 
         function changeMusicUrl() {
-            const newUrl = prompt("Enter custom MP3 audio URL for the vinyl player:", document.getElementById('bgMusic').src);
+            const newUrl = prompt("Enter MP3 URL or YouTube video link for the vinyl player:", localStorage.getItem('dreamCanvasCustomSong') || "");
             if (newUrl && newUrl.trim() !== '') {
+                const trimmed = newUrl.trim();
+                localStorage.setItem('dreamCanvasCustomSong', trimmed);
+
+                const ytId = getYouTubeId(trimmed);
                 const audio = document.getElementById('bgMusic');
-                audio.src = newUrl.trim();
-                localStorage.setItem('dreamCanvasCustomSong', newUrl.trim());
-                document.getElementById('musicSub').innerText = "Custom Song ✨";
-                audio.play();
-                document.getElementById('vinylDisk').classList.add('spinning');
-                document.getElementById('musicStatus').innerHTML = 'Playing <span style="color:var(--accent-gold)">✦</span>';
+
+                if (ytId) {
+                    audio.pause();
+                    activeMusicType = 'youtube';
+                    document.getElementById('musicSub').innerText = "YouTube Track ✨";
+                    if (ytPlayer && isYtReady) {
+                        ytPlayer.loadVideoById(ytId);
+                        ytPlayer.playVideo();
+                    }
+                } else {
+                    if (ytPlayer && isYtReady) { ytPlayer.stopVideo(); }
+                    activeMusicType = 'mp3';
+                    audio.src = trimmed;
+                    document.getElementById('musicSub').innerText = "Custom Song ✨";
+                    audio.play();
+                    document.getElementById('vinylDisk').classList.add('spinning');
+                    document.getElementById('musicStatus').innerHTML = 'Playing <span style="color:var(--accent-gold)">✦</span>';
+                }
             }
         }
 
