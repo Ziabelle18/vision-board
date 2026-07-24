@@ -3,26 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DreamCanvas - Vision Board & Productivity</title>
+    <title>My Personal Vision Board</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel:wght@600;700&family=Fira+Code:wght@400;500&family=Montserrat:wght@400;500;600&family=Pacifico&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-color: #fceef2;
+            /* DEFAULT THEME: CREAM WHITE */
+            --bg-color: #fdfbf7;
             --card-white: #fffdfb;
-            --card-pink: #f8d7e0;
+            --card-pink: #f4eee5;
             --card-black: #1e1c1b;
             --text-color: #2b2b2b;
             --accent-gold: #c5a059;
+            --font-main-title: 'Caveat', cursive;
             --font-title: 'Playfair Display', serif;
-            --font-hand: 'Caveat', cursive;
             --font-body: 'Montserrat', sans-serif;
+            --shadow-soft: 0 8px 20px rgba(180, 170, 150, 0.12);
+            --tape-color: rgba(230, 225, 210, 0.75);
+        }
+
+        /* OTHER THEMES PRESETS */
+        body.theme-pastel-sage {
+            --bg-color: #eaf0ed;
+            --card-pink: #c8d6af;
+            --shadow-soft: 0 8px 20px rgba(150, 170, 150, 0.15);
+            --tape-color: rgba(200, 215, 200, 0.75);
+        }
+
+        body.theme-pastel-pink {
+            --bg-color: #fceef2;
+            --card-pink: #f8d7e0;
             --shadow-soft: 0 8px 20px rgba(220, 150, 170, 0.12);
             --tape-color: rgba(230, 200, 210, 0.75);
+        }
+
+        body.theme-pastel-blue {
+            --bg-color: #eaf4f8;
+            --card-pink: #d0e8f2;
+            --shadow-soft: 0 8px 20px rgba(150, 190, 210, 0.15);
+            --tape-color: rgba(200, 225, 235, 0.75);
+        }
+
+        /* NEW: AESTHETIC SILVER GRAY THEME */
+        body.theme-silver-gray {
+            --bg-color: #f0f2f5;
+            --card-white: #ffffff;
+            --card-pink: #e2e8f0;
+            --card-black: #2d3748;
+            --text-color: #2d3748;
+            --accent-gold: #94a3b8;
+            --shadow-soft: 0 8px 20px rgba(148, 163, 184, 0.18);
+            --tape-color: rgba(203, 213, 225, 0.75);
+        }
+
+        body.theme-pastel-beige {
+            --bg-color: #f7f0e6;
+            --card-pink: #ebdccb;
+            --shadow-soft: 0 8px 20px rgba(190, 170, 150, 0.15);
+            --tape-color: rgba(225, 210, 195, 0.75);
         }
 
         body.dark-mode {
@@ -40,7 +82,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            /* REMOVE BLUE TAP HIGHLIGHT & OUTLINES */
             -webkit-tap-highlight-color: transparent !important;
             outline: none !important;
         }
@@ -58,7 +99,7 @@
             color: var(--text-color);
             padding: 20px 10px 80px 10px;
             transition: background-color 0.3s ease, color 0.3s ease;
-            background-image: radial-gradient(rgba(225, 175, 190, 0.25) 1px, transparent 0);
+            background-image: radial-gradient(rgba(200, 200, 180, 0.2) 1px, transparent 0);
             background-size: 24px 24px;
             -webkit-overflow-scrolling: touch;
         }
@@ -67,27 +108,16 @@
             position: absolute;
             border-radius: 50%;
             filter: blur(50px);
-            opacity: 0.45;
+            opacity: 0.35;
             pointer-events: none;
             z-index: 0;
         }
 
-        .blob-1 {
-            width: 300px; height: 300px;
-            background: #f7cad0;
-            top: -50px; left: -80px;
-        }
-
-        .blob-2 {
-            width: 320px; height: 320px;
-            background: #fae1dd;
-            bottom: 100px; right: -100px;
-        }
+        .blob-1 { width: 300px; height: 300px; background: #ebdccb; top: -50px; left: -80px; }
+        .blob-2 { width: 320px; height: 320px; background: #fae1dd; bottom: 100px; right: -100px; }
 
         /* ATMOSPHERIC SCREEN EFFECTS */
-        body.sunny-glow {
-            animation: sunFlash 1.2s ease-out;
-        }
+        body.sunny-glow { animation: sunFlash 1.2s ease-out; }
 
         @keyframes sunFlash {
             0% { filter: brightness(1); }
@@ -107,9 +137,8 @@
 
         .rain-drop {
             position: absolute;
-            background: linear-gradient(transparent, rgba(135, 206, 235, 0.7));
-            width: 2px;
-            height: 25px;
+            background: linear-gradient(transparent, rgba(197, 160, 89, 0.6));
+            width: 2px; height: 25px;
             animation: fall 0.8s linear infinite;
         }
 
@@ -125,26 +154,26 @@
             right: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             z-index: 100;
+            flex-wrap: nowrap;
         }
 
         .control-btn {
             background: var(--card-white);
             color: var(--text-color);
             border: 1px solid var(--accent-gold);
-            padding: 7px 12px;
+            padding: 6px 11px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             box-shadow: var(--shadow-soft);
             transition: transform 0.2s;
             white-space: nowrap;
         }
 
-        .control-btn:hover {
-            transform: scale(1.05);
-        }
+        .control-btn span.gold-icon { color: var(--accent-gold); font-weight: bold; margin-right: 3px; }
+        .control-btn:hover { transform: scale(1.05); }
 
         /* VINYL PLAYER */
         .vinyl-wrapper {
@@ -167,69 +196,39 @@
             white-space: nowrap;
         }
 
-        .vinyl-container:hover {
-            transform: scale(1.05);
-        }
+        .vinyl-container:hover { transform: scale(1.05); }
 
         .vinyl-record {
-            width: 28px;
-            height: 28px;
+            width: 24px; height: 24px;
             border-radius: 50%;
             background: radial-gradient(circle, #333 20%, #111 25%, #111 60%, #222 62%, #111 100%);
             border: 2px solid var(--accent-gold);
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
 
         .vinyl-record::after {
-            content: "";
-            width: 6px;
-            height: 6px;
-            background: var(--accent-gold);
-            border-radius: 50%;
+            content: ""; width: 5px; height: 5px;
+            background: var(--accent-gold); border-radius: 50%;
         }
 
-        .vinyl-record.spinning {
-            animation: spinVinyl 3s linear infinite;
-        }
+        .vinyl-record.spinning { animation: spinVinyl 3s linear infinite; }
+        @keyframes spinVinyl { 100% { transform: rotate(360deg); } }
 
-        @keyframes spinVinyl {
-            100% { transform: rotate(360deg); }
-        }
-
-        .vinyl-info {
-            font-size: 0.72rem;
-            font-weight: 600;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .vinyl-sub {
-            font-size: 0.6rem;
-            opacity: 0.7;
-            font-style: italic;
-        }
+        .vinyl-info { font-size: 0.7rem; font-weight: 600; display: flex; flex-direction: column; }
+        .vinyl-sub { font-size: 0.58rem; opacity: 0.7; font-style: italic; }
 
         .music-settings-btn {
             background: var(--card-white);
             border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
             border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 0.8rem;
+            width: 24px; height: 24px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 0.72rem;
             box-shadow: var(--shadow-soft);
             transition: transform 0.2s;
-        }
-
-        .music-settings-btn:hover {
-            transform: rotate(90deg) scale(1.1);
         }
 
         .board-container {
@@ -243,11 +242,8 @@
         /* WEATHER STICKER */
         .weather-floating-sticker {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            top: 10px; left: 10px;
+            display: flex; align-items: center; gap: 10px;
             background: var(--card-white);
             padding: 6px 14px;
             border-radius: 30px;
@@ -258,36 +254,12 @@
             transition: transform 0.2s ease;
         }
 
-        .weather-floating-sticker:hover {
-            transform: scale(1.05) rotate(-2deg);
-        }
-
-        .weather-temp {
-            font-size: 1.3rem;
-            font-weight: 700;
-            font-family: var(--font-title);
-            color: var(--accent-gold);
-        }
-
-        .weather-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .weather-city {
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .weather-desc {
-            font-size: 0.68rem;
-            font-style: italic;
-            opacity: 0.8;
-        }
-
-        .weather-icon-live {
-            font-size: 1.8rem;
-        }
+        .weather-floating-sticker:hover { transform: scale(1.05) rotate(-2deg); }
+        .weather-temp { font-size: 1.3rem; font-weight: 700; font-family: var(--font-title); color: var(--accent-gold); }
+        .weather-info { display: flex; flex-direction: column; }
+        .weather-city { font-size: 0.75rem; font-weight: 600; }
+        .weather-desc { font-size: 0.68rem; font-style: italic; opacity: 0.8; }
+        .weather-icon-live { font-size: 1.4rem; color: var(--accent-gold); }
 
         /* HEADER */
         .header {
@@ -298,7 +270,7 @@
         }
 
         .header h1 {
-            font-family: var(--font-hand);
+            font-family: var(--font-main-title);
             font-size: 5rem;
             line-height: 0.9;
             transform: rotate(-2deg);
@@ -310,7 +282,7 @@
         }
 
         .header .quote {
-            font-family: var(--font-hand);
+            font-family: var(--font-main-title);
             font-size: 1.6rem;
             color: var(--accent-gold);
             font-weight: 700;
@@ -322,31 +294,22 @@
             max-width: 100%;
         }
 
-        /* SUBTLE EDIT BUTTON */
         .edit-btn {
-            width: 22px;
-            height: 22px;
-            background: rgba(248, 215, 224, 0.45);
+            width: 22px; height: 22px;
+            background: rgba(230, 225, 210, 0.45);
             border: 1px solid rgba(197, 160, 89, 0.35);
             border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.62rem;
-            color: var(--accent-gold);
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 0.62rem; color: var(--accent-gold);
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(220, 150, 170, 0.15);
+            box-shadow: 0 2px 6px rgba(180, 170, 150, 0.15);
             transition: transform 0.2s, background 0.2s, opacity 0.2s;
             flex-shrink: 0;
             user-select: none;
             opacity: 0.38;
         }
 
-        .edit-btn:hover {
-            transform: scale(1.18) rotate(12deg);
-            background: #f7cad0;
-            opacity: 1;
-        }
+        .edit-btn:hover { transform: scale(1.18) rotate(12deg); background: rgba(220, 210, 195, 0.7); opacity: 1; }
 
         /* DESKTOP 3-COLUMN GRID LAYOUT */
         .main-layout {
@@ -357,20 +320,15 @@
             width: 100%;
         }
 
-        .column {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            width: 100%;
-        }
+        .column { display: flex; flex-direction: column; gap: 16px; width: 100%; }
 
-        /* CARD BASE & COLOR SYSTEM */
+        /* CARD BASE */
         .card {
             padding: 18px;
             border-radius: 6px;
             box-shadow: var(--shadow-soft);
             position: relative;
-            border: 1px solid rgba(220, 150, 170, 0.15);
+            border: 1px solid rgba(180, 170, 150, 0.15);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
             width: 100%;
@@ -378,32 +336,12 @@
             -webkit-user-select: none;
         }
 
-        .card[data-editing="true"] {
-            user-select: text !important;
-            -webkit-user-select: text !important;
-        }
+        .card[data-editing="true"] { user-select: text !important; -webkit-user-select: text !important; }
 
-        .card-white {
-            background: var(--card-white);
-            color: var(--text-color);
-        }
-
-        .card-pink {
-            background: var(--card-pink);
-            color: var(--text-color);
-            border-color: rgba(220, 150, 170, 0.25);
-        }
-
-        .card-black {
-            background: var(--card-black);
-            color: #ffffff;
-            border: none;
-        }
-
-        .card-black .card-title {
-            color: #ffffff;
-            border-bottom-color: #333;
-        }
+        .card-white { background: var(--card-white); color: var(--text-color); }
+        .card-pink { background: var(--card-pink); color: var(--text-color); border-color: rgba(180, 170, 150, 0.25); }
+        .card-black { background: var(--card-black); color: #ffffff; border: none; }
+        .card-black .card-title { color: #ffffff; border-bottom-color: #333; }
 
         .card:hover {
             transform: translateY(-4px) scale(1.01) !important;
@@ -411,6 +349,7 @@
             box-shadow: 0 12px 24px rgba(197, 160, 89, 0.22);
         }
 
+        /* WIGGLE ANIMATION */
         @keyframes wiggly {
             0% { transform: rotate(0deg) scale(0.98); }
             25% { transform: rotate(-3deg) scale(1.02); }
@@ -419,17 +358,15 @@
             100% { transform: rotate(0deg) scale(1); }
         }
 
-        .card.wiggle-effect {
-            animation: wiggly 0.4s ease-in-out;
+        .card.wiggle-effect, .modal-card.wiggle-effect { 
+            animation: wiggly 0.4s ease-in-out forwards; 
         }
 
         .tape {
             position: absolute;
-            top: -10px;
-            left: 50%;
+            top: -10px; left: 50%;
             transform: translateX(-50%);
-            width: 75px;
-            height: 18px;
+            width: 75px; height: 18px;
             background: var(--tape-color);
             border-left: 2px dashed rgba(0,0,0,0.08);
             border-right: 2px dashed rgba(0,0,0,0.08);
@@ -437,259 +374,132 @@
         }
 
         .card-header-flex {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between;
             border-bottom: 1.5px solid rgba(197, 160, 89, 0.3);
-            padding-bottom: 5px;
-            margin-bottom: 10px;
+            padding-bottom: 5px; margin-bottom: 10px;
         }
 
         .card-title {
             font-family: var(--font-title);
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            margin-bottom: 0;
-            border-bottom: none;
+            font-size: 1rem; font-weight: 700;
+            letter-spacing: 1.2px; margin-bottom: 0; border-bottom: none;
         }
 
-        ul.scrap-list {
-            list-style: none;
-        }
+        ul.scrap-list { list-style: none; }
 
         ul.scrap-list li {
-            font-size: 0.86rem;
-            margin-bottom: 6px;
-            padding-left: 18px;
-            position: relative;
-            line-height: 1.35;
+            font-size: 0.86rem; margin-bottom: 6px; padding-left: 18px;
+            position: relative; line-height: 1.35;
         }
 
-        ul.scrap-list li::before {
-            content: "✦";
-            position: absolute;
-            left: 0;
-            color: var(--accent-gold);
-        }
+        ul.scrap-list li::before { content: "✦"; position: absolute; left: 0; color: var(--accent-gold); }
 
-        /* CENTER COLUMN */
-        .col-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
+        /* CENTER COLUMN HERO & PHOTO UPLOADER */
+        .col-center { display: flex; flex-direction: column; align-items: center; width: 100%; }
 
         .hero-wrapper {
-            width: 100%;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            user-select: none;
-            -webkit-user-select: none;
+            width: 100%; text-align: center; cursor: pointer; position: relative; user-select: none;
         }
 
         .hero-girl {
-            width: 100%;
-            height: auto;
-            max-height: 520px;
-            object-fit: contain;
-            filter: drop-shadow(0 15px 30px rgba(180, 120, 140, 0.25));
+            width: 100%; height: auto; max-height: 500px; object-fit: contain;
+            filter: drop-shadow(0 15px 30px rgba(180, 170, 150, 0.2));
             transition: transform 0.2s ease;
-            pointer-events: auto;
-            user-select: none;
-            -webkit-user-drag: none;
         }
 
-        .hero-girl:hover {
-            transform: scale(1.02);
+        /* AESTHETIC TRANSPARENT PHOTO UPLOAD BADGE */
+        .photo-upload-badge {
+            position: absolute; bottom: 15px; right: 15px;
+            background: rgba(255, 253, 251, 0.35);
+            border: 1px solid rgba(197, 160, 89, 0.45);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+            
+            padding: 5px 12px; border-radius: 20px;
+            font-size: 0.72rem; font-weight: 600; color: var(--accent-gold);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(180, 170, 150, 0.1);
+            transition: transform 0.2s, background 0.2s, opacity 0.2s;
+            display: flex; align-items: center; gap: 4px;
+            opacity: 0.55;
         }
 
-        .char-bounce {
-            animation: charBounceAnim 0.45s ease;
+        .photo-upload-badge:hover {
+            transform: scale(1.08);
+            background: rgba(255, 253, 251, 0.7);
+            opacity: 1;
         }
 
-        @keyframes charBounceAnim {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05) translateY(-6px); }
-            100% { transform: scale(1); }
-        }
+        .center-quote-card { width: 100%; text-align: center; margin-top: 10px; z-index: 5; }
+        .handwritten-quote { font-family: var(--font-main-title); font-size: 1.45rem; line-height: 1.3; }
 
-        .center-quote-card {
-            width: 100%;
-            text-align: center;
-            margin-top: 10px;
-            z-index: 5;
-        }
+        /* CALENDAR & TO-DO */
+        .calendar-header { font-family: var(--font-main-title); font-size: 1.4rem; color: var(--accent-gold); text-align: center; margin-bottom: 6px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 0.75rem; }
+        .cal-day-head { font-weight: bold; color: var(--accent-gold); }
+        .cal-date { padding: 4px 0; border-radius: 4px; }
+        .cal-date.today { background: var(--accent-gold); color: #000; font-weight: bold; }
 
-        .handwritten-quote {
-            font-family: var(--font-hand);
-            font-size: 1.45rem;
-            line-height: 1.3;
-        }
-
-        /* CALENDAR & TO-DO STYLES */
-        .calendar-header {
-            font-family: var(--font-hand);
-            font-size: 1.4rem;
-            color: var(--accent-gold);
-            text-align: center;
-            margin-bottom: 6px;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            text-align: center;
-            font-size: 0.75rem;
-        }
-
-        .cal-day-head {
-            font-weight: bold;
-            color: var(--accent-gold);
-        }
-
-        .cal-date {
-            padding: 4px 0;
-            border-radius: 4px;
-        }
-
-        .cal-date.today {
-            background: var(--accent-gold);
-            color: #000;
-            font-weight: bold;
-        }
-
-        .todo-input-box {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
+        .todo-input-box { display: flex; gap: 6px; margin-bottom: 10px; }
         .todo-input-box input {
-            flex: 1;
-            padding: 6px 10px;
-            border: 1px solid rgba(197, 160, 89, 0.4);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            background: transparent;
-            color: inherit;
+            flex: 1; padding: 6px 10px; border: 1px solid rgba(197, 160, 89, 0.4);
+            border-radius: 4px; font-size: 0.8rem; background: transparent; color: inherit;
         }
-
         .todo-input-box button {
-            background: var(--accent-gold);
-            border: none;
-            color: #000;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
+            background: var(--accent-gold); border: none; color: #000;
+            padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;
         }
-
-        .todo-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 6px;
-            cursor: pointer;
-        }
+        .todo-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; margin-bottom: 6px; cursor: pointer; }
 
         .rot-left { transform: rotate(-1.5deg); }
         .rot-right { transform: rotate(1.5deg); }
 
-        /* MODAL POPUP */
+        /* MODAL POPUPS & CUSTOMIZERS */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.45);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.45); display: none;
+            justify-content: center; align-items: center; z-index: 1000;
         }
 
         .modal-card {
-            background: var(--card-white);
-            color: var(--text-color);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 450px;
-            width: 90%;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-            position: relative;
-            animation: popup 0.25s ease-out;
-        }
-
-        @keyframes popup {
-            from { transform: scale(0.85); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            background: var(--card-white); color: var(--text-color);
+            padding: 25px; border-radius: 12px; max-width: 420px; width: 90%;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25); position: relative;
         }
 
         .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.5rem;
-            border: none;
-            background: none;
-            cursor: pointer;
-            color: var(--text-color);
+            position: absolute; top: 12px; right: 16px;
+            font-size: 1.4rem; border: none; background: none; cursor: pointer; color: var(--text-color);
         }
 
-        /* MOBILE SPECIFIC OVERRIDES */
+        .customizer-title { font-family: var(--font-title); font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--accent-gold); text-align: center; }
+        
+        .customizer-section { margin-bottom: 14px; }
+        .customizer-label { font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; display: block; color: var(--accent-gold); }
+        
+        .picker-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        .picker-btn {
+            background: var(--bg-color); border: 1px solid var(--accent-gold);
+            padding: 8px; border-radius: 6px; font-size: 0.8rem; cursor: pointer;
+            text-align: center; transition: transform 0.2s, background 0.2s; color: var(--text-color);
+        }
+        .picker-btn:hover { transform: scale(1.03); background: var(--card-pink); }
+
+        select.font-select {
+            width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--accent-gold);
+            background: var(--bg-color); color: var(--text-color); font-size: 0.85rem; margin-bottom: 10px;
+        }
+
+        /* MOBILE OVERRIDES */
         @media (max-width: 850px) {
-            body {
-                padding-top: 10px;
-            }
+            .top-controls { position: relative; top: 0; right: 0; left: 0; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+            .weather-floating-sticker { position: relative; top: 0; left: 0; margin: 0 auto 15px auto; width: fit-content; }
+            .header h1 { font-size: 3.4rem; }
+            .header .quote { font-size: 1.35rem; }
 
-            .top-controls {
-                position: relative;
-                top: 0;
-                right: 0;
-                left: 0;
-                justify-content: center;
-                margin-bottom: 12px;
-                flex-wrap: wrap;
-            }
-
-            .weather-floating-sticker {
-                position: relative;
-                top: 0;
-                left: 0;
-                margin: 0 auto 15px auto;
-                width: fit-content;
-            }
-
-            .header {
-                margin-top: 10px;
-                margin-bottom: 20px;
-            }
-
-            .header h1 {
-                font-size: 3.4rem;
-            }
-
-            .header .quote {
-                font-size: 1.35rem;
-            }
-
-            .main-layout {
-                display: flex;
-                flex-direction: column;
-                gap: 18px;
-            }
-
-            .column {
-                display: contents;
-            }
-
-            .hero-girl {
-                width: 100%;
-                max-height: 440px;
-            }
+            .main-layout { display: flex; flex-direction: column; gap: 18px; }
+            .column { display: contents; }
+            .hero-girl { width: 100%; max-height: 440px; }
 
             #card-center-col { order: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
             #card-calendar   { order: 2; width: 100%; }
@@ -712,26 +522,31 @@
 
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
 
+    <input type="file" id="heroImageInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+
+    <!-- TOP CONTROLS WITH DARK BUTTON ELEVATED SIDE-BY-SIDE -->
     <div class="top-controls">
         <div class="vinyl-wrapper">
             <div class="vinyl-container" onclick="toggleMusic()">
                 <div class="vinyl-record" id="vinylDisk"></div>
                 <div class="vinyl-info">
-                    <span id="musicStatus">Play Music 🎵</span>
+                    <span id="musicStatus">Play Music <span style="color:var(--accent-gold)">✦</span></span>
                     <span class="vinyl-sub" id="musicSub">Cozy Lofi Vibes</span>
                 </div>
             </div>
-            <button class="music-settings-btn" onclick="changeMusicUrl()" title="Change Music URL">⚙️</button>
+            <button class="music-settings-btn" onclick="changeMusicUrl()" title="Change Music URL">✦</button>
         </div>
 
-        <button class="control-btn" onclick="toggleDarkMode()" id="modeBtn">🌙 Dark Mode</button>
+        <button class="control-btn" onclick="openThemeModal()"><span class="gold-icon">✦</span> Theme</button>
+        <button class="control-btn" onclick="openFontModal()"><span class="gold-icon">✦</span> Font</button>
+        <button class="control-btn" onclick="toggleDarkMode()" id="modeBtn"><span class="gold-icon">✦</span> Dark</button>
     </div>
 
     <div class="board-container">
-        
+
         <!-- WEATHER STICKER -->
         <div class="weather-floating-sticker" onclick="triggerWeatherMagic()">
-            <div class="weather-icon-live" id="weatherIcon">⛅</div>
+            <div class="weather-icon-live" id="weatherIcon">✦</div>
             <div class="weather-info">
                 <div class="weather-temp" id="weatherTemp">--°C</div>
                 <div class="weather-city" id="weatherCity">Detecting...</div>
@@ -740,99 +555,96 @@
         </div>
 
         <header class="header">
-            <h1>this is me <span class="edit-btn" onclick="enableTextEdit(this)">✦</span></h1>
+            <h1>my vision board <span class="edit-btn" onclick="enableTextEdit(this)">✦</span></h1>
             <br>
-            <p class="quote">"I'm not lucky, I'm consistent." <span class="edit-btn" onclick="enableTextEdit(this)">✦</span></p>
+            <p class="quote">"Type your favorite quote here..." <span class="edit-btn" onclick="enableTextEdit(this)">✦</span></p>
         </header>
 
         <div class="main-layout">
 
-            <!-- KALIWANG COLUMN (LEFT) -->
+            <!-- KALIWANG COLUMN -->
             <div class="column col-left">
                 
-                <!-- Today's Calendar (Cream White 🤍) -->
+                <!-- Today's Calendar -->
                 <div class="card card-white rot-left" id="card-calendar">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">📅 TODAY'S CALENDAR</div>
+                        <div class="card-title">✦ TODAY'S CALENDAR</div>
                     </div>
                     <div class="calendar-header" id="calMonthYear">July 2026</div>
                     <div class="calendar-grid" id="calendarDays"></div>
                 </div>
 
-                <!-- About Me (Soft Black 🖤) -->
+                <!-- Card 1 -->
                 <div class="card card-black rot-right" id="card-about" onclick="handleCardClick(this, event)">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">♡ ABOUT ME</div>
+                        <div class="card-title">✦ ABOUT ME</div>
                         <span class="edit-btn" onclick="enableCardEdit(this, event)">✦</span>
                     </div>
                     <ul class="scrap-list">
-                        <li>Dreamer with ambition</li>
-                        <li>Creative soul & performer</li>
-                        <li>Loves deeply, feels everything</li>
-                        <li>Soft heart, strong mind</li>
-                        <li>Private, but passionate</li>
+                        <li>Click ✦ button to edit this item</li>
+                        <li>Add your personal traits or goals</li>
+                        <li>Type your dream here...</li>
                     </ul>
                 </div>
 
-                <!-- Things I Love (Cream White 🤍) -->
+                <!-- Card 2 -->
                 <div class="card card-white rot-right" id="card-things" onclick="handleCardClick(this, event)">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">🎤 THINGS I LOVE</div>
+                        <div class="card-title">✦ THINGS I LOVE</div>
                         <span class="edit-btn" onclick="enableCardEdit(this, event)">✦</span>
                     </div>
                     <ul class="scrap-list">
-                        <li>Performing & Singing</li>
-                        <li>Horror Movies & Thrillers</li>
-                        <li>Sketching & Journaling</li>
-                        <li>Coffee & Tea Breaks</li>
+                        <li>My favorite hobbies</li>
+                        <li>Songs & performances</li>
+                        <li>Favorite coffee or tea</li>
                     </ul>
                 </div>
 
-                <!-- Healing Journey (Pastel Pink 🌸) -->
+                <!-- Card 3 -->
                 <div class="card card-pink rot-left" id="card-healing" onclick="handleCardClick(this, event)">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">🌸 HEALING JOURNEY</div>
+                        <div class="card-title">✦ MY JOURNEY</div>
                         <span class="edit-btn" onclick="enableCardEdit(this, event)">✦</span>
                     </div>
                     <ul class="scrap-list">
-                        <li>Learning to choose me</li>
-                        <li>Releasing what no longer serves me</li>
-                        <li>Building peace from within</li>
+                        <li>Daily peaceful reminders</li>
+                        <li>Mindset shifts & growth</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- GITNANG COLUMN (CENTER - HERO GIRL & PHILOSOPHY) -->
+            <!-- GITNANG COLUMN -->
             <div class="column col-center" id="card-center-col">
-                <div class="hero-wrapper" onclick="triggerCharacterBounce()">
-                    <img src="girl.png" alt="Character" class="hero-girl" id="heroImg" onerror="this.onerror=null; this.src='vision-board.png';">
+                <div class="hero-wrapper">
+                    <img src="girl.png" alt="Character" class="hero-girl" id="heroImg" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80';">
+                    <div class="photo-upload-badge" onclick="triggerPhotoSelect()">✦ Change Photo</div>
                 </div>
 
-                <!-- Philosophy (Cream White 🤍) -->
+                <!-- Main Quote Card -->
                 <div class="card card-white center-quote-card" onclick="handleCardClick(this, event)">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">✨ MY PHILOSOPHY</div>
+                        <div class="card-title">✦ MY PHILOSOPHY</div>
                         <span class="edit-btn" onclick="enableCardEdit(this, event)">✦</span>
                     </div>
                     <p class="handwritten-quote">
-                        "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
+                        "Your inspiring handwritten quote goes here..."
                     </p>
                 </div>
             </div>
 
-            <!-- KANANG COLUMN (RIGHT) -->
+            <!-- KANANG COLUMN -->
             <div class="column col-right">
                 
-                <!-- Daily To-Do List (Pastel Pink 🌸) -->
+                <!-- Daily To-Do List -->
                 <div class="card card-pink rot-right" id="card-todo">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">✍️ DAILY TO-DO LIST</div>
+                        <div class="card-title">✦ DAILY TO-DO LIST</div>
                     </div>
                     <div class="todo-input-box" onclick="event.stopPropagation()">
                         <input type="text" id="todoInput" placeholder="Add new task...">
@@ -841,46 +653,43 @@
                     <div id="todoContainer" onclick="event.stopPropagation()"></div>
                 </div>
 
-                <!-- Strengths (Soft Black 🖤) -->
+                <!-- Card 4 -->
                 <div class="card card-black rot-left" id="card-strengths" onclick="handleCardClick(this, event)">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">👑 STRENGTHS</div>
+                        <div class="card-title">✦ MY STRENGTHS</div>
                         <span class="edit-btn" onclick="enableCardEdit(this, event)">✦</span>
                     </div>
                     <ul class="scrap-list">
-                        <li>Resilient & Determined</li>
-                        <li>Independent & Adaptable</li>
-                        <li>Empathetic & Loyal</li>
+                        <li>Strength #1</li>
+                        <li>Strength #2</li>
                     </ul>
                 </div>
 
-                <!-- Future Goals (Cream White 🤍) -->
+                <!-- Card 5 -->
                 <div class="card card-white rot-right" id="card-goals" onclick="handleCardClick(this, event)">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">📌 FUTURE GOALS</div>
+                        <div class="card-title">✦ FUTURE GOALS</div>
                         <span class="edit-btn" onclick="enableCardEdit(this, event)">✦</span>
                     </div>
                     <ul class="scrap-list">
-                        <li>Successful Freelance Career</li>
-                        <li>Build My Business</li>
-                        <li>Financial Freedom</li>
-                        <li>Travel The World</li>
+                        <li>Goal #1 for this year</li>
+                        <li>Dream destination</li>
+                        <li>Financial target</li>
                     </ul>
                 </div>
 
-                <!-- Fashion Style (Pastel Pink 🌸) -->
+                <!-- Card 6 -->
                 <div class="card card-pink rot-left" id="card-fashion" onclick="handleCardClick(this, event)">
                     <div class="tape"></div>
                     <div class="card-header-flex">
-                        <div class="card-title">👠 FASHION STYLE</div>
+                        <div class="card-title">✦ MY STYLE & VIBE</div>
                         <span class="edit-btn" onclick="enableCardEdit(this, event)">✦</span>
                     </div>
                     <ul class="scrap-list">
-                        <li>Classic. Elegant. Timeless.</li>
-                        <li>Main Character Energy ♡</li>
-                        <li>Black is my power color</li>
+                        <li>Classic & Elegant</li>
+                        <li>Main Character Energy ✦</li>
                     </ul>
                 </div>
 
@@ -889,37 +698,101 @@
         </div>
     </div>
 
-    <!-- Modal Popup Box -->
+    <!-- General Card Popup Modal -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
-        <div class="modal-card" onclick="event.stopPropagation()">
+        <div class="modal-card" id="modalCardBox" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal()">&times;</button>
             <div id="modalBody"></div>
         </div>
     </div>
 
+    <!-- Theme Selector Modal -->
+    <div class="modal-overlay" id="themeModal" onclick="closeThemeModal()">
+        <div class="modal-card wiggle-effect" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeThemeModal()">&times;</button>
+            <div class="customizer-title">✦ Select Color Theme</div>
+            <div class="picker-grid">
+                <div class="picker-btn" onclick="setTheme('theme-cream-white')">✦ Cream White</div>
+                <div class="picker-btn" onclick="setTheme('theme-pastel-pink')">✦ Pastel Pink</div>
+                <div class="picker-btn" onclick="setTheme('theme-pastel-blue')">✦ Pastel Blue</div>
+                <div class="picker-btn" onclick="setTheme('theme-pastel-sage')">✦ Pastel Sage</div>
+                <div class="picker-btn" onclick="setTheme('theme-silver-gray')">✦ Silver Gray</div>
+                <div class="picker-btn" onclick="setTheme('theme-pastel-beige')">✦ Pastel Beige</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Font Selector Modal -->
+    <div class="modal-overlay" id="fontModal" onclick="closeFontModal()">
+        <div class="modal-card wiggle-effect" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeFontModal()">&times;</button>
+            <div class="customizer-title">✦ Customize Typography</div>
+            
+            <div class="customizer-section">
+                <label class="customizer-label">✦ Main Header & Top Quote Font:</label>
+                <select class="font-select" id="mainTitleFontSelect" onchange="applyMainTitleFont(this.value)">
+                    <option value="'Caveat', cursive">Caveat (Handwritten Original)</option>
+                    <option value="'Playfair Display', serif">Playfair Display (Serif)</option>
+                    <option value="'Montserrat', sans-serif">Montserrat (Clean)</option>
+                    <option value="'Quicksand', sans-serif">Quicksand (Soft Modern)</option>
+                    <option value="'Pacifico', cursive">Pacifico (Retro Script)</option>
+                    <option value="'Cinzel', serif">Cinzel (Classic Elegant)</option>
+                    <option value="'Fira Code', monospace">Fira Code (Tech Aesthetic)</option>
+                </select>
+            </div>
+
+            <div class="customizer-section">
+                <label class="customizer-label">✦ Card Headers Font:</label>
+                <select class="font-select" id="headerFontSelect" onchange="applyHeaderFont(this.value)">
+                    <option value="'Playfair Display', serif">Playfair Display (Original)</option>
+                    <option value="'Caveat', cursive">Caveat (Handwritten)</option>
+                    <option value="'Montserrat', sans-serif">Montserrat (Clean)</option>
+                    <option value="'Quicksand', sans-serif">Quicksand (Soft Modern)</option>
+                    <option value="'Pacifico', cursive">Pacifico (Retro Script)</option>
+                    <option value="'Cinzel', serif">Cinzel (Classic Elegant)</option>
+                    <option value="'Fira Code', monospace">Fira Code (Tech Aesthetic)</option>
+                </select>
+            </div>
+
+            <div class="customizer-section">
+                <label class="customizer-label">✦ Body Text & Inside Boxes Font:</label>
+                <select class="font-select" id="bodyFontSelect" onchange="applyBodyFont(this.value)">
+                    <option value="'Montserrat', sans-serif">Montserrat (Original)</option>
+                    <option value="'Caveat', cursive">Caveat (Handwritten)</option>
+                    <option value="'Playfair Display', serif">Playfair Display (Serif)</option>
+                    <option value="'Quicksand', sans-serif">Quicksand (Soft Modern)</option>
+                    <option value="'Pacifico', cursive">Pacifico (Retro Script)</option>
+                    <option value="'Cinzel', serif">Cinzel (Classic Elegant)</option>
+                    <option value="'Fira Code', monospace">Fira Code (Tech Aesthetic)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // 1. Wiggle & Clean Modal Popup Effect
+        // 1. Card Click & Popup with Wiggle Animation
         function handleCardClick(card, event) {
             if (card.dataset.editing === "true") return;
 
-            card.classList.add('wiggle-effect');
-            setTimeout(() => card.classList.remove('wiggle-effect'), 400);
-
             const modalBody = document.getElementById('modalBody');
             const modalOverlay = document.getElementById('modalOverlay');
+            const modalCardBox = document.getElementById('modalCardBox');
             
             const clone = card.cloneNode(true);
             clone.querySelectorAll('.edit-btn').forEach(btn => btn.remove());
             
             modalBody.innerHTML = clone.innerHTML;
             modalOverlay.style.display = 'flex';
+
+            // Add wiggle effect to modal on opening
+            modalCardBox.classList.remove('wiggle-effect');
+            void modalCardBox.offsetWidth; // trigger reflow
+            modalCardBox.classList.add('wiggle-effect');
         }
 
-        function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
 
-        // 2. Enable Text Editing via Translucent Gold Accent Circle
+        // 2. Text Editing
         function enableCardEdit(btn, event) {
             event.stopPropagation();
             const card = btn.closest('.card');
@@ -927,18 +800,14 @@
             if (card.dataset.editing === "true") {
                 card.dataset.editing = "false";
                 card.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
-                btn.innerText = "✦";
-                btn.style.width = "22px";
+                btn.innerText = "✦"; btn.style.width = "22px";
             } else {
                 card.dataset.editing = "true";
                 const title = card.querySelector('.card-title');
                 if (title) title.setAttribute('contenteditable', 'true');
-                
                 card.querySelectorAll('li, p').forEach(el => el.setAttribute('contenteditable', 'true'));
-                
                 if (title) title.focus();
-                btn.innerText = "💾";
-                btn.style.width = "26px";
+                btn.innerText = "💾"; btn.style.width = "26px";
             }
         }
 
@@ -954,7 +823,80 @@
             }
         }
 
-        // 3. Vinyl Music Player & Custom URL Changer
+        // 3. Image Upload
+        function triggerPhotoSelect() { document.getElementById('heroImageInput').click(); }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgData = e.target.result;
+                    document.getElementById('heroImg').src = imgData;
+                    localStorage.setItem('dreamCanvasUserPhoto', imgData);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        const savedPhoto = localStorage.getItem('dreamCanvasUserPhoto');
+        if (savedPhoto) { document.getElementById('heroImg').src = savedPhoto; }
+
+        // 4. Themes & Fonts Customizers
+        function openThemeModal() { document.getElementById('themeModal').style.display = 'flex'; }
+        function closeThemeModal() { document.getElementById('themeModal').style.display = 'none'; }
+
+        function setTheme(themeClass) {
+            document.body.className = document.body.className.replace(/theme-\S+/g, '').trim();
+            if (themeClass) { document.body.classList.add(themeClass); }
+            localStorage.setItem('dreamCanvasTheme', themeClass);
+            closeThemeModal();
+        }
+
+        const savedTheme = localStorage.getItem('dreamCanvasTheme');
+        if (savedTheme !== null) { 
+            setTheme(savedTheme); 
+        } else {
+            setTheme('theme-cream-white');
+        }
+
+        function openFontModal() { document.getElementById('fontModal').style.display = 'flex'; }
+        function closeFontModal() { document.getElementById('fontModal').style.display = 'none'; }
+
+        function applyMainTitleFont(fontFamily) {
+            document.documentElement.style.setProperty('--font-main-title', fontFamily);
+            localStorage.setItem('dreamCanvasMainTitleFont', fontFamily);
+        }
+
+        function applyHeaderFont(fontFamily) {
+            document.documentElement.style.setProperty('--font-title', fontFamily);
+            localStorage.setItem('dreamCanvasHeaderFont', fontFamily);
+        }
+
+        function applyBodyFont(fontFamily) {
+            document.documentElement.style.setProperty('--font-body', fontFamily);
+            localStorage.setItem('dreamCanvasBodyFont', fontFamily);
+        }
+
+        const savedMainTitleFont = localStorage.getItem('dreamCanvasMainTitleFont');
+        if (savedMainTitleFont) {
+            applyMainTitleFont(savedMainTitleFont);
+            document.getElementById('mainTitleFontSelect').value = savedMainTitleFont;
+        }
+
+        const savedHeaderFont = localStorage.getItem('dreamCanvasHeaderFont');
+        if (savedHeaderFont) {
+            applyHeaderFont(savedHeaderFont);
+            document.getElementById('headerFontSelect').value = savedHeaderFont;
+        }
+
+        const savedBodyFont = localStorage.getItem('dreamCanvasBodyFont');
+        if (savedBodyFont) {
+            applyBodyFont(savedBodyFont);
+            document.getElementById('bodyFontSelect').value = savedBodyFont;
+        }
+
+        // 5. Vinyl Music Player
         const savedSong = localStorage.getItem('dreamCanvasCustomSong');
         if (savedSong) {
             document.getElementById('bgMusic').src = savedSong;
@@ -967,53 +909,30 @@
             const status = document.getElementById('musicStatus');
 
             if (audio.paused) {
-                audio.play();
-                disk.classList.add('spinning');
-                status.innerText = "Playing 🎵";
+                audio.play(); disk.classList.add('spinning'); status.innerHTML = 'Playing <span style="color:var(--accent-gold)">✦</span>';
             } else {
-                audio.pause();
-                disk.classList.remove('spinning');
-                status.innerText = "Play Music 🎵";
+                audio.pause(); disk.classList.remove('spinning'); status.innerHTML = 'Play Music <span style="color:var(--accent-gold)">✦</span>';
             }
         }
 
         function changeMusicUrl() {
-            const newUrl = prompt("I-paste ang audio URL (.mp3 link) para sa iyong vinyl player:", document.getElementById('bgMusic').src);
+            const newUrl = prompt("Enter custom MP3 audio URL for the vinyl player:", document.getElementById('bgMusic').src);
             if (newUrl && newUrl.trim() !== '') {
                 const audio = document.getElementById('bgMusic');
                 audio.src = newUrl.trim();
                 localStorage.setItem('dreamCanvasCustomSong', newUrl.trim());
                 document.getElementById('musicSub').innerText = "Custom Song ✨";
-                
                 audio.play();
                 document.getElementById('vinylDisk').classList.add('spinning');
-                document.getElementById('musicStatus').innerText = "Playing 🎵";
+                document.getElementById('musicStatus').innerHTML = 'Playing <span style="color:var(--accent-gold)">✦</span>';
             }
         }
 
-        // 4. Character Clean Bounce
-        function triggerCharacterBounce() {
-            const img = document.getElementById('heroImg');
-            img.classList.add('char-bounce');
-            setTimeout(() => img.classList.remove('char-bounce'), 450);
-        }
-
-        // 5. Dark Mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const btn = document.getElementById('modeBtn');
-            btn.innerHTML = document.body.classList.contains('dark-mode') ? "☀️ Light Mode" : "🌙 Dark Mode";
-        }
-
-        // 6. Weather Effects
+        // 6. Weather Magic
         let currentWeatherType = "sunny";
 
         function triggerWeatherMagic() {
-            if (currentWeatherType === "rainy") {
-                showRainScreenEffect();
-            } else {
-                showSunnyGlowEffect();
-            }
+            if (currentWeatherType === "rainy") { showRainScreenEffect(); } else { showSunnyGlowEffect(); }
         }
 
         function showSunnyGlowEffect() {
@@ -1024,8 +943,7 @@
 
         function showRainScreenEffect() {
             const overlay = document.getElementById('weatherScreenOverlay');
-            overlay.innerHTML = '';
-            overlay.style.opacity = '1';
+            overlay.innerHTML = ''; overlay.style.opacity = '1';
 
             for (let i = 0; i < 30; i++) {
                 const drop = document.createElement('div');
@@ -1049,7 +967,7 @@
                     const lon = position.coords.longitude;
                     
                     try {
-                        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current-weather=true`);
+                        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
                         const data = await response.json();
                         const weather = data.current_weather;
                         
@@ -1057,17 +975,17 @@
                         document.getElementById('weatherCity').innerText = "Local Sky";
                         
                         let statusText = "Sunny Clear";
-                        let emoji = "☀️";
+                        let iconSymbol = "☼";
                         currentWeatherType = "sunny";
                         
                         if (weather.weathercode >= 1 && weather.weathercode <= 3) {
-                            statusText = "Partly Cloudy"; emoji = "⛅"; currentWeatherType = "cloudy";
+                            statusText = "Partly Cloudy"; iconSymbol = "☁"; currentWeatherType = "cloudy";
                         } else if (weather.weathercode >= 51) {
-                            statusText = "Gentle Rain"; emoji = "🌧️"; currentWeatherType = "rainy";
+                            statusText = "Gentle Rain"; iconSymbol = "✦"; currentWeatherType = "rainy";
                         }
 
                         document.getElementById('weatherDesc').innerText = statusText;
-                        document.getElementById('weatherIcon').innerText = emoji;
+                        document.getElementById('weatherIcon').innerText = iconSymbol;
 
                     } catch (e) {
                         document.getElementById('weatherTemp').innerText = "28°C";
@@ -1082,7 +1000,13 @@
             }
         }
 
-        // 7. Calendar
+        // 7. Dark Mode & Calendar
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.getElementById('modeBtn');
+            btn.innerHTML = document.body.classList.contains('dark-mode') ? '<span class="gold-icon">✦</span> Light' : '<span class="gold-icon">✦</span> Dark';
+        }
+
         function renderCalendar() {
             const now = new Date();
             const year = now.getFullYear();
@@ -1109,7 +1033,7 @@
         }
 
         // 8. To-Do List
-        let todos = JSON.parse(localStorage.getItem('myVisionTodos')) || ["Sing & practice vocals 🎤", "Drink green tea 🍵", "Journal daily goals ✨"];
+        let todos = JSON.parse(localStorage.getItem('myVisionTodosTemplate')) || ["Add your first task here ✦"];
 
         function renderTodos() {
             const container = document.getElementById('todoContainer');
@@ -1122,7 +1046,7 @@
                     </div>
                 `;
             });
-            localStorage.setItem('myVisionTodos', JSON.stringify(todos));
+            localStorage.setItem('myVisionTodosTemplate', JSON.stringify(todos));
         }
 
         function addTodo() {
