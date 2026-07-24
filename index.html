@@ -498,16 +498,29 @@
             overflow: hidden; left: -9999px;
         }
 
-        /* MOBILE OVERRIDES (WEATHER STICKER SHIFTED TO UPPER LEFT) */
+        /* MOBILE OVERRIDES (SAFE INLINE LAYOUT TO PREVENT OVERLAPPING) */
         @media (max-width: 850px) {
-            .top-controls { position: relative; top: 0; right: 0; left: 0; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
-            .weather-floating-sticker { 
-                position: absolute; 
-                top: 15px; 
-                left: 10px; 
-                margin: 0; 
-                transform: scale(0.9);
+            .top-controls { 
+                position: relative; 
+                top: 0; right: 0; left: 0; 
+                justify-content: center; 
+                margin-bottom: 8px; 
+                flex-wrap: wrap; 
             }
+            
+            .weather-floating-sticker { 
+                position: relative; 
+                top: 0; left: 0; 
+                margin: 0 auto 12px auto; 
+                width: fit-content;
+                transform: scale(0.95);
+            }
+
+            .header {
+                margin-top: 5px;
+                margin-bottom: 20px;
+            }
+
             .header h1 { font-size: 3.4rem; }
             .header .quote { font-size: 1.35rem; }
 
@@ -560,7 +573,7 @@
 
     <div class="board-container">
 
-        <!-- MINI REFINED WEATHER STICKER -->
+        <!-- MINI REFINED WEATHER STICKER (SAFE NON-OVERLAPPING INLINE FLOW) -->
         <div class="weather-floating-sticker" onclick="triggerWeatherMagic()">
             <div class="weather-icon-live" id="weatherIcon">✦</div>
             <div class="weather-info">
