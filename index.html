@@ -21,7 +21,7 @@
             --font-title: 'Playfair Display', serif;
             --font-hand: 'Caveat', cursive;
             --font-body: 'Montserrat', sans-serif;
-            --shadow-soft: 0 10px 25px rgba(220, 150, 170, 0.15);
+            --shadow-soft: 0 8px 20px rgba(220, 150, 170, 0.12);
             --tape-color: rgba(230, 200, 210, 0.75);
         }
 
@@ -47,83 +47,44 @@
             font-family: var(--font-body);
             color: var(--text-color);
             padding: 20px 10px 80px 10px;
-            transition: background-color 0.4s ease, color 0.4s ease, filter 0.5s ease;
+            transition: background-color 0.3s ease, color 0.3s ease;
             background-image: radial-gradient(rgba(225, 175, 190, 0.25) 1px, transparent 0);
             background-size: 24px 24px;
             position: relative;
             overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* Extra Smooth Scrolling on iOS/Android */
         }
 
-        /* BACKGROUND AESTHETIC BLOBS & GLOWING ORBS */
+        /* STATIC AESTHETIC BACKGROUND BLOBS (No Heavy Floating Motion) */
         .bg-blob {
             position: absolute;
             border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.55;
+            filter: blur(50px);
+            opacity: 0.45;
             pointer-events: none;
             z-index: 0;
-            animation: floatBlob 12s ease-in-out infinite alternate;
         }
 
         .blob-1 {
-            width: 380px; height: 380px;
+            width: 350px; height: 350px;
             background: #f7cad0;
             top: -50px; left: -80px;
         }
 
         .blob-2 {
-            width: 420px; height: 420px;
+            width: 380px; height: 380px;
             background: #fae1dd;
             bottom: 100px; right: -100px;
-            animation-delay: -4s;
-        }
-
-        .blob-3 {
-            width: 320px; height: 320px;
-            background: #f0efeb;
-            top: 40%; left: 35%;
-            animation-delay: -7s;
-        }
-
-        @keyframes floatBlob {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 40px) scale(1.08); }
-        }
-
-        /* MAGICAL FLOATING ORBS & SPARKLES */
-        .sparkle-container {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .floating-orb {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 10px rgba(255, 209, 220, 0.9), 0 0 20px rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            animation: floatOrb 8s infinite ease-in-out;
-        }
-
-        @keyframes floatOrb {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
         /* ATMOSPHERIC SCREEN EFFECTS */
         body.sunny-glow {
-            animation: sunFlash 1.5s ease-out;
+            animation: sunFlash 1.2s ease-out;
         }
 
         @keyframes sunFlash {
             0% { filter: brightness(1); }
-            30% { filter: brightness(1.15) sepia(0.08); }
+            30% { filter: brightness(1.12); }
             100% { filter: brightness(1); }
         }
 
@@ -134,7 +95,7 @@
             pointer-events: none;
             z-index: 999;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
         }
 
         .rain-drop {
@@ -170,7 +131,7 @@
             font-size: 0.8rem;
             cursor: pointer;
             box-shadow: var(--shadow-soft);
-            transition: transform 0.2s, background 0.3s;
+            transition: transform 0.2s;
             white-space: nowrap;
         }
 
@@ -178,7 +139,7 @@
             transform: scale(1.05);
         }
 
-        /* VINYL PLAYER & MUSIC URL CHANGER */
+        /* VINYL PLAYER */
         .vinyl-wrapper {
             display: flex;
             align-items: center;
@@ -271,7 +232,7 @@
             z-index: 2;
         }
 
-        /* FLOATING WEATHER STICKER */
+        /* WEATHER STICKER */
         .weather-floating-sticker {
             position: absolute;
             top: 10px;
@@ -279,14 +240,14 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(8px);
+            background: var(--card-white);
             padding: 6px 14px;
             border-radius: 30px;
             border: 1px dashed var(--accent-gold);
             cursor: pointer;
             z-index: 20;
-            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.2s ease;
         }
 
         .weather-floating-sticker:hover {
@@ -364,7 +325,7 @@
             box-shadow: var(--shadow-soft);
             position: relative;
             border: 1px solid rgba(220, 150, 170, 0.15);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.4s;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
         }
 
@@ -391,9 +352,9 @@
         }
 
         .card:hover {
-            transform: translateY(-5px) scale(1.02) !important;
+            transform: translateY(-4px) scale(1.01) !important;
             z-index: 10;
-            box-shadow: 0 14px 28px rgba(197, 160, 89, 0.25);
+            box-shadow: 0 12px 24px rgba(197, 160, 89, 0.22);
         }
 
         @keyframes wiggly {
@@ -405,7 +366,7 @@
         }
 
         .card.wiggle-effect {
-            animation: wiggly 0.45s ease-in-out;
+            animation: wiggly 0.4s ease-in-out;
         }
 
         .tape {
@@ -416,7 +377,6 @@
             width: 75px;
             height: 18px;
             background: var(--tape-color);
-            backdrop-filter: blur(2px);
             border-left: 2px dashed rgba(0,0,0,0.08);
             border-right: 2px dashed rgba(0,0,0,0.08);
             pointer-events: none;
@@ -472,20 +432,20 @@
             max-height: 520px;
             object-fit: contain;
             filter: drop-shadow(0 15px 30px rgba(180, 120, 140, 0.25));
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.2s ease;
         }
 
         .hero-girl:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
         }
 
         .char-bounce {
-            animation: charBounceAnim 0.5s ease;
+            animation: charBounceAnim 0.45s ease;
         }
 
         @keyframes charBounceAnim {
             0% { transform: scale(1); }
-            50% { transform: scale(1.06) translateY(-8px); }
+            50% { transform: scale(1.05) translateY(-6px); }
             100% { transform: scale(1); }
         }
 
@@ -577,8 +537,7 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.4);
             display: none;
             justify-content: center;
             align-items: center;
@@ -592,13 +551,13 @@
             border-radius: 12px;
             max-width: 450px;
             width: 90%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
             position: relative;
-            animation: popup 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popup 0.25s ease-out;
         }
 
         @keyframes popup {
-            from { transform: scale(0.8); opacity: 0; }
+            from { transform: scale(0.85); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
@@ -675,13 +634,9 @@
 </head>
 <body>
 
-    <!-- AESTHETIC BACKGROUND BLOBS -->
+    <!-- STATIC AESTHETIC BACKGROUND BLOBS -->
     <div class="bg-blob blob-1"></div>
     <div class="bg-blob blob-2"></div>
-    <div class="bg-blob blob-3"></div>
-
-    <!-- MAGICAL FLOATING ORBS & SPARKLES -->
-    <div class="sparkle-container" id="sparkleContainer"></div>
 
     <div id="weatherScreenOverlay"></div>
 
@@ -705,7 +660,7 @@
 
     <div class="board-container">
         
-        <!-- FLOATING WEATHER STICKER -->
+        <!-- WEATHER STICKER -->
         <div class="weather-floating-sticker" onclick="triggerWeatherMagic()">
             <div class="weather-icon-live" id="weatherIcon">⛅</div>
             <div class="weather-info">
@@ -852,7 +807,7 @@
         // 1. Wiggle & Modal Popup Effect
         function handleCardClick(card) {
             card.classList.add('wiggle-effect');
-            setTimeout(() => card.classList.remove('wiggle-effect'), 450);
+            setTimeout(() => card.classList.remove('wiggle-effect'), 400);
 
             const modalBody = document.getElementById('modalBody');
             const modalOverlay = document.getElementById('modalOverlay');
@@ -895,45 +850,27 @@
                 localStorage.setItem('dreamCanvasCustomSong', newUrl.trim());
                 document.getElementById('musicSub').innerText = "Custom Song ✨";
                 
-                // Auto play new song
                 audio.play();
                 document.getElementById('vinylDisk').classList.add('spinning');
                 document.getElementById('musicStatus').innerText = "Playing 🎵";
             }
         }
 
-        // 3. Floating Orbs & Sparkles Generator
-        function generateSparkles() {
-            const container = document.getElementById('sparkleContainer');
-            container.innerHTML = '';
-            for (let i = 0; i < 22; i++) {
-                const orb = document.createElement('div');
-                orb.className = 'floating-orb';
-                orb.style.left = `${Math.random() * 100}vw`;
-                orb.style.animationDuration = `${6 + Math.random() * 8}s`;
-                orb.style.animationDelay = `${Math.random() * 5}s`;
-                const size = 4 + Math.random() * 6;
-                orb.style.width = `${size}px`;
-                orb.style.height = `${size}px`;
-                container.appendChild(orb);
-            }
-        }
-
-        // 4. Character Clean Bounce
+        // 3. Character Clean Bounce
         function triggerCharacterBounce() {
             const img = document.getElementById('heroImg');
             img.classList.add('char-bounce');
-            setTimeout(() => img.classList.remove('char-bounce'), 500);
+            setTimeout(() => img.classList.remove('char-bounce'), 450);
         }
 
-        // 5. Dark Mode
+        // 4. Dark Mode
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             const btn = document.getElementById('modeBtn');
             btn.innerHTML = document.body.classList.contains('dark-mode') ? "☀️ Light Mode" : "🌙 Dark Mode";
         }
 
-        // 6. Weather Effects
+        // 5. Weather Effects
         let currentWeatherType = "sunny";
 
         function triggerWeatherMagic() {
@@ -955,7 +892,7 @@
             overlay.innerHTML = '';
             overlay.style.opacity = '1';
 
-            for (let i = 0; i < 35; i++) {
+            for (let i = 0; i < 30; i++) {
                 const drop = document.createElement('div');
                 drop.className = 'rain-drop';
                 drop.style.left = `${Math.random() * 100}vw`;
@@ -966,8 +903,8 @@
 
             setTimeout(() => {
                 overlay.style.opacity = '0';
-                setTimeout(() => overlay.innerHTML = '', 500);
-            }, 2500);
+                setTimeout(() => overlay.innerHTML = '', 400);
+            }, 2200);
         }
 
         async function fetchLiveWeather() {
@@ -1010,7 +947,7 @@
             }
         }
 
-        // 7. Calendar
+        // 6. Calendar
         function renderCalendar() {
             const now = new Date();
             const year = now.getFullYear();
@@ -1036,7 +973,7 @@
             }
         }
 
-        // 8. To-Do List
+        // 7. To-Do List
         let todos = JSON.parse(localStorage.getItem('myVisionTodos')) || ["Sing & practice vocals 🎤", "Drink green tea 🍵", "Journal daily goals ✨"];
 
         function renderTodos() {
@@ -1071,7 +1008,6 @@
             renderCalendar();
             renderTodos();
             fetchLiveWeather();
-            generateSparkles();
         });
     </script>
 </body>
