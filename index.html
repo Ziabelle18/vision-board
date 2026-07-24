@@ -3,25 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Board - This Is Me</title>
+    <title>Vision Board - Scrapbook Style</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f7f4ef;
-            --card-bg: #ffffff;
-            --text-dark: #2c2a29;
-            --text-muted: #66605b;
+            --bg-color: #f5f0e6;
+            --text-color: #2b2b2b;
             --accent-gold: #c5a059;
-            --accent-black: #1a1a1a;
-            --accent-soft: #f2e9e1;
-            --border-color: #e5dec9;
-            --shadow-subtle: 0 10px 25px rgba(0,0,0,0.04);
-            --shadow-hover: 0 15px 35px rgba(0,0,0,0.07);
-            --font-main: 'Montserrat', sans-serif;
-            --font-heading: 'Playfair Display', serif;
             --font-hand: 'Caveat', cursive;
+            --font-sketch: 'Architects Daughter', cursive;
+            --font-body: 'Montserrat', sans-serif;
         }
 
         * {
@@ -32,210 +25,167 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-dark);
-            font-family: var(--font-main);
-            line-height: 1.6;
+            color: var(--text-color);
+            font-family: var(--font-body);
             padding: 40px 20px;
-            background-image: radial-gradient(#d8d0c1 0.8px, transparent 0.8px);
-            background-size: 24px 24px;
+            /* Grid Paper Pattern Background */
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        /* Header Section */
+        /* Header Style */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             position: relative;
         }
 
         .header h1 {
             font-family: var(--font-hand);
-            font-size: 4.5rem;
-            color: var(--accent-black);
+            font-size: 5rem;
             line-height: 1;
-            margin-bottom: 5px;
+            font-weight: 700;
+            transform: rotate(-2deg);
+            display: inline-block;
         }
 
         .header p.quote {
-            font-family: var(--font-hand);
-            font-size: 1.8rem;
-            color: var(--accent-gold);
+            font-family: var(--font-sketch);
+            font-size: 1.5rem;
+            color: #666;
+            margin-top: 5px;
         }
 
-        /* Layout Grid */
-        .board-grid {
+        /* Scrapbook Grid Container */
+        .scrapbook-board {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 25px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
             align-items: start;
         }
 
-        /* Card Styles */
+        /* Common Scrapbook Card Base */
         .card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 24px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-subtle);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 4px 5px 15px rgba(0,0,0,0.08);
             position: relative;
+            transition: transform 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
+            transform: scale(1.02) rotate(0deg) !important;
+            z-index: 10;
         }
 
+        /* Tape Effect sa Taas ng Card */
+        .tape {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 25px;
+            background: rgba(235, 225, 200, 0.7);
+            border-left: 2px dashed rgba(0,0,0,0.1);
+            border-right: 2px dashed rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Card Titles */
         .card-title {
-            font-family: var(--font-heading);
-            font-size: 1.25rem;
+            font-family: var(--font-sketch);
+            font-size: 1.3rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 16px;
-            color: var(--accent-black);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
             gap: 8px;
-            border-bottom: 2px solid var(--accent-soft);
+            border-bottom: 2px dashed #e0d8c3;
             padding-bottom: 8px;
         }
 
-        /* Grid Column Sizes */
-        .col-4 { grid-column: span 4; }
-        .col-6 { grid-column: span 6; }
-        .col-12 { grid-column: span 12; }
+        /* Custom Rotations para sa Cut-Out Collaged Look */
+        .rotate-left { transform: rotate(-3deg); }
+        .rotate-right { transform: rotate(2.5deg); }
+        .rotate-slightly-left { transform: rotate(-1.5deg); }
+        .rotate-slightly-right { transform: rotate(1.8deg); }
 
-        /* Profile Center Card */
-        .profile-card {
-            grid-column: span 4;
+        /* Polaroid Center Frame */
+        .polaroid-card {
+            background: #ffffff;
+            padding: 15px 15px 25px 15px;
+            box-shadow: 6px 10px 20px rgba(0,0,0,0.12);
             text-align: center;
-            background: linear-gradient(180deg, #ffffff 0%, #faf6f0 100%);
-            border: 2px solid var(--accent-gold);
-            padding: 30px 20px;
+            border: 1px solid #e2dcd0;
         }
 
-        .profile-img-container {
+        .polaroid-img {
             width: 100%;
-            max-width: 280px;
-            height: 380px;
-            margin: 0 auto 20px auto;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 4px solid #fff;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .profile-img-container img {
-            width: 100%;
-            height: 100%;
+            height: 340px;
             object-fit: cover;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
         }
 
-        .profile-badge {
-            display: inline-block;
-            background: var(--accent-black);
+        .polaroid-caption {
+            font-family: var(--font-hand);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Sticky Note Variant */
+        .sticky-note {
+            background: #fff8c6;
+            border-radius: 2px;
+            box-shadow: 5px 5px 12px rgba(0,0,0,0.07);
+        }
+
+        .black-card {
+            background: #222;
             color: #fff;
-            font-size: 0.85rem;
-            padding: 6px 16px;
-            border-radius: 50px;
-            letter-spacing: 1px;
-            margin-top: 10px;
-            font-weight: 500;
+        }
+        .black-card .card-title {
+            color: #fff;
+            border-bottom-color: #444;
         }
 
-        /* List Styles */
-        ul.custom-list {
+        /* Lists */
+        ul.scrap-list {
             list-style: none;
         }
 
-        ul.custom-list li {
-            position: relative;
-            padding-left: 24px;
-            margin-bottom: 12px;
+        ul.scrap-list li {
             font-size: 0.95rem;
-            color: var(--text-dark);
-            font-weight: 400;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
         }
 
-        ul.custom-list li::before {
-            content: "✦";
+        ul.scrap-list li::before {
+            content: "★";
             position: absolute;
             left: 0;
             color: var(--accent-gold);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
-        /* Checkbox List Styles */
-        ul.check-list {
-            list-style: none;
+        /* Responsiveness */
+        @media (max-width: 900px) {
+            .scrapbook-board { grid-template-columns: repeat(2, 1fr); }
         }
-
-        ul.check-list li {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        ul.check-list li input[type="checkbox"] {
-            accent-color: var(--accent-gold);
-            width: 18px;
-            height: 18px;
-        }
-
-        /* Detail Items */
-        .detail-item {
-            margin-bottom: 14px;
-        }
-
-        .detail-item .title {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--accent-black);
-        }
-
-        .detail-item .subtitle {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .quote-box {
-            background: #1a1a1a;
-            color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            font-family: var(--font-hand);
-            font-size: 1.5rem;
-            margin-top: 15px;
-            border-left: 4px solid var(--accent-gold);
-        }
-
-        .sticky-note {
-            background: #fffdf5;
-            border: 1px solid #f0e6c8;
-            padding: 18px;
-            border-radius: 8px;
-            font-family: var(--font-hand);
-            font-size: 1.4rem;
-            color: #444;
-        }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .col-4 { grid-column: span 6; }
-            .profile-card { grid-column: span 12; order: -1; }
-        }
-
         @media (max-width: 600px) {
-            .col-4 { grid-column: span 12; }
-            .header h1 { font-size: 3.2rem; }
+            .scrapbook-board { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -243,19 +193,18 @@
 
     <div class="container">
         
-        <!-- Header -->
         <header class="header">
             <h1>this is me</h1>
             <p class="quote">"I'm not lucky, I'm consistent."</p>
         </header>
 
-        <!-- Main Grid -->
-        <div class="board-grid">
+        <div class="scrapbook-board">
 
-            <!-- 1. About Me -->
-            <div class="card col-4">
+            <!-- Card 1: About Me -->
+            <div class="card rotate-left">
+                <div class="tape"></div>
                 <div class="card-title">♡ ABOUT ME</div>
-                <ul class="custom-list">
+                <ul class="scrap-list">
                     <li>Dreamer with ambition</li>
                     <li>Creative soul</li>
                     <li>Loves deeply, feels everything</li>
@@ -265,49 +214,45 @@
                 </ul>
             </div>
 
-            <!-- 2. Profile Center Card -->
-            <div class="card profile-card">
-                <div class="profile-img-container">
-                    <img src="profile.jpg" alt="Profile Picture">
-                </div>
-                <div class="profile-badge">MAIN CHARACTER ENERGY</div>
-                <div class="quote-box">
-                    "I'm working on the life I prayed for. ♡"
-                </div>
+            <!-- Card 2: Center Polaroid Image -->
+            <div class="card polaroid-card rotate-slightly-right">
+                <div class="tape" style="top: -15px;"></div>
+                <img src="profile.jpg" alt="Profile Picture" class="polaroid-img">
+                <div class="polaroid-caption">"Working on the life I prayed for."</div>
             </div>
 
-            <!-- 3. Strengths -->
-            <div class="card col-4">
+            <!-- Card 3: Strengths -->
+            <div class="card rotate-right">
+                <div class="tape"></div>
                 <div class="card-title">👑 STRENGTHS</div>
-                <ul class="custom-list">
+                <ul class="scrap-list">
                     <li>Resilient</li>
                     <li>Determined</li>
                     <li>Independent</li>
                     <li>Empathetic</li>
                     <li>Hardworking</li>
                     <li>Adaptable</li>
-                    <li>Loyal</li>
                 </ul>
             </div>
 
-            <!-- 4. Future Goals -->
-            <div class="card col-4">
+            <!-- Card 4: Future Goals (Black Sticky Card) -->
+            <div class="card black-card rotate-slightly-left">
+                <div class="tape" style="background: rgba(255,255,255,0.2);"></div>
                 <div class="card-title">📌 FUTURE GOALS</div>
-                <ul class="check-list">
-                    <li><input type="checkbox" checked disabled> Successful Freelance Career</li>
-                    <li><input type="checkbox" checked disabled> Build My Business</li>
-                    <li><input type="checkbox" checked disabled> Financial Freedom</li>
-                    <li><input type="checkbox" checked disabled> Help My Family</li>
-                    <li><input type="checkbox" checked disabled> Travel The World</li>
-                    <li><input type="checkbox" checked disabled> Live in Luxury</li>
-                    <li><input type="checkbox" checked disabled> Inspire Others</li>
+                <ul class="scrap-list">
+                    <li>Successful Freelance Career</li>
+                    <li>Build My Business</li>
+                    <li>Financial Freedom</li>
+                    <li>Help My Family</li>
+                    <li>Travel The World</li>
                 </ul>
             </div>
 
-            <!-- 5. Healing Journey -->
-            <div class="card col-4">
+            <!-- Card 5: Healing Journey -->
+            <div class="card rotate-right">
+                <div class="tape"></div>
                 <div class="card-title">🌸 HEALING JOURNEY</div>
-                <ul class="custom-list">
+                <ul class="scrap-list">
                     <li>Learning to choose me</li>
                     <li>Releasing what no longer serves me</li>
                     <li>Building peace from within</li>
@@ -315,71 +260,17 @@
                 </ul>
             </div>
 
-            <!-- 6. Fashion Style -->
-            <div class="card col-4">
-                <div class="card-title">🖤 FASHION STYLE</div>
-                <p style="font-weight: 600; margin-bottom: 4px;">Classic. Elegant. Timeless.</p>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Main Character Energy</p>
-                <div style="background: #1a1a1a; color: #fff; padding: 6px 14px; border-radius: 20px; display: inline-block; font-size: 0.85rem;">
-                    black is my power color
-                </div>
-            </div>
-
-            <!-- 7. Things I Love -->
-            <div class="card col-4">
-                <div class="card-title">🎤 THINGS I LOVE</div>
-                <div class="detail-item">
-                    <div class="title">🎤 Performing & Singing</div>
-                    <div class="subtitle">My heart on stage</div>
-                </div>
-                <div class="detail-item">
-                    <div class="title">🎬 Horror Movies</div>
-                    <div class="subtitle">Thrills, chills & twisted genius</div>
-                </div>
-                <div class="detail-item">
-                    <div class="title">📱 TikTok After Performances</div>
-                    <div class="subtitle">My little dopamine reward</div>
-                </div>
-                <div class="detail-item">
-                    <div class="title">✏️ Sketching & Journaling</div>
-                    <div class="subtitle">Brain dump to beautiful plans</div>
-                </div>
-                <div class="detail-item">
-                    <div class="title">☕ Coffee</div>
-                    <div class="subtitle">Fuel for the soul</div>
-                </div>
-            </div>
-
-            <!-- 8. Big Dreams -->
-            <div class="card col-4">
-                <div class="card-title">☁️ BIG DREAMS</div>
-                <ul class="custom-list">
-                    <li>Perform on bigger stages</li>
-                    <li>Work with brands I love</li>
-                    <li>Own a successful business</li>
-                    <li>Live a life of impact and abundance</li>
-                </ul>
-            </div>
-
-            <!-- 9. Quirks -->
-            <div class="card col-4">
+            <!-- Card 6: Quirks (Yellow Sticky Note) -->
+            <div class="card sticky-note rotate-left">
+                <div class="tape"></div>
                 <div class="card-title">✨ QUIRKS</div>
-                <ul class="custom-list">
+                <ul class="scrap-list">
                     <li>Random dance breaks</li>
                     <li>Talks to herself</li>
                     <li>Has 1000 screenshots</li>
                     <li>Loves room service</li>
                     <li>Obsessed with perfume</li>
-                    <li>May look calm, but is always planning something big</li>
                 </ul>
-            </div>
-
-            <!-- 10. My Philosophy -->
-            <div class="card col-12" style="background: #faf6f0; text-align: center;">
-                <div class="card-title" style="justify-content: center;">✨ MY PHILOSOPHY</div>
-                <p class="sticky-note">
-                    Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself.
-                </p>
             </div>
 
         </div>
