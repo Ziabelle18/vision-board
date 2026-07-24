@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Board - Interactive Scrapbook</title>
+    <title>Vision Board - Editorial Scrapbook</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat:wght@600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Fonts matched to editorial/AI poster aesthetic -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cinzel+Decorative:wght@700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f5f0e6;
-            --text-color: #2b2b2b;
-            --accent-gold: #c5a059;
+            --bg-color: #f4efe6;
+            --text-color: #2b2825;
+            --accent-gold: #b89350;
+            --font-title: 'Cinzel Decorative', 'Playfair Display', serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-script: 'Pinyon Script', 'Caveat', cursive;
             --font-hand: 'Caveat', cursive;
-            --font-sketch: 'Architects Daughter', cursive;
             --font-body: 'Montserrat', sans-serif;
         }
 
@@ -27,79 +30,81 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: var(--font-body);
-            padding: 40px 20px;
+            padding: 50px 20px;
             background-image: 
-                linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
+                radial-gradient(rgba(0,0,0,0.08) 0.8px, transparent 0.8px);
+            background-size: 18px 18px;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 0 auto;
         }
 
-        /* Header Style */
+        /* Header Style matched to AI style */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 45px;
             position: relative;
         }
 
         .header h1 {
-            font-family: var(--font-hand);
-            font-size: 5rem;
-            line-height: 1;
-            font-weight: 700;
-            transform: rotate(-2deg);
+            font-family: var(--font-script);
+            font-size: 5.8rem;
+            line-height: 0.8;
+            font-weight: 400;
+            color: #1a1a1a;
+            transform: rotate(-3deg);
             display: inline-block;
             outline: none;
+            margin-bottom: 10px;
         }
 
         .header p.quote {
-            font-family: var(--font-sketch);
-            font-size: 1.5rem;
-            color: #666;
-            margin-top: 5px;
+            font-family: var(--font-hand);
+            font-size: 1.8rem;
+            color: var(--accent-gold);
             outline: none;
+            font-weight: 700;
         }
 
         /* Scrapbook Grid Container */
         .scrapbook-board {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            gap: 28px;
             align-items: start;
         }
 
         /* Common Scrapbook Card Base */
         .card {
             background: #fff;
-            padding: 25px;
-            border-radius: 4px;
-            box-shadow: 4px 5px 15px rgba(0,0,0,0.08);
+            padding: 26px;
+            border-radius: 2px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
             position: relative;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.04);
         }
 
-        /* Visual indicator kapag in-edit ang text */
+        /* Visual indicator kapag in-edit */
         [contenteditable="true"] {
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 3px;
             transition: background 0.2s;
         }
         [contenteditable="true"]:hover {
-            background: rgba(197, 160, 89, 0.15);
+            background: rgba(184, 147, 80, 0.12);
         }
         [contenteditable="true"]:focus {
-            background: rgba(197, 160, 89, 0.2);
+            background: rgba(184, 147, 80, 0.18);
             outline: 1px dashed var(--accent-gold);
         }
 
         .card:hover {
             transform: scale(1.02) rotate(0deg) !important;
             z-index: 10;
-            box-shadow: 6px 12px 25px rgba(0,0,0,0.12);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
         }
 
         /* Tape Effect */
@@ -108,85 +113,82 @@
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90px;
-            height: 25px;
-            background: rgba(235, 225, 200, 0.7);
-            border-left: 2px dashed rgba(0,0,0,0.1);
-            border-right: 2px dashed rgba(0,0,0,0.1);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 85px;
+            height: 22px;
+            background: rgba(225, 215, 190, 0.65);
+            border-left: 2px dashed rgba(0,0,0,0.08);
+            border-right: 2px dashed rgba(0,0,0,0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             pointer-events: none;
         }
 
-        /* Card Titles */
+        /* Editorial Card Titles */
         .card-title {
-            font-family: var(--font-sketch);
-            font-size: 1.3rem;
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            color: #1a1a1a;
             display: flex;
             align-items: center;
             gap: 8px;
-            border-bottom: 2px dashed #e0d8c3;
+            border-bottom: 1.5px solid #eae2d0;
             padding-bottom: 8px;
             outline: none;
         }
 
         /* Custom Rotations */
-        .rotate-left { transform: rotate(-3deg); }
-        .rotate-right { transform: rotate(2.5deg); }
-        .rotate-slightly-left { transform: rotate(-1.5deg); }
-        .rotate-slightly-right { transform: rotate(1.8deg); }
+        .rotate-left { transform: rotate(-2.5deg); }
+        .rotate-right { transform: rotate(2deg); }
+        .rotate-slightly-left { transform: rotate(-1deg); }
+        .rotate-slightly-right { transform: rotate(1.5deg); }
 
-        /* Polaroid Center Frame */
+        /* Center Photo Frame */
         .polaroid-card {
             background: #ffffff;
-            padding: 15px 15px 20px 15px;
-            box-shadow: 6px 10px 20px rgba(0,0,0,0.12);
+            padding: 16px 16px 22px 16px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
             text-align: center;
-            border: 1px solid #e2dcd0;
+            border: 1px solid #e0d8c8;
         }
 
         .polaroid-img {
             width: 100%;
-            height: 320px;
+            height: 330px;
             object-fit: cover;
-            border: 1px solid #ddd;
-            margin-bottom: 12px;
+            border: 1px solid #eee;
+            margin-bottom: 14px;
         }
 
         .polaroid-caption {
             font-family: var(--font-hand);
             font-size: 1.8rem;
             font-weight: 700;
-            color: #333;
+            color: #222;
             outline: none;
         }
 
-        /* Sticky Note Variant */
-        .sticky-note {
-            background: #fff8c6;
-            border-radius: 2px;
-        }
-
+        /* Black Theme Card */
         .black-card {
-            background: #222;
+            background: #1c1a19;
             color: #fff;
         }
         .black-card .card-title {
             color: #fff;
-            border-bottom-color: #444;
+            border-bottom-color: #333;
         }
 
-        /* Music Player Card Special Styling */
+        /* Music Player Styling */
         .music-card {
-            background: #1e1e24;
+            background: #242120;
             color: #fff;
             text-align: center;
         }
         .music-card .card-title {
-            color: #c5a059;
-            border-bottom-color: #333;
+            color: var(--accent-gold);
+            border-bottom-color: #3d3835;
         }
         .player-controls {
             display: flex;
@@ -198,11 +200,11 @@
         .play-btn {
             background: var(--accent-gold);
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -211,10 +213,6 @@
         .play-btn:hover {
             transform: scale(1.1);
         }
-        .track-info {
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
 
         /* Lists */
         ul.scrap-list {
@@ -222,7 +220,7 @@
         }
 
         ul.scrap-list li {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             margin-bottom: 10px;
             position: relative;
             padding-left: 20px;
@@ -230,11 +228,41 @@
         }
 
         ul.scrap-list li::before {
-            content: "★";
+            content: "✦";
             position: absolute;
             left: 0;
             color: var(--accent-gold);
             font-size: 0.8rem;
+        }
+
+        .detail-item {
+            margin-bottom: 12px;
+        }
+        .detail-item .title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .detail-item .subtitle {
+            font-size: 0.8rem;
+            color: #777;
+            font-style: italic;
+            outline: none;
+        }
+
+        /* Philosophy Sticky Note */
+        .philosophy-note {
+            background: #faf6eb;
+            border: 1px solid #e8dec8;
+            text-align: center;
+        }
+        .philosophy-text {
+            font-family: var(--font-hand);
+            font-size: 1.4rem;
+            line-height: 1.4;
+            color: #333;
+            outline: none;
+            padding: 5px;
         }
 
         /* Responsiveness */
@@ -243,6 +271,7 @@
         }
         @media (max-width: 600px) {
             .scrapbook-board { grid-template-columns: 1fr; }
+            .header h1 { font-size: 4rem; }
         }
     </style>
 </head>
@@ -272,11 +301,11 @@
                 </ul>
             </div>
 
-            <!-- Card 2: Center Polaroid Image & Caption -->
+            <!-- Card 2: Center Photo Frame -->
             <div class="card polaroid-card rotate-slightly-right">
                 <div class="tape" style="top: -15px;"></div>
                 <img src="profile.jpg" alt="Profile Picture" class="polaroid-img">
-                <div class="polaroid-caption" contenteditable="true">"Working on the life I prayed for."</div>
+                <div class="polaroid-caption" contenteditable="true">"I'm working on the life I prayed for. ♡"</div>
             </div>
 
             <!-- Card 3: Strengths -->
@@ -306,16 +335,37 @@
                 </ul>
             </div>
 
-            <!-- Card 5: MUSIC PLAYER CARD -->
-            <div class="card music-card rotate-right">
+            <!-- Card 5: Things I Love -->
+            <div class="card rotate-right">
+                <div class="tape"></div>
+                <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
+                <div class="detail-item">
+                    <div class="title" contenteditable="true">🎤 Performing & Singing</div>
+                    <div class="subtitle" contenteditable="true">My heart on stage</div>
+                </div>
+                <div class="detail-item">
+                    <div class="title" contenteditable="true">🎬 Horror Movies</div>
+                    <div class="subtitle" contenteditable="true">Thrills, chills & twisted genius</div>
+                </div>
+                <div class="detail-item">
+                    <div class="title" contenteditable="true">📱 TikTok After Performances</div>
+                    <div class="subtitle" contenteditable="true">My little dopamine reward</div>
+                </div>
+                <div class="detail-item">
+                    <div class="title" contenteditable="true">✏️ Sketching & Journaling</div>
+                    <div class="subtitle" contenteditable="true">Brain dump to beautiful plans</div>
+                </div>
+            </div>
+
+            <!-- Card 6: Music Player Card -->
+            <div class="card music-card rotate-slightly-left">
                 <div class="tape" style="background: rgba(255,255,255,0.2);"></div>
                 <div class="card-title">🎵 MY SOUNDTRACK</div>
-                <div class="track-info">
-                    <p style="font-weight: 600; font-size: 1rem;" contenteditable="true">Acoustic Covers & Vocal Vibes</p>
-                    <p style="color: #aaa; font-size: 0.85rem;" contenteditable="true">Live Session • Stage Performances</p>
+                <div style="margin-bottom: 10px;">
+                    <p style="font-weight: 600; font-size: 0.95rem;" contenteditable="true">Acoustic Covers & Vocal Vibes</p>
+                    <p style="color: #aaa; font-size: 0.8rem;" contenteditable="true">Live Session • Stage Performances</p>
                 </div>
                 
-                <!-- Audio element (Lagay ka ng music file name tulad ng song.mp3) -->
                 <audio id="bgMusic" src="song.mp3"></audio>
 
                 <div class="player-controls">
@@ -325,24 +375,19 @@
                 </div>
             </div>
 
-            <!-- Card 6: Quirks (Yellow Sticky Note) -->
-            <div class="card sticky-note rotate-left">
+            <!-- Card 7: My Philosophy (Pinalitan ang Quirks) -->
+            <div class="card philosophy-note rotate-left" style="grid-column: span 3;">
                 <div class="tape"></div>
-                <div class="card-title" contenteditable="true">✨ QUIRKS</div>
-                <ul class="scrap-list">
-                    <li contenteditable="true">Random dance breaks</li>
-                    <li contenteditable="true">Talks to herself</li>
-                    <li contenteditable="true">Has 1000 screenshots</li>
-                    <li contenteditable="true">Loves room service</li>
-                    <li contenteditable="true">Obsessed with perfume</li>
-                </ul>
+                <div class="card-title" style="justify-content: center;" contenteditable="true">✨ MY PHILOSOPHY</div>
+                <div class="philosophy-text" contenteditable="true">
+                    "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
+                </div>
             </div>
 
         </div>
     </div>
 
     <script>
-        // Simple Audio Toggle Script
         function togglePlay() {
             var audio = document.getElementById("bgMusic");
             var btn = document.querySelector(".play-btn");
@@ -350,7 +395,7 @@
                 audio.play().then(() => {
                     btn.innerHTML = "⏸️";
                 }).catch(e => {
-                    alert("Mag-add muna ng 'song.mp3' na file sa folder mo para tumugtog!");
+                    alert("Mag-add ng 'song.mp3' sa file folder para sa audio playback!");
                 });
             } else {
                 audio.pause();
