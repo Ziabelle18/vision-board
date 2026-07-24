@@ -6,7 +6,7 @@
     <title>Vision Board - This Is Me</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #f7f4ef;
@@ -17,8 +17,8 @@
             --accent-black: #1a1a1a;
             --accent-soft: #f2e9e1;
             --border-color: #e5dec9;
-            --shadow-subtle: 0 10px 25px rgba(0,0,0,0.05);
-            --shadow-hover: 0 15px 35px rgba(0,0,0,0.08);
+            --shadow-subtle: 0 10px 25px rgba(0,0,0,0.04);
+            --shadow-hover: 0 15px 35px rgba(0,0,0,0.07);
             --font-main: 'Montserrat', sans-serif;
             --font-heading: 'Playfair Display', serif;
             --font-hand: 'Caveat', cursive;
@@ -45,6 +45,7 @@
             margin: 0 auto;
         }
 
+        /* Header Section */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -65,6 +66,7 @@
             color: var(--accent-gold);
         }
 
+        /* Layout Grid */
         .board-grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
@@ -72,6 +74,7 @@
             align-items: start;
         }
 
+        /* Card Styles */
         .card {
             background: var(--card-bg);
             border-radius: 16px;
@@ -101,10 +104,12 @@
             padding-bottom: 8px;
         }
 
+        /* Grid Column Sizes */
         .col-4 { grid-column: span 4; }
         .col-6 { grid-column: span 6; }
         .col-12 { grid-column: span 12; }
 
+        /* Profile Center Card */
         .profile-card {
             grid-column: span 4;
             text-align: center;
@@ -139,8 +144,10 @@
             border-radius: 50px;
             letter-spacing: 1px;
             margin-top: 10px;
+            font-weight: 500;
         }
 
+        /* List Styles */
         ul.custom-list {
             list-style: none;
         }
@@ -151,6 +158,7 @@
             margin-bottom: 12px;
             font-size: 0.95rem;
             color: var(--text-dark);
+            font-weight: 400;
         }
 
         ul.custom-list li::before {
@@ -161,6 +169,7 @@
             font-size: 0.9rem;
         }
 
+        /* Checkbox List Styles */
         ul.check-list {
             list-style: none;
         }
@@ -179,6 +188,7 @@
             height: 18px;
         }
 
+        /* Detail Items */
         .detail-item {
             margin-bottom: 14px;
         }
@@ -196,7 +206,7 @@
         }
 
         .quote-box {
-            background: #222;
+            background: #1a1a1a;
             color: #fff;
             padding: 20px;
             border-radius: 12px;
@@ -213,10 +223,11 @@
             padding: 18px;
             border-radius: 8px;
             font-family: var(--font-hand);
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: #444;
         }
 
+        /* Responsive */
         @media (max-width: 992px) {
             .col-4 { grid-column: span 6; }
             .profile-card { grid-column: span 12; order: -1; }
@@ -232,15 +243,18 @@
 
     <div class="container">
         
+        <!-- Header -->
         <header class="header">
             <h1>this is me</h1>
             <p class="quote">"I'm not lucky, I'm consistent."</p>
         </header>
 
+        <!-- Main Grid -->
         <div class="board-grid">
 
+            <!-- 1. About Me -->
             <div class="card col-4">
-                <div class="card-title">♡ About Me</div>
+                <div class="card-title">♡ ABOUT ME</div>
                 <ul class="custom-list">
                     <li>Dreamer with ambition</li>
                     <li>Creative soul</li>
@@ -251,6 +265,7 @@
                 </ul>
             </div>
 
+            <!-- 2. Profile Center Card -->
             <div class="card profile-card">
                 <div class="profile-img-container">
                     <img src="profile.jpg" alt="Profile Picture">
@@ -261,8 +276,9 @@
                 </div>
             </div>
 
+            <!-- 3. Strengths -->
             <div class="card col-4">
-                <div class="card-title">👑 Strengths</div>
+                <div class="card-title">👑 STRENGTHS</div>
                 <ul class="custom-list">
                     <li>Resilient</li>
                     <li>Determined</li>
@@ -274,8 +290,9 @@
                 </ul>
             </div>
 
+            <!-- 4. Future Goals -->
             <div class="card col-4">
-                <div class="card-title">📌 Future Goals</div>
+                <div class="card-title">📌 FUTURE GOALS</div>
                 <ul class="check-list">
                     <li><input type="checkbox" checked disabled> Successful Freelance Career</li>
                     <li><input type="checkbox" checked disabled> Build My Business</li>
@@ -287,8 +304,9 @@
                 </ul>
             </div>
 
+            <!-- 5. Healing Journey -->
             <div class="card col-4">
-                <div class="card-title">🌸 Healing Journey</div>
+                <div class="card-title">🌸 HEALING JOURNEY</div>
                 <ul class="custom-list">
                     <li>Learning to choose me</li>
                     <li>Releasing what no longer serves me</li>
@@ -297,17 +315,19 @@
                 </ul>
             </div>
 
+            <!-- 6. Fashion Style -->
             <div class="card col-4">
-                <div class="card-title">🖤 Fashion Style</div>
-                <p style="font-weight: 600; margin-bottom: 8px;">Classic. Elegant. Timeless.</p>
+                <div class="card-title">🖤 FASHION STYLE</div>
+                <p style="font-weight: 600; margin-bottom: 4px;">Classic. Elegant. Timeless.</p>
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Main Character Energy</p>
-                <div style="background: #1a1a1a; color: #fff; padding: 8px 14px; border-radius: 20px; display: inline-block; font-size: 0.85rem;">
+                <div style="background: #1a1a1a; color: #fff; padding: 6px 14px; border-radius: 20px; display: inline-block; font-size: 0.85rem;">
                     black is my power color
                 </div>
             </div>
 
+            <!-- 7. Things I Love -->
             <div class="card col-4">
-                <div class="card-title">🎤 Things I Love</div>
+                <div class="card-title">🎤 THINGS I LOVE</div>
                 <div class="detail-item">
                     <div class="title">🎤 Performing & Singing</div>
                     <div class="subtitle">My heart on stage</div>
@@ -330,8 +350,9 @@
                 </div>
             </div>
 
+            <!-- 8. Big Dreams -->
             <div class="card col-4">
-                <div class="card-title">☁️ Big Dreams</div>
+                <div class="card-title">☁️ BIG DREAMS</div>
                 <ul class="custom-list">
                     <li>Perform on bigger stages</li>
                     <li>Work with brands I love</li>
@@ -340,8 +361,9 @@
                 </ul>
             </div>
 
+            <!-- 9. Quirks -->
             <div class="card col-4">
-                <div class="card-title">✨ Quirks</div>
+                <div class="card-title">✨ QUIRKS</div>
                 <ul class="custom-list">
                     <li>Random dance breaks</li>
                     <li>Talks to herself</li>
@@ -352,8 +374,9 @@
                 </ul>
             </div>
 
+            <!-- 10. My Philosophy -->
             <div class="card col-12" style="background: #faf6f0; text-align: center;">
-                <div class="card-title" style="justify-content: center;">✨ My Philosophy</div>
+                <div class="card-title" style="justify-content: center;">✨ MY PHILOSOPHY</div>
                 <p class="sticky-note">
                     Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself.
                 </p>
