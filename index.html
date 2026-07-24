@@ -88,7 +88,7 @@
             100% { transform: translateY(100vh); }
         }
 
-        /* TOP CONTROLS BAR */
+        /* TOP CONTROLS BAR (DESKTOP DEFAULT) */
         .top-controls {
             position: fixed;
             top: 15px;
@@ -269,7 +269,7 @@
             gap: 16px;
         }
 
-        /* CARD BASE & ALTERNATING COLOR SYSTEM */
+        /* CARD BASE & COLOR SYSTEM */
         .card {
             padding: 18px;
             border-radius: 6px;
@@ -525,54 +525,65 @@
             color: var(--text-color);
         }
 
-        /* MOBILE SPECIFIC OVERRIDES & ORDERING FIX */
+        /* MOBILE SPECIFIC OVERRIDES & FIXED NO-OVERLAP ORDERING */
         @media (max-width: 850px) {
-            .header {
-                margin-top: 75px;
+            body {
+                padding-top: 10px;
+            }
+
+            /* Un-fix Top Controls on Mobile so it never overlaps content */
+            .top-controls {
+                position: relative;
+                top: 0;
+                right: 0;
+                left: 0;
+                justify-content: center;
+                margin-bottom: 12px;
+                flex-wrap: wrap;
             }
 
             .weather-floating-sticker {
                 position: relative;
                 top: 0;
                 left: 0;
-                margin: 0 auto 10px auto;
+                margin: 0 auto 15px auto;
                 width: fit-content;
             }
 
-            .top-controls {
-                top: 10px;
-                right: 10px;
-                left: 10px;
-                justify-content: center;
-                flex-wrap: wrap;
+            .header {
+                margin-top: 10px;
+                margin-bottom: 25px;
             }
 
-            /* Unpack grid columns to apply flex ordering to individual cards */
+            .header h1 {
+                font-size: 4.2rem;
+            }
+
+            /* Convert Grid Layout to Flex Column */
             .main-layout {
                 display: flex;
                 flex-direction: column;
-                gap: 16px;
+                gap: 18px;
             }
 
+            /* Display column contents linearly */
             .column {
-                display: contents; /* Allows children to be ordered independently */
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+                width: 100%;
             }
 
             .hero-girl {
                 width: 100%;
                 margin-left: 0;
+                max-height: 480px;
             }
 
-            /* STRICT MOBILE STACKING ORDER */
-            #card-center-col { order: 1; }
-            #card-calendar   { order: 2; }
-            #card-todo       { order: 3; }
-            #card-about      { order: 4; }
-            #card-things     { order: 5; }
-            #card-healing    { order: 6; }
-            #card-strengths  { order: 7; }
-            #card-goals      { order: 8; }
-            #card-fashion    { order: 9; }
+            /* Re-order elements so Hero Girl is First */
+            .col-center { order: 1; }
+            .col-left   { order: 2; }
+            .col-right  { order: 3; }
         }
     </style>
 </head>
@@ -583,8 +594,8 @@
     <!-- Background Audio Element -->
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
 
+    <!-- TOP CONTROLS (Static Flow on Mobile) -->
     <div class="top-controls">
-        <!-- Vinyl Record Player -->
         <div class="vinyl-container" onclick="toggleMusic()">
             <div class="vinyl-record" id="vinylDisk"></div>
             <div class="vinyl-info">
@@ -616,11 +627,27 @@
 
         <div class="main-layout">
 
+            <!-- CENTER COLUMN (FIRST ON MOBILE) -->
+            <div class="column col-center">
+                <div class="hero-wrapper" onclick="triggerCharacterBounce()">
+                    <img src="girl.png" alt="Character" class="hero-girl" id="heroImg" onerror="this.onerror=null; this.src='vision-board.png';">
+                </div>
+
+                <!-- 1. Hero Quote (Cream White 🤍) -->
+                <div class="card card-white center-quote-card" onclick="handleCardClick(this)">
+                    <div class="tape"></div>
+                    <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
+                    <p class="handwritten-quote" contenteditable="true">
+                        "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
+                    </p>
+                </div>
+            </div>
+
             <!-- LEFT COLUMN -->
             <div class="column col-left">
                 
                 <!-- 2. Today's Calendar (Cream White 🤍) -->
-                <div class="card card-white rot-left" id="card-calendar">
+                <div class="card card-white rot-left">
                     <div class="tape"></div>
                     <div class="card-title">📅 TODAY'S CALENDAR</div>
                     <div class="calendar-header" id="calMonthYear">July 2026</div>
@@ -628,7 +655,7 @@
                 </div>
 
                 <!-- 4. About Me (Soft Black 🖤) -->
-                <div class="card card-black rot-right" id="card-about" onclick="handleCardClick(this)">
+                <div class="card card-black rot-right" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
                     <ul class="scrap-list">
@@ -641,7 +668,7 @@
                 </div>
 
                 <!-- 5. Things I Love (Cream White 🤍) -->
-                <div class="card card-white rot-right" id="card-things" onclick="handleCardClick(this)">
+                <div class="card card-white rot-right" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
                     <ul class="scrap-list">
@@ -653,7 +680,7 @@
                 </div>
 
                 <!-- 6. Healing Journey (Pastel Pink 🌸) -->
-                <div class="card card-pink rot-left" id="card-healing" onclick="handleCardClick(this)">
+                <div class="card card-pink rot-left" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">🌸 HEALING JOURNEY</div>
                     <ul class="scrap-list">
@@ -664,27 +691,11 @@
                 </div>
             </div>
 
-            <!-- CENTER COLUMN (ORDER 1 ON MOBILE) -->
-            <div class="column col-center" id="card-center-col">
-                <div class="hero-wrapper" onclick="triggerCharacterBounce()">
-                    <img src="girl.png" alt="Character" class="hero-girl" id="heroImg" onerror="this.onerror=null; this.src='vision-board.png';">
-                </div>
-
-                <!-- Hero Quote (Cream White 🤍) -->
-                <div class="card card-white center-quote-card" onclick="handleCardClick(this)">
-                    <div class="tape"></div>
-                    <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
-                    <p class="handwritten-quote" contenteditable="true">
-                        "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
-                    </p>
-                </div>
-            </div>
-
             <!-- RIGHT COLUMN -->
             <div class="column col-right">
                 
                 <!-- 3. Daily To-Do List (Pastel Pink 🌸) -->
-                <div class="card card-pink rot-right" id="card-todo">
+                <div class="card card-pink rot-right">
                     <div class="tape"></div>
                     <div class="card-title">✍️ DAILY TO-DO LIST</div>
                     <div class="todo-input-box" onclick="event.stopPropagation()">
@@ -695,7 +706,7 @@
                 </div>
 
                 <!-- 7. Strengths (Soft Black 🖤) -->
-                <div class="card card-black rot-left" id="card-strengths" onclick="handleCardClick(this)">
+                <div class="card card-black rot-left" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
                     <ul class="scrap-list">
@@ -706,7 +717,7 @@
                 </div>
 
                 <!-- 8. Future Goals (Cream White 🤍) -->
-                <div class="card card-white rot-right" id="card-goals" onclick="handleCardClick(this)">
+                <div class="card card-white rot-right" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
                     <ul class="scrap-list">
@@ -718,7 +729,7 @@
                 </div>
 
                 <!-- 9. Fashion Style (Pastel Pink 🌸) -->
-                <div class="card card-pink rot-left" id="card-fashion" onclick="handleCardClick(this)">
+                <div class="card card-pink rot-left" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">👠 FASHION STYLE</div>
                     <ul class="scrap-list">
