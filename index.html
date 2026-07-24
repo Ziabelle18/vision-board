@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Board - This Is Me</title>
+    <title>Vision Board - Scrapbook Collage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f2ede4;
+            --bg-color: #f3eee6;
             --accent-gold: #c5a059;
-            --accent-black: #1a1a1a;
-            --font-main: 'Montserrat', sans-serif;
+            --font-title: 'Playfair Display', serif;
+            --font-hand: 'Caveat', cursive;
+            --font-body: 'Montserrat', sans-serif;
         }
 
         * {
@@ -23,77 +24,151 @@
 
         body {
             background-color: var(--bg-color);
-            font-family: var(--font-main);
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 30px 15px 100px 15px; /* Extra bottom padding para sa floating music player */
-            /* Subtle dotted background pattern */
+            font-family: var(--font-body);
+            color: #2b2b2b;
+            padding: 40px 15px 100px 15px;
             background-image: radial-gradient(rgba(0,0,0,0.06) 0.8px, transparent 0.8px);
             background-size: 20px 20px;
         }
 
-        /* Poster Display Frame */
-        .board-wrapper {
+        .board-container {
+            max-width: 1100px;
+            margin: 0 auto;
             position: relative;
-            max-width: 900px;
-            width: 100%;
+            padding: 20px;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: var(--font-hand);
+            font-size: 5.5rem;
+            line-height: 0.9;
+            transform: rotate(-2deg);
+            display: inline-block;
+        }
+
+        .header p.quote {
+            font-family: var(--font-hand);
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        /* Main Canvas Layout */
+        .collage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Scrapbook Cards Base */
+        .card {
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-            overflow: hidden;
-            border: 1px solid #e0d8c8;
+            padding: 22px;
+            border-radius: 4px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            position: relative;
+            border: 1px solid #e8e2d5;
+            transition: transform 0.3s ease, z-index 0.3s;
         }
 
-        /* The Main AI Poster Image */
-        .board-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            pointer-events: none; /* Iniiwasan ang accidental dragging ng pic */
+        .card:hover {
+            transform: scale(1.03) rotate(0deg) !important;
+            z-index: 20 !important;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
         }
 
-        /* Interactive Clickable Overlay Hotspots (Halimbawa para sa interactive links/popups) */
-        .hotspot {
+        /* Tape Effect */
+        .tape {
             position: absolute;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(197, 160, 89, 0);
-        }
-
-        .hotspot:hover {
-            background: rgba(197, 160, 89, 0.15);
-            box-shadow: 0 0 15px rgba(197, 160, 89, 0.4);
-            border: 1.5px dashed var(--accent-gold);
-        }
-
-        /* Positions ng Interactive Zones (In % para responsive sa mobile/desktop) */
-        .spot-things-i-love {
-            top: 47%;
-            left: 2%;
-            width: 30%;
-            height: 25%;
-        }
-
-        .spot-future-goals {
-            top: 3%;
-            right: 2%;
-            width: 25%;
-            height: 16%;
-        }
-
-        .spot-philosophy {
-            bottom: 12%;
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 25%;
-            height: 10%;
+            width: 80px;
+            height: 20px;
+            background: rgba(225, 215, 190, 0.7);
+            border-left: 2px dashed rgba(0,0,0,0.08);
+            border-right: 2px dashed rgba(0,0,0,0.08);
+            pointer-events: none;
         }
 
-        /* Floating Audio Player Bar */
+        /* Editable text highlights */
+        [contenteditable="true"]:hover {
+            background: rgba(197, 160, 89, 0.1);
+            border-radius: 3px;
+        }
+
+        /* Card Titles */
+        .card-title {
+            font-family: var(--font-title);
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            border-bottom: 1.5px solid #eae2d0;
+            padding-bottom: 6px;
+        }
+
+        /* Rotations para sa Cutout Feel */
+        .rot-left { transform: rotate(-2.5deg); }
+        .rot-right { transform: rotate(2deg); }
+        .rot-slight-left { transform: rotate(-1deg); }
+
+        /* Floating Character Cutout sa Gitna */
+        .character-overlay {
+            grid-column: span 1;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .character-img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+            transition: transform 0.3s ease;
+        }
+
+        .character-img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Black Sticky Card */
+        .black-card {
+            background: #1e1c1b;
+            color: #fff;
+        }
+        .black-card .card-title {
+            color: #fff;
+            border-bottom-color: #333;
+        }
+
+        /* Custom List */
+        ul.scrap-list {
+            list-style: none;
+        }
+        ul.scrap-list li {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            padding-left: 18px;
+            position: relative;
+        }
+        ul.scrap-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+        }
+
+        /* Bottom Floating Soundtrack Player */
         .floating-player {
             position: fixed;
             bottom: 20px;
@@ -102,100 +177,136 @@
             background: rgba(26, 26, 26, 0.92);
             backdrop-filter: blur(8px);
             color: #fff;
-            padding: 12px 24px;
+            padding: 10px 22px;
             border-radius: 50px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 15px;
             z-index: 100;
             border: 1px solid rgba(197, 160, 89, 0.4);
-        }
-
-        .player-info {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .player-title {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .player-subtitle {
-            font-size: 0.75rem;
-            color: var(--accent-gold);
         }
 
         .play-btn {
             background: var(--accent-gold);
             border: none;
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s, background 0.2s;
         }
 
-        .play-btn:hover {
-            transform: scale(1.08);
-            background: #d4ae63;
+        /* Mobile Adjustments */
+        @media (max-width: 850px) {
+            .collage-grid { grid-template-columns: 1fr; }
+            .character-overlay { order: -1; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Main Vision Board Frame -->
-    <div class="board-wrapper">
-        <!-- Siguraduhing "vision-board.png" ang name ng AI photo mo sa folder -->
-        <img src="vision-board.png" alt="Vision Board Poster" class="board-img">
+    <div class="board-container">
+        
+        <!-- Header -->
+        <header class="header">
+            <h1 contenteditable="true">this is me</h1>
+            <p class="quote" contenteditable="true">"I'm not lucky, I'm consistent."</p>
+        </header>
 
-        <!-- Clickable Overlay Zones -->
-        <div class="hotspot spot-things-i-love" onclick="showAlert('🎤 Things I Love', 'Performing, Music, Horror Movies & Creative Outlets!')" title="Click to view details"></div>
-        <div class="hotspot spot-future-goals" onclick="showAlert('📌 Future Goals', 'Financial Freedom, Luxury Travel & Building My Business!')" title="Click to view details"></div>
-        <div class="hotspot spot-philosophy" onclick="showAlert('✨ My Philosophy', 'Stay kind, work hard, be humble, trust God.')" title="Click to view details"></div>
+        <!-- Main Collage Canvas -->
+        <div class="collage-grid">
+
+            <!-- Left Column Cards -->
+            <div class="card rot-left">
+                <div class="tape"></div>
+                <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
+                <ul class="scrap-list">
+                    <li contenteditable="true">Dreamer with ambition</li>
+                    <li contenteditable="true">Creative soul</li>
+                    <li contenteditable="true">Loves deeply, feels everything</li>
+                    <li contenteditable="true">Soft heart, strong mind</li>
+                    <li contenteditable="true">Private, but passionate</li>
+                </ul>
+            </div>
+
+            <!-- Center Column: Character Illustration Cutout -->
+            <div class="character-overlay">
+                <!-- Siguraduhing "character.png" o "vision-board.png" ang file name -->
+                <img src="character.png" alt="Character Illustration" class="character-img" onerror="this.src='vision-board.png'">
+            </div>
+
+            <!-- Right Column Cards -->
+            <div class="card rot-right">
+                <div class="tape"></div>
+                <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
+                <ul class="scrap-list">
+                    <li contenteditable="true">Resilient</li>
+                    <li contenteditable="true">Determined</li>
+                    <li contenteditable="true">Independent</li>
+                    <li contenteditable="true">Empathetic</li>
+                    <li contenteditable="true">Hardworking</li>
+                </ul>
+            </div>
+
+            <!-- Second Row Cards -->
+            <div class="card black-card rot-slight-left">
+                <div class="tape" style="background: rgba(255,255,255,0.2);"></div>
+                <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
+                <ul class="scrap-list">
+                    <li contenteditable="true">Successful Freelance Career</li>
+                    <li contenteditable="true">Build My Business</li>
+                    <li contenteditable="true">Financial Freedom</li>
+                    <li contenteditable="true">Travel The World</li>
+                </ul>
+            </div>
+
+            <div class="card rot-right">
+                <div class="tape"></div>
+                <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
+                <ul class="scrap-list">
+                    <li contenteditable="true">Performing & Singing</li>
+                    <li contenteditable="true">Horror Movies</li>
+                    <li contenteditable="true">TikTok After Performances</li>
+                    <li contenteditable="true">Coffee & Journaling</li>
+                </ul>
+            </div>
+
+            <div class="card rot-left" style="background: #faf6eb;">
+                <div class="tape"></div>
+                <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
+                <p style="font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.3;" contenteditable="true">
+                    "Stay kind, work hard, be humble, trust God, and never stop becoming the best version of yourself."
+                </p>
+            </div>
+
+        </div>
     </div>
 
-    <!-- Floating Soundtrack Player -->
+    <!-- Floating Audio Player -->
     <div class="floating-player">
-        <div class="player-info">
-            <span class="player-title">🎵 Vision Board Soundtrack</span>
-            <span class="player-subtitle">Live Covers & Vocal Vibes</span>
+        <div style="font-size: 0.8rem;">
+            <p style="font-weight: 600;">🎵 Vision Board Vibe</p>
+            <p style="color: var(--accent-gold); font-size: 0.75rem;">Acoustic Live Session</p>
         </div>
-
-        <!-- Palitan ng totoong audio file path kung may song.mp3 ka -->
         <audio id="bgMusic" src="song.mp3" loop></audio>
-
         <button class="play-btn" onclick="togglePlay()" id="playBtn">▶️</button>
     </div>
 
     <script>
-        // Toggle Audio Play/Pause
         function togglePlay() {
             var audio = document.getElementById("bgMusic");
             var btn = document.getElementById("playBtn");
-            
             if (audio.paused) {
-                audio.play().then(() => {
-                    btn.innerHTML = "⏸️";
-                }).catch(e => {
-                    alert("Maglagay ng 'song.mp3' file sa parehong folder para sa music!");
-                });
+                audio.play().then(() => { btn.innerHTML = "⏸️"; })
+                .catch(e => { alert("Maglagay ng 'song.mp3' file sa folder para sa audio!"); });
             } else {
                 audio.pause();
                 btn.innerHTML = "▶️";
             }
-        }
-
-        // Custom Click Notification para sa Hotspots
-        function showAlert(title, text) {
-            alert(title + "\n\n" + text);
         }
     </script>
 
