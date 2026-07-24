@@ -54,7 +54,7 @@
             overflow-x: hidden;
         }
 
-        /* BACKGROUND AESTHETIC BLOBS & SPARKLES */
+        /* BACKGROUND AESTHETIC BLOBS & GLOWING ORBS */
         .bg-blob {
             position: absolute;
             border-radius: 50%;
@@ -88,6 +88,32 @@
         @keyframes floatBlob {
             0% { transform: translate(0, 0) scale(1); }
             100% { transform: translate(30px, 40px) scale(1.08); }
+        }
+
+        /* MAGICAL FLOATING ORBS & SPARKLES */
+        .sparkle-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-orb {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(255, 209, 220, 0.9), 0 0 20px rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: floatOrb 8s infinite ease-in-out;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
         /* ATMOSPHERIC SCREEN EFFECTS */
@@ -152,7 +178,13 @@
             transform: scale(1.05);
         }
 
-        /* VINYL PLAYER */
+        /* VINYL PLAYER & MUSIC URL CHANGER */
+        .vinyl-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
         .vinyl-container {
             display: flex;
             align-items: center;
@@ -211,6 +243,25 @@
             font-size: 0.6rem;
             opacity: 0.7;
             font-style: italic;
+        }
+
+        .music-settings-btn {
+            background: var(--card-white);
+            border: 1px solid var(--accent-gold);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.2s;
+        }
+
+        .music-settings-btn:hover {
+            transform: rotate(90deg) scale(1.1);
         }
 
         .board-container {
@@ -595,7 +646,6 @@
                 font-size: 4.2rem;
             }
 
-            /* Single Column Layout on Mobile */
             .main-layout {
                 display: flex;
                 flex-direction: column;
@@ -611,7 +661,6 @@
                 max-height: 480px;
             }
 
-            /* MOBILE CARD STACKING SEQUENCE */
             #card-center-col { order: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
             #card-calendar   { order: 2; width: 100%; }
             #card-todo       { order: 3; width: 100%; }
@@ -631,18 +680,24 @@
     <div class="bg-blob blob-2"></div>
     <div class="bg-blob blob-3"></div>
 
+    <!-- MAGICAL FLOATING ORBS & SPARKLES -->
+    <div class="sparkle-container" id="sparkleContainer"></div>
+
     <div id="weatherScreenOverlay"></div>
 
     <!-- Audio Element -->
     <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
 
     <div class="top-controls">
-        <div class="vinyl-container" onclick="toggleMusic()">
-            <div class="vinyl-record" id="vinylDisk"></div>
-            <div class="vinyl-info">
-                <span id="musicStatus">Play Music 🎵</span>
-                <span class="vinyl-sub">Cozy Lofi Vibes</span>
+        <div class="vinyl-wrapper">
+            <div class="vinyl-container" onclick="toggleMusic()">
+                <div class="vinyl-record" id="vinylDisk"></div>
+                <div class="vinyl-info">
+                    <span id="musicStatus">Play Music 🎵</span>
+                    <span class="vinyl-sub" id="musicSub">Cozy Lofi Vibes</span>
+                </div>
             </div>
+            <button class="music-settings-btn" onclick="changeMusicUrl()" title="Change Music URL">⚙️</button>
         </div>
 
         <button class="control-btn" onclick="toggleDarkMode()" id="modeBtn">🌙 Dark Mode</button>
@@ -809,7 +864,13 @@
             document.getElementById('modalOverlay').style.display = 'none';
         }
 
-        // 2. Vinyl Music Player Handler
+        // 2. Vinyl Music Player & Custom URL Changer
+        const savedSong = localStorage.getItem('dreamCanvasCustomSong');
+        if (savedSong) {
+            document.getElementById('bgMusic').src = savedSong;
+            document.getElementById('musicSub').innerText = "Custom Song ✨";
+        }
+
         function toggleMusic() {
             const audio = document.getElementById('bgMusic');
             const disk = document.getElementById('vinylDisk');
@@ -826,21 +887,53 @@
             }
         }
 
-        // 3. Character Clean Bounce
+        function changeMusicUrl() {
+            const newUrl = prompt("I-paste ang audio URL (.mp3 link) para sa iyong vinyl player:", document.getElementById('bgMusic').src);
+            if (newUrl && newUrl.trim() !== '') {
+                const audio = document.getElementById('bgMusic');
+                audio.src = newUrl.trim();
+                localStorage.setItem('dreamCanvasCustomSong', newUrl.trim());
+                document.getElementById('musicSub').innerText = "Custom Song ✨";
+                
+                // Auto play new song
+                audio.play();
+                document.getElementById('vinylDisk').classList.add('spinning');
+                document.getElementById('musicStatus').innerText = "Playing 🎵";
+            }
+        }
+
+        // 3. Floating Orbs & Sparkles Generator
+        function generateSparkles() {
+            const container = document.getElementById('sparkleContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < 22; i++) {
+                const orb = document.createElement('div');
+                orb.className = 'floating-orb';
+                orb.style.left = `${Math.random() * 100}vw`;
+                orb.style.animationDuration = `${6 + Math.random() * 8}s`;
+                orb.style.animationDelay = `${Math.random() * 5}s`;
+                const size = 4 + Math.random() * 6;
+                orb.style.width = `${size}px`;
+                orb.style.height = `${size}px`;
+                container.appendChild(orb);
+            }
+        }
+
+        // 4. Character Clean Bounce
         function triggerCharacterBounce() {
             const img = document.getElementById('heroImg');
             img.classList.add('char-bounce');
             setTimeout(() => img.classList.remove('char-bounce'), 500);
         }
 
-        // 4. Dark Mode
+        // 5. Dark Mode
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             const btn = document.getElementById('modeBtn');
             btn.innerHTML = document.body.classList.contains('dark-mode') ? "☀️ Light Mode" : "🌙 Dark Mode";
         }
 
-        // 5. Weather Effects
+        // 6. Weather Effects
         let currentWeatherType = "sunny";
 
         function triggerWeatherMagic() {
@@ -917,7 +1010,7 @@
             }
         }
 
-        // 6. Calendar
+        // 7. Calendar
         function renderCalendar() {
             const now = new Date();
             const year = now.getFullYear();
@@ -943,7 +1036,7 @@
             }
         }
 
-        // 7. To-Do List
+        // 8. To-Do List
         let todos = JSON.parse(localStorage.getItem('myVisionTodos')) || ["Sing & practice vocals 🎤", "Drink green tea 🍵", "Journal daily goals ✨"];
 
         function renderTodos() {
@@ -978,6 +1071,7 @@
             renderCalendar();
             renderTodos();
             fetchLiveWeather();
+            generateSparkles();
         });
     </script>
 </body>
