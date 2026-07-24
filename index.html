@@ -55,18 +55,16 @@
         }
 
         /* ATMOSPHERIC SCREEN EFFECTS */
-        /* Sunny Bright Glow Effect */
         body.sunny-glow {
             animation: sunFlash 1.5s ease-out;
         }
 
         @keyframes sunFlash {
-            0% { filter: brightness(1) drop-shadow(0 0 0px #fff); }
-            30% { filter: brightness(1.18) sepia(0.12) contrast(1.02); }
-            100% { filter: brightness(1) sepia(0) contrast(1); }
+            0% { filter: brightness(1); }
+            30% { filter: brightness(1.18) sepia(0.12); }
+            100% { filter: brightness(1); }
         }
 
-        /* Screen Rain Overlay Container */
         #weatherScreenOverlay {
             position: fixed;
             top: 0; left: 0;
@@ -194,7 +192,7 @@
             margin-top: 5px;
         }
 
-        /* Grid Layout */
+        /* Desktop Grid Layout */
         .main-layout {
             display: grid;
             grid-template-columns: 310px 1fr 310px;
@@ -208,7 +206,7 @@
             gap: 16px;
         }
 
-        /* Card Base & Alternating Color System */
+        /* Card Base & Color Themes */
         .card {
             padding: 18px;
             border-radius: 6px;
@@ -354,7 +352,7 @@
             line-height: 1.3;
         }
 
-        /* SMART CALENDAR & TO-DO STYLES */
+        /* CALENDAR & TO-DO STYLES */
         .calendar-header {
             font-family: var(--font-hand);
             font-size: 1.4rem;
@@ -465,17 +463,52 @@
             color: var(--text-color);
         }
 
+        /* MOBILE SPECIFIC OVERRIDES & ORDERING */
         @media (max-width: 850px) {
-            .main-layout { grid-template-columns: 1fr; }
-            .col-center { order: -1; }
-            .hero-girl { width: 100%; margin-left: 0; }
-            .weather-floating-sticker { position: relative; top: 0; left: 0; margin: 0 auto 15px auto; width: fit-content; }
+            .header {
+                margin-top: 60px;
+            }
+
+            /* Weather Sticker Placement Fix on Mobile */
+            .weather-floating-sticker {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin: 0 auto 10px auto;
+                width: fit-content;
+            }
+
+            .top-controls {
+                top: 10px;
+                right: 15px;
+            }
+
+            .main-layout {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .hero-girl {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            /* Strict Mobile Ordering */
+            #card-center-col { order: 1; }
+            #card-calendar   { order: 2; }
+            #card-todo       { order: 3; }
+            #card-about      { order: 4; }
+            #card-things     { order: 5; }
+            #card-healing    { order: 6; }
+            #card-strengths  { order: 7; }
+            #card-goals      { order: 8; }
+            #card-fashion    { order: 9; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Screen Rain Overlay Container -->
     <div id="weatherScreenOverlay"></div>
 
     <div class="top-controls">
@@ -505,14 +538,16 @@
             <!-- LEFT COLUMN -->
             <div class="column col-left">
                 
-                <div class="card card-white rot-left">
+                <!-- 2. Today's Calendar (Cream White 🤍) -->
+                <div class="card card-white rot-left" id="card-calendar">
                     <div class="tape"></div>
                     <div class="card-title">📅 TODAY'S CALENDAR</div>
                     <div class="calendar-header" id="calMonthYear">July 2026</div>
                     <div class="calendar-grid" id="calendarDays"></div>
                 </div>
 
-                <div class="card card-pink rot-right" onclick="handleCardClick(this)">
+                <!-- 4. About Me (Soft Black 🖤) -->
+                <div class="card card-black rot-right" id="card-about" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
                     <ul class="scrap-list">
@@ -524,7 +559,8 @@
                     </ul>
                 </div>
 
-                <div class="card card-black rot-left" onclick="handleCardClick(this)">
+                <!-- 6. Healing Journey (Pastel Pink 🌸) -->
+                <div class="card card-pink rot-left" id="card-healing" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">🌸 HEALING JOURNEY</div>
                     <ul class="scrap-list">
@@ -534,7 +570,8 @@
                     </ul>
                 </div>
 
-                <div class="card card-pink rot-right" onclick="handleCardClick(this)">
+                <!-- 5. Things I Love (Cream White 🤍) -->
+                <div class="card card-white rot-right" id="card-things" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
                     <ul class="scrap-list">
@@ -547,11 +584,12 @@
             </div>
 
             <!-- CENTER COLUMN -->
-            <div class="column col-center">
+            <div class="column col-center" id="card-center-col">
                 <div class="hero-wrapper" onclick="triggerCharacterBounce()">
                     <img src="girl.png" alt="Character" class="hero-girl" id="heroImg" onerror="this.onerror=null; this.src='vision-board.png';">
                 </div>
 
+                <!-- 1. Hero Quote (Cream White 🤍) -->
                 <div class="card card-white center-quote-card" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
@@ -564,7 +602,8 @@
             <!-- RIGHT COLUMN -->
             <div class="column col-right">
                 
-                <div class="card card-pink rot-right">
+                <!-- 3. Daily To-Do List (Pastel Pink 🌸) -->
+                <div class="card card-pink rot-right" id="card-todo">
                     <div class="tape"></div>
                     <div class="card-title">✍️ DAILY TO-DO LIST</div>
                     <div class="todo-input-box" onclick="event.stopPropagation()">
@@ -574,7 +613,8 @@
                     <div id="todoContainer" onclick="event.stopPropagation()"></div>
                 </div>
 
-                <div class="card card-black rot-left" onclick="handleCardClick(this)">
+                <!-- 7. Strengths (Soft Black 🖤) -->
+                <div class="card card-black rot-left" id="card-strengths" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
                     <ul class="scrap-list">
@@ -584,7 +624,8 @@
                     </ul>
                 </div>
 
-                <div class="card card-white rot-right" onclick="handleCardClick(this)">
+                <!-- 8. Future Goals (Cream White 🤍) -->
+                <div class="card card-white rot-right" id="card-goals" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
                     <ul class="scrap-list">
@@ -595,7 +636,8 @@
                     </ul>
                 </div>
 
-                <div class="card card-pink rot-left" onclick="handleCardClick(this)">
+                <!-- 9. Fashion Style (Pastel Pink 🌸) -->
+                <div class="card card-pink rot-left" id="card-fashion" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">👠 FASHION STYLE</div>
                     <ul class="scrap-list">
@@ -634,7 +676,7 @@
             document.getElementById('modalOverlay').style.display = 'none';
         }
 
-        // 2. Character Clean Bounce (No Confetti / Poppers)
+        // 2. Character Clean Bounce
         function triggerCharacterBounce() {
             const img = document.getElementById('heroImg');
             img.classList.add('char-bounce');
@@ -648,7 +690,7 @@
             btn.innerHTML = document.body.classList.contains('dark-mode') ? "☀️ Light Mode" : "🌙 Dark Mode";
         }
 
-        // 4. ATMOSPHERIC WEATHER SCREEN EFFECTS
+        // 4. Weather Effects
         let currentWeatherType = "sunny";
 
         function triggerWeatherMagic() {
@@ -661,7 +703,7 @@
 
         function showSunnyGlowEffect() {
             document.body.classList.remove('sunny-glow');
-            void document.body.offsetWidth; // trigger reflow
+            void document.body.offsetWidth;
             document.body.classList.add('sunny-glow');
         }
 
@@ -670,7 +712,6 @@
             overlay.innerHTML = '';
             overlay.style.opacity = '1';
 
-            // Generate 35 falling rain droplets
             for (let i = 0; i < 35; i++) {
                 const drop = document.createElement('div');
                 drop.className = 'rain-drop';
