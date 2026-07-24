@@ -10,15 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Canvas Confetti Library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <style>
         :root {
             --bg-color: #f5f0e6;
             --card-white: #fffdfb;
-            --card-pink: #fde8ed; /* Pastel Pink Cutout */
-            --card-black: #1e1c1b; /* Soft Dark Cutout */
+            --card-pink: #fde8ed;
+            --card-black: #1e1c1b;
             --text-color: #2b2b2b;
             --accent-gold: #c5a059;
             --font-title: 'Playfair Display', serif;
@@ -50,10 +47,47 @@
             font-family: var(--font-body);
             color: var(--text-color);
             padding: 20px 10px 80px 10px;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            transition: background-color 0.4s ease, color 0.4s ease, filter 0.5s ease;
             background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 0);
             background-size: 20px 20px;
             position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ATMOSPHERIC SCREEN EFFECTS */
+        /* Sunny Bright Glow Effect */
+        body.sunny-glow {
+            animation: sunFlash 1.5s ease-out;
+        }
+
+        @keyframes sunFlash {
+            0% { filter: brightness(1) drop-shadow(0 0 0px #fff); }
+            30% { filter: brightness(1.18) sepia(0.12) contrast(1.02); }
+            100% { filter: brightness(1) sepia(0) contrast(1); }
+        }
+
+        /* Screen Rain Overlay Container */
+        #weatherScreenOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .rain-drop {
+            position: absolute;
+            background: linear-gradient(transparent, rgba(135, 206, 235, 0.7));
+            width: 2px;
+            height: 25px;
+            animation: fall 0.8s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
         }
 
         /* Top Bar Controls */
@@ -88,7 +122,7 @@
             position: relative;
         }
 
-        /* FLOATING INTEGRATED WEATHER DESIGN (NO BOX) */
+        /* FLOATING INTEGRATED WEATHER STICKER */
         .weather-floating-sticker {
             position: absolute;
             top: 10px;
@@ -185,7 +219,6 @@
             cursor: pointer;
         }
 
-        /* Alternate Card Themes */
         .card-white {
             background: var(--card-white);
             color: var(--text-color);
@@ -389,7 +422,6 @@
             cursor: pointer;
         }
 
-        /* Rotations */
         .rot-left { transform: rotate(-1.5deg); }
         .rot-right { transform: rotate(1.5deg); }
 
@@ -443,13 +475,16 @@
 </head>
 <body>
 
+    <!-- Screen Rain Overlay Container -->
+    <div id="weatherScreenOverlay"></div>
+
     <div class="top-controls">
         <button class="control-btn" onclick="toggleDarkMode()" id="modeBtn">🌙 Dark Mode</button>
     </div>
 
     <div class="board-container">
         
-        <!-- INTEGRATED FLOATING BACKGROUND WEATHER DESIGN -->
+        <!-- FLOATING WEATHER STICKER -->
         <div class="weather-floating-sticker" onclick="triggerWeatherMagic()">
             <div class="weather-icon-live" id="weatherIcon">⛅</div>
             <div class="weather-info">
@@ -467,20 +502,16 @@
 
         <div class="main-layout">
 
-            <!-- LEFT COLUMN (Alternating Colors: White -> Pink -> Black) -->
+            <!-- LEFT COLUMN -->
             <div class="column col-left">
                 
-                <!-- Smart Mini Calendar (White Card) -->
                 <div class="card card-white rot-left">
                     <div class="tape"></div>
                     <div class="card-title">📅 TODAY'S CALENDAR</div>
                     <div class="calendar-header" id="calMonthYear">July 2026</div>
-                    <div class="calendar-grid" id="calendarDays">
-                        <!-- Auto generated -->
-                    </div>
+                    <div class="calendar-grid" id="calendarDays"></div>
                 </div>
 
-                <!-- About Me (Pastel Pink Card) -->
                 <div class="card card-pink rot-right" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">♡ ABOUT ME</div>
@@ -493,7 +524,6 @@
                     </ul>
                 </div>
 
-                <!-- Healing Journey (Soft Black Card) -->
                 <div class="card card-black rot-left" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">🌸 HEALING JOURNEY</div>
@@ -504,7 +534,6 @@
                     </ul>
                 </div>
 
-                <!-- Things I Love (Pastel Pink Card) -->
                 <div class="card card-pink rot-right" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">🎤 THINGS I LOVE</div>
@@ -517,13 +546,12 @@
                 </div>
             </div>
 
-            <!-- CENTER COLUMN (Character & Philosophy) -->
+            <!-- CENTER COLUMN -->
             <div class="column col-center">
-                <div class="hero-wrapper" onclick="triggerCharacterMagic(this)">
+                <div class="hero-wrapper" onclick="triggerCharacterBounce()">
                     <img src="girl.png" alt="Character" class="hero-girl" id="heroImg" onerror="this.onerror=null; this.src='vision-board.png';">
                 </div>
 
-                <!-- Philosophy (White Card) -->
                 <div class="card card-white center-quote-card" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">✨ MY PHILOSOPHY</div>
@@ -533,10 +561,9 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN (Alternating Colors: Pink -> Black -> White -> Pink) -->
+            <!-- RIGHT COLUMN -->
             <div class="column col-right">
                 
-                <!-- Daily To-Do List (Pastel Pink Card) -->
                 <div class="card card-pink rot-right">
                     <div class="tape"></div>
                     <div class="card-title">✍️ DAILY TO-DO LIST</div>
@@ -544,12 +571,9 @@
                         <input type="text" id="todoInput" placeholder="Add new task...">
                         <button onclick="addTodo()">+</button>
                     </div>
-                    <div id="todoContainer" onclick="event.stopPropagation()">
-                        <!-- Items -->
-                    </div>
+                    <div id="todoContainer" onclick="event.stopPropagation()"></div>
                 </div>
 
-                <!-- Strengths (Soft Black Card) -->
                 <div class="card card-black rot-left" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">👑 STRENGTHS</div>
@@ -560,7 +584,6 @@
                     </ul>
                 </div>
 
-                <!-- Future Goals (White Card) -->
                 <div class="card card-white rot-right" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">📌 FUTURE GOALS</div>
@@ -572,7 +595,6 @@
                     </ul>
                 </div>
 
-                <!-- Fashion Style (Pastel Pink Card) -->
                 <div class="card card-pink rot-left" onclick="handleCardClick(this)">
                     <div class="tape"></div>
                     <div class="card-title" contenteditable="true">👠 FASHION STYLE</div>
@@ -612,18 +634,11 @@
             document.getElementById('modalOverlay').style.display = 'none';
         }
 
-        // 2. Character Sparkles & Bounce Effect
-        function triggerCharacterMagic(wrapper) {
+        // 2. Character Clean Bounce (No Confetti / Poppers)
+        function triggerCharacterBounce() {
             const img = document.getElementById('heroImg');
             img.classList.add('char-bounce');
             setTimeout(() => img.classList.remove('char-bounce'), 500);
-
-            confetti({
-                particleCount: 45,
-                spread: 65,
-                origin: { y: 0.5 },
-                colors: ['#c5a059', '#ffd1dc', '#ffffff']
-            });
         }
 
         // 3. Dark Mode
@@ -633,14 +648,42 @@
             btn.innerHTML = document.body.classList.contains('dark-mode') ? "☀️ Light Mode" : "🌙 Dark Mode";
         }
 
-        // 4. Floating Weather Magic & Confetti Blast
+        // 4. ATMOSPHERIC WEATHER SCREEN EFFECTS
+        let currentWeatherType = "sunny";
+
         function triggerWeatherMagic() {
-            confetti({
-                particleCount: 35,
-                spread: 55,
-                origin: { x: 0.15, y: 0.15 },
-                colors: ['#87CEEB', '#00BFFF', '#ffd1dc', '#FFFFFF']
-            });
+            if (currentWeatherType === "rainy") {
+                showRainScreenEffect();
+            } else {
+                showSunnyGlowEffect();
+            }
+        }
+
+        function showSunnyGlowEffect() {
+            document.body.classList.remove('sunny-glow');
+            void document.body.offsetWidth; // trigger reflow
+            document.body.classList.add('sunny-glow');
+        }
+
+        function showRainScreenEffect() {
+            const overlay = document.getElementById('weatherScreenOverlay');
+            overlay.innerHTML = '';
+            overlay.style.opacity = '1';
+
+            // Generate 35 falling rain droplets
+            for (let i = 0; i < 35; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'rain-drop';
+                drop.style.left = `${Math.random() * 100}vw`;
+                drop.style.animationDuration = `${0.5 + Math.random() * 0.5}s`;
+                drop.style.animationDelay = `${Math.random() * 0.3}s`;
+                overlay.appendChild(drop);
+            }
+
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.innerHTML = '', 500);
+            }, 2500);
         }
 
         async function fetchLiveWeather() {
@@ -659,15 +702,12 @@
                         
                         let statusText = "Sunny Clear";
                         let emoji = "☀️";
+                        currentWeatherType = "sunny";
                         
                         if (weather.weathercode >= 1 && weather.weathercode <= 3) {
-                            statusText = "Partly Cloudy"; emoji = "⛅";
-                        } else if (weather.weathercode >= 45 && weather.weathercode <= 48) {
-                            statusText = "Misty Fog"; emoji = "🌫️";
-                        } else if (weather.weathercode >= 51 && weather.weathercode <= 67) {
-                            statusText = "Gentle Rain"; emoji = "🌧️";
-                        } else if (weather.weathercode >= 80) {
-                            statusText = "Rain Showers"; emoji = "🌦️";
+                            statusText = "Partly Cloudy"; emoji = "⛅"; currentWeatherType = "cloudy";
+                        } else if (weather.weathercode >= 51) {
+                            statusText = "Gentle Rain"; emoji = "🌧️"; currentWeatherType = "rainy";
                         }
 
                         document.getElementById('weatherDesc').innerText = statusText;
@@ -686,7 +726,7 @@
             }
         }
 
-        // 5. Smart Calendar Generator
+        // 5. Calendar
         function renderCalendar() {
             const now = new Date();
             const year = now.getFullYear();
@@ -700,24 +740,19 @@
             grid.innerHTML = '';
 
             const dayHeads = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-            dayHeads.forEach(d => {
-                grid.innerHTML += `<div class="cal-day-head">${d}</div>`;
-            });
+            dayHeads.forEach(d => { grid.innerHTML += `<div class="cal-day-head">${d}</div>`; });
 
             const firstDay = new Date(year, month, 1).getDay();
             const totalDays = new Date(year, month + 1, 0).getDate();
 
-            for (let i = 0; i < firstDay; i++) {
-                grid.innerHTML += `<div></div>`;
-            }
-
+            for (let i = 0; i < firstDay; i++) { grid.innerHTML += `<div></div>`; }
             for (let day = 1; day <= totalDays; day++) {
                 const isToday = day === today ? 'today' : '';
                 grid.innerHTML += `<div class="cal-date ${isToday}">${day}</div>`;
             }
         }
 
-        // 6. Smart To-Do List
+        // 6. To-Do List
         let todos = JSON.parse(localStorage.getItem('myVisionTodos')) || ["Sing & practice vocals 🎤", "Drink green tea 🍵", "Journal daily goals ✨"];
 
         function renderTodos() {
@@ -748,7 +783,6 @@
             renderTodos();
         }
 
-        // Initialization
         document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             renderTodos();
