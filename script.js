@@ -1,106 +1,17 @@
+// DreamCanvas - Version 2A Core Interactivity
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DreamCanvas V2A Loaded Successfully!");
 
-const cards = [
+    const cards = document.querySelectorAll('.card');
 
-{
-title:"⭐ About Me",
-content:"Dreamer with ambition"
-},
-
-{
-title:"👑 Strengths",
-content:"Resilient • Independent • Loyal"
-},
-
-{
-title:"🎯 Future Goals",
-content:"Travel • Business • Financial Freedom"
-},
-
-{
-title:"🌸 Healing Journey",
-content:"Growing every day"
-},
-
-{
-title:"👠 Fashion Style",
-content:"Elegant • Timeless • Black is my power color"
-},
-
-{
-title:"🎤 Big Dreams",
-content:"Perform on bigger stages"
-},
-
-{
-title:"☕ Things I Love",
-content:"Coffee • Singing • Horror Movies"
-},
-
-{
-title:"🌍 Solo Traveler",
-content:"Collecting memories around the world"
-}
-
-];
-
-{
-title:"About Me",
-content:"Dreamer with ambition"
-},
-
-{
-title:"Strengths",
-content:"Resilient, Independent"
-},
-
-{
-title:"Future Goals",
-content:"Travel, Freedom, Business"
-},
-
-{
-title:"Healing Journey",
-content:"Growing every day"
-},
-
-{
-title:"Fashion Style",
-content:"Elegant • Timeless"
-},
-
-{
-title:"Big Dreams",
-content:"Perform on bigger stages"
-},
-
-{
-title:"Things I Love",
-content:"Singing • Coffee • Horror Movies"
-},
-
-{
-title:"Daily Reminder",
-content:"You got this."
-}
-
-];
-
-const board=document.getElementById("vision-board");
-
-cards.forEach(card=>{
-
-const div=document.createElement("div");
-
-div.className="card";
-
-div.innerHTML=`
-
-<h2>${card.title}</h2>
-
-<p>${card.content}</p>
-
-`;
-
-board.appendChild(div);
-
+    // Simple interaction effect on card click
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Slight tilt bounce animation feedback
+            card.style.transform = "scale(0.98)";
+            setTimeout(() => {
+                card.style.transform = "";
+            }, 150);
+        });
+    });
 });
